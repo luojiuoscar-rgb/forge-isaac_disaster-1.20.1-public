@@ -1,8 +1,11 @@
 package net.luojiuoscar.isaac_disaster.registries.ability.passive.impl;
 
+import net.luojiuoscar.isaac_disaster.client.ClientDataManager;
+import net.luojiuoscar.isaac_disaster.helper.DescriptionHelper;
+import net.luojiuoscar.isaac_disaster.item.ModPassiveItems;
 import net.luojiuoscar.isaac_disaster.manager.StatManager;
 import net.luojiuoscar.isaac_disaster.registries.ability.passive.PassiveAbility;
-import net.luojiuoscar.isaac_disaster.registries.periodic_module.ModPeriodicModules;
+import net.luojiuoscar.isaac_disaster.registries.familiar.ModFamiliarEntities;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -22,20 +25,27 @@ public class SackOfPennies extends PassiveAbility {
 
     @Override
     public void handleObtain(ServerPlayer player, @Nullable ItemStack stack) {
-        StatManager.addPeriodicModule(player, ModPeriodicModules.SACK_OF_PENNIES.getId(), 1);
+        StatManager.addFamiliar(player, ModFamiliarEntities.SACK_OF_PENNIES.getId(), ModPassiveItems.SACK_OF_PENNIES.getId(), 1);
     }
 
     @Override
     public void handleRemove(ServerPlayer player, @Nullable ItemStack stack) {
-        StatManager.addPeriodicModule(player, ModPeriodicModules.SACK_OF_PENNIES.getId(), -1);
-
+        StatManager.addFamiliar(player, ModFamiliarEntities.SACK_OF_PENNIES.getId(), ModPassiveItems.SACK_OF_PENNIES.getId(), -1);
     }
 
     @Override
-    public List<Component> getDesc(@Nullable ItemStack stack, Player player) {
-        return List.of(
-            Component.translatable("item.isaac_disaster.sack_of_pennies.lore.1")
-        );
+    public List<Component> getDesc(@Nullable ItemStack stack, @Nullable Player player) {
+        return List.of(Component.translatable("item.isaac_disaster.sack_of_pennies.lore.1"),
+                Component.translatable("item.isaac_disaster.sack_of_pennies.lore.2"));
+    }
+
+    @Override
+    public List<Component> getSynergyDesc(@Nullable ItemStack stack, @Nullable Player player) {
+        if (ClientDataManager.getInstance().getItemCount(ModPassiveItems.BFFS.getId()) > 0) {
+            return List.of(DescriptionHelper.getSynergyDesc(Component.translatable("item.isaac_disaster.bffs"),
+                    Component.translatable("item.isaac_disaster.familiar.synergy.double_production")));
+        }
+        return List.of();
     }
 
 }

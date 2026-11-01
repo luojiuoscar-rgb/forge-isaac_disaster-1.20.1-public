@@ -818,6 +818,50 @@ public class ModPassiveItems {
     public static final RegistryObject<Item> INFESTATION_2 = ITEMS.register("infestation_2",
             () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.INFESTATION_2));
     static {ItemListManager.PASSIVE_ITEM_LIST.add(INFESTATION_2);}
+    public static final RegistryObject<Item> TRACTOR_BEAM = ITEMS.register("tractor_beam",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.TRACTOR_BEAM));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(TRACTOR_BEAM);}
+
+    public static final RegistryObject<Item> MOMS_KNIFE = ITEMS.register("moms_knife",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.MOMS_KNIFE));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(MOMS_KNIFE);}
+
+    public static final RegistryObject<Item> BROTHER_BOBBY = ITEMS.register("brother_bobby",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.BROTHER_BOBBY));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(BROTHER_BOBBY);}
+
+    public static final RegistryObject<Item> SISTER_MAGGY = ITEMS.register("sister_maggy",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.SISTER_MAGGY));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(SISTER_MAGGY);}
+
+    public static final RegistryObject<Item> GHOST_BABY = ITEMS.register("ghost_baby",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.GHOST_BABY));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(GHOST_BABY);}
+
+    public static final RegistryObject<Item> HARLEQUIN_BABY = ITEMS.register("harlequin_baby",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.HARLEQUIN_BABY));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(HARLEQUIN_BABY);}
+
+    public static final RegistryObject<Item> ROTTEN_BABY = ITEMS.register("rotten_baby",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.ROTTEN_BABY));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(ROTTEN_BABY);}
+
+    public static final RegistryObject<Item> LOKI_BABY = ITEMS.register("loki_baby",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.LOKI_BABY));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(LOKI_BABY);}
+
+    public static final RegistryObject<Item> ROBO_BABY = ITEMS.register("robo_baby",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.ROBO_BABY));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(ROBO_BABY);}
+
+    public static final RegistryObject<Item> ROBO_BABY_2 = ITEMS.register("robo_baby_2",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.ROBO_BABY_2));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(ROBO_BABY_2);}
+
+    public static final RegistryObject<Item> DEMON_BABY = ITEMS.register("demon_baby",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.DEMON_BABY));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(DEMON_BABY);}
+
 
     public static final RegistryObject<Item> HOLY_LIGHT = ITEMS.register("holy_light",
             () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.HOLY_LIGHT));

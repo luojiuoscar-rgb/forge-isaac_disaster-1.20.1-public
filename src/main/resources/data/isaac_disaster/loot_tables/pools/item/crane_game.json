@@ -3,6 +3,8 @@
     {
       "rolls": 1,
       "entries": [
+        {"type": "minecraft:item", "name": "isaac_disaster:robo_baby_2"},
+        {"type": "minecraft:item", "name": "isaac_disaster:robo_baby"},
         {"type": "minecraft:item", "name": "isaac_disaster:marbles"},
         {"type": "minecraft:item", "name": "isaac_disaster:analog_stick"},
         {"type": "minecraft:item", "name": "isaac_disaster:booster_pack"},
@@ -39,7 +41,8 @@
         {"type": "minecraft:item", "name": "isaac_disaster:pentagram"},
         {"type": "minecraft:item", "name": "isaac_disaster:smb_super_fan"},
         {"type": "minecraft:item", "name": "isaac_disaster:magic_8_ball"},
-        {"type": "minecraft:item", "name": "isaac_disaster:squeezy"}
+        {"type": "minecraft:item", "name": "isaac_disaster:squeezy"},
+        {"type": "minecraft:item", "name": "isaac_disaster:tractor_beam"}
       ]
     }
   ]

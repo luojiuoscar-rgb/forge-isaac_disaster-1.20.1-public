@@ -140,10 +140,10 @@ public class ModExecutableEffects {
             EXECUTABLE_EFFECT_REGISTRY.register("laser_plus_brimstone", LaserPlusBrimstone::new);
     public static final RegistryObject<IExecutableEffect> LASER_PLUS_FETUS =
             EXECUTABLE_EFFECT_REGISTRY.register("laser_plus_fetus", LaserPlusFetus::new);
+    public static final RegistryObject<IExecutableEffect> LASER_PLUS_MOMS_KNIFE =
+            EXECUTABLE_EFFECT_REGISTRY.register("laser_plus_moms_knife", LaserPlusMomsKnife::new);
     public static final RegistryObject<IExecutableEffect> IPECAC =
             EXECUTABLE_EFFECT_REGISTRY.register("ipecac", Ipecac::new);
-    public static final RegistryObject<IExecutableEffect> FIRING_MODIFIER_ATTACK_PLAN =
-            EXECUTABLE_EFFECT_REGISTRY.register("firing_modifier_attack_plan", FiringModifierAttackPlan::new);
     public static final RegistryObject<IExecutableEffect> BRIMSTONE_PLUS_MONSTROS_LUNG =
             EXECUTABLE_EFFECT_REGISTRY.register("brimstone_plus_monstros_lung", BrimstonePlusMonstrosLung::new);
     public static final RegistryObject<IExecutableEffect> LEAD_PENCIL_BURST =
@@ -160,6 +160,16 @@ public class ModExecutableEffects {
             EXECUTABLE_EFFECT_REGISTRY.register("cursed_eye", CursedEye::new);
     public static final RegistryObject<IExecutableEffect> BRIMSTONE_PLUS_C_SECTION =
             EXECUTABLE_EFFECT_REGISTRY.register("brimstone_plus_c_section", BrimstonePlusCSection::new);
+    public static final RegistryObject<IExecutableEffect> MOMS_KNIFE_BARRAGE =
+            EXECUTABLE_EFFECT_REGISTRY.register("moms_knife_barrage", MomsKnifeBarrage::new);
+    public static final RegistryObject<IExecutableEffect> MOMS_KNIFE_SHOT =
+            EXECUTABLE_EFFECT_REGISTRY.register("moms_knife_shot", MomsKnifeShot::new);
+    public static final RegistryObject<IExecutableEffect> LOKIS_HORNS_HELD_KNIVES =
+            EXECUTABLE_EFFECT_REGISTRY.register("lokis_horns_held_knives", LokisHornsHeldKnives::new);
+    public static final RegistryObject<IExecutableEffect> BOOK_PLUS_MOMS_KNIFE =
+            EXECUTABLE_EFFECT_REGISTRY.register("book_plus_moms_knife", BookPlusMomsKnife::new);
+    public static final RegistryObject<IExecutableEffect> MONSTROS_LUNG_PLUS_MOMS_KNIFE =
+            EXECUTABLE_EFFECT_REGISTRY.register("monstros_lung_plus_moms_knife", MonstrosLungPlusMomsKnife::new);
     public static final RegistryObject<IExecutableEffect> CHARM_OF_THE_VAMPIRE =
             EXECUTABLE_EFFECT_REGISTRY.register("charm_of_the_vampire", CharmOfTheVampire::new);
     public static final RegistryObject<IExecutableEffect> CARTRIDGE =
@@ -184,8 +194,6 @@ public class ModExecutableEffects {
             EXECUTABLE_EFFECT_REGISTRY.register("magneto", Magneto::new);
     public static final RegistryObject<IExecutableEffect> MONEY_IS_POWER =
             EXECUTABLE_EFFECT_REGISTRY.register("money_is_power", MoneyIsPower::new);
-    public static final RegistryObject<IExecutableEffect> LOOT_MONEY =
-            EXECUTABLE_EFFECT_REGISTRY.register("loot_money", LootMoney::new);
     public static final RegistryObject<IExecutableEffect> THE_LEFT_HAND =
             EXECUTABLE_EFFECT_REGISTRY.register("the_left_hand", TheLeftHand::new);
     public static final RegistryObject<IExecutableEffect> STACK_HOLY_SHIELD =
@@ -297,7 +305,7 @@ public class ModExecutableEffects {
     public static final RegistryObject<IExecutableEffect> FRIENDS_TILL_THE_END =
             EXECUTABLE_EFFECT_REGISTRY.register("friends_till_the_end", FriendsTillTheEnd::new);
     public static final RegistryObject<IExecutableEffect> FULL_HEALTH_PILL =
-            EXECUTABLE_EFFECT_REGISTRY.register("full_health_pill", FullHealth::new);
+            EXECUTABLE_EFFECT_REGISTRY.register("full_health_pill", FullHealthPill::new);
     public static final RegistryObject<IExecutableEffect> GULP =
             EXECUTABLE_EFFECT_REGISTRY.register("gulp", Gulp::new);
     public static final RegistryObject<IExecutableEffect> HEALTH_DOWN =
@@ -398,6 +406,8 @@ public class ModExecutableEffects {
             EXECUTABLE_EFFECT_REGISTRY.register("bogo_bombs", BogoBombs::new);
     public static final RegistryObject<IExecutableEffect> LOKIS_HORNS =
             EXECUTABLE_EFFECT_REGISTRY.register("lokis_horns", LokisHorns::new);
+    public static final RegistryObject<IExecutableEffect> CONJOINED_ATTACK_PLAN =
+            EXECUTABLE_EFFECT_REGISTRY.register("conjoined_attack_plan", ConjoinedAttackPlan::new);
     public static final RegistryObject<IExecutableEffect> THE_WIZ_ATTACK_PLAN =
             EXECUTABLE_EFFECT_REGISTRY.register("the_wiz_attack_plan", TheWizAttackPlan::new);
     public static final RegistryObject<IExecutableEffect> BLOOD_RIGHTS =
@@ -554,20 +564,12 @@ public class ModExecutableEffects {
                 ));
                 ctx.set(ContextKeys.EXECUTABLE_EFFECT, POTIONS.get());
             }));
-    public static final RegistryObject<IExecutableEffect> BOMB_BAG =
-            EXECUTABLE_EFFECT_REGISTRY.register("bomb_bag", () -> new AbilityEffectEntry(
-                    GIVE_ITEM, ctx -> ctx.set(ContextKeys.ITEM, ModItems.BOMB.get())
-            ));
     public static final RegistryObject<IExecutableEffect> FIRE_RESISTENCE =
             EXECUTABLE_EFFECT_REGISTRY.register("fire_resistence", () -> new AbilityEffectEntry(
                     POTIONS, ctx -> ctx.set(ContextKeys.POTIONS, List.of(new PotionProfile(
                             MobEffects.FIRE_RESISTANCE,
                             240,
                             0, 0, 0, false)))
-            ));
-    public static final RegistryObject<IExecutableEffect> THE_RELIC =
-            EXECUTABLE_EFFECT_REGISTRY.register("the_relic", () -> new AbilityEffectEntry(
-                    GIVE_ITEM, ctx -> ctx.set(ContextKeys.ITEM, ModItems.SOUL_HEART.get())
             ));
     public static final RegistryObject<IExecutableEffect> THE_SOUL =
             EXECUTABLE_EFFECT_REGISTRY.register("the_soul", () -> new AbilityEffectEntry(
@@ -1198,9 +1200,6 @@ public class ModExecutableEffects {
             EXECUTABLE_EFFECT_REGISTRY.register("spawn_blue_fly", () ->
                     new SpawnFamiliars(ModFamiliarEntities.BLUE_FLY::getId, 1, 1, false));
 
-    public static final RegistryObject<IExecutableEffect> CAT =
-            EXECUTABLE_EFFECT_REGISTRY.register("cat", () -> new AbilityEffectEntry(SPAWN_BLUE_FLY,
-                    ctx -> ctx.set(ContextKeys.TARGET_POSITION, ctx.getEntity().position())));
 
     public static final RegistryObject<IExecutableEffect> VIRGO =
             EXECUTABLE_EFFECT_REGISTRY.register("virgo", VirgoShield::new);

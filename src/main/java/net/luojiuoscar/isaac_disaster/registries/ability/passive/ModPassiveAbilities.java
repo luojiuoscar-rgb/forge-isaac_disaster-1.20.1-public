@@ -821,6 +821,50 @@ public class ModPassiveAbilities {
     public static final RegistryObject<PassiveAbility> INFESTATION_2 =
             PASSIVE_ABILITY_REGISTRY.register("infestation_2",
                     () -> new Infestation2(ItemId.INFESTATION_2.getId(), ItemId.INFESTATION_2.getLevel()));
+    public static final RegistryObject<PassiveAbility> TRACTOR_BEAM =
+            PASSIVE_ABILITY_REGISTRY.register("tractor_beam",
+                    () -> new TractorBeam(ItemId.TRACTOR_BEAM.getId(), ItemId.TRACTOR_BEAM.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> MOMS_KNIFE =
+            PASSIVE_ABILITY_REGISTRY.register("moms_knife",
+                    () -> new MomsKnife(ItemId.MOMS_KNIFE.getId(), ItemId.MOMS_KNIFE.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> BROTHER_BOBBY =
+            PASSIVE_ABILITY_REGISTRY.register("brother_bobby",
+                    () -> new BrotherBobby(ItemId.BROTHER_BOBBY.getId(), ItemId.BROTHER_BOBBY.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> SISTER_MAGGY =
+            PASSIVE_ABILITY_REGISTRY.register("sister_maggy",
+                    () -> new SisterMaggy(ItemId.SISTER_MAGGY.getId(), ItemId.SISTER_MAGGY.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> GHOST_BABY =
+            PASSIVE_ABILITY_REGISTRY.register("ghost_baby",
+                    () -> new GhostBaby(ItemId.GHOST_BABY.getId(), ItemId.GHOST_BABY.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> HARLEQUIN_BABY =
+            PASSIVE_ABILITY_REGISTRY.register("harlequin_baby",
+                    () -> new HarlequinBaby(ItemId.HARLEQUIN_BABY.getId(), ItemId.HARLEQUIN_BABY.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> ROTTEN_BABY =
+            PASSIVE_ABILITY_REGISTRY.register("rotten_baby",
+                    () -> new RottenBaby(ItemId.ROTTEN_BABY.getId(), ItemId.ROTTEN_BABY.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> LOKI_BABY =
+            PASSIVE_ABILITY_REGISTRY.register("loki_baby",
+                    () -> new LokiBaby(ItemId.LOKI_BABY.getId(), ItemId.LOKI_BABY.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> ROBO_BABY =
+            PASSIVE_ABILITY_REGISTRY.register("robo_baby",
+                    () -> new RoboBaby(ItemId.ROBO_BABY.getId(), ItemId.ROBO_BABY.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> ROBO_BABY_2 =
+            PASSIVE_ABILITY_REGISTRY.register("robo_baby_2",
+                    () -> new RoboBaby2(ItemId.ROBO_BABY_2.getId(), ItemId.ROBO_BABY_2.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> DEMON_BABY =
+            PASSIVE_ABILITY_REGISTRY.register("demon_baby",
+                    () -> new DemonBaby(ItemId.DEMON_BABY.getId(), ItemId.DEMON_BABY.getLevel()));
+
 
     public static final RegistryObject<PassiveAbility> VIRGO =
             PASSIVE_ABILITY_REGISTRY.register("virgo", () -> new Virgo(ItemId.VIRGO.getId(), ItemId.VIRGO.getLevel()));

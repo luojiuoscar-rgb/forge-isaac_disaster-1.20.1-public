@@ -51,6 +51,10 @@ public final class ModDamageSources {
         return new DamageSource(type(level, ModDamageType.HOLY_LIGHT), null, caster);
     }
 
+    public static DamageSource momsKnife(Level level, Entity direct, Entity owner) {
+        return new DamageSource(type(level, ModDamageType.MOMS_KNIFE), direct, owner);
+    }
+
     private static Holder<DamageType> type(Level level, ResourceKey<DamageType> key) {
         return level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key);
     }

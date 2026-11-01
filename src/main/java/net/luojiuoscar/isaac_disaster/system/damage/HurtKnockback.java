@@ -55,7 +55,8 @@ public final class HurtKnockback {
         }
         if (source.is(ModDamageType.LASER)
                 || source.is(ModDamageType.FAMILIAR)
-                || source.is(ModDamageType.WATER)) {
+                || source.is(ModDamageType.WATER)
+                || source.is(ModDamageType.MOMS_KNIFE)) {
             return new Response(false, 0, 0, 0);
         }
         return null;

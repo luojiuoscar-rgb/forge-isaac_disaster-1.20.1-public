@@ -35,7 +35,6 @@ public final class ContextKeys {
     public static final ContextKey<Event> EVENT = new ContextKey<>();
     public static final ContextKey<IBulletObject> BULLET = new ContextKey<>();
     public static final ContextKey<BulletStickContext> BULLET_STICK = new ContextKey<>();
-    public static final ContextKey<ResourceLocation> BULLET_COLOR_ID = new ContextKey<>();
     public static final ContextKey<AttackContext> ATTACK_CONTEXT = new ContextKey<>();
     public static final ContextKey<EffectAttachmentNode> EFFECT_ATTACHMENT_NODE = new ContextKey<>();
     public static final ContextKey<PeriodicModuleQueue> PERIODIC_MODULE_QUEUE = new ContextKey<>();

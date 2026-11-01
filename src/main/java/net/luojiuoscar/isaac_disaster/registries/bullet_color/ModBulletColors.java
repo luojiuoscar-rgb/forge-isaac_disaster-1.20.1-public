@@ -35,6 +35,9 @@ public class ModBulletColors {
     public static final RegistryObject<BulletColor> BLOOD_TEAR =
             BULLET_COLOR_REGISTRY.register("blood_tear", () -> BulletColor.builder().color(0xCC171F).alpha(1.0f).priority(BulletColorPrio.BLOOD_TEAR).build());
 
+    public static final RegistryObject<BulletColor> GHOST_TEAR =
+            BULLET_COLOR_REGISTRY.register("ghost_tear", () -> BulletColor.builder().color(0xFFFFFF).alpha(0.6F).priority(0, 0).build());
+
     public static final RegistryObject<BulletColor> PARASITE =
             BULLET_COLOR_REGISTRY.register("parasite", () -> BulletColor.builder().color(0x9D5328).alpha(1.0f).priority(BulletColorPrio.PARASITE).build());
 

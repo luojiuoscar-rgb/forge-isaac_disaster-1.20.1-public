@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 import net.luojiuoscar.isaac_disaster.IsaacDisaster;
 import net.luojiuoscar.isaac_disaster.system.damage.HurtKnockback;
+import net.luojiuoscar.isaac_disaster.entity.projectile.moms_knife.FetusMomsKnifeState;
 import net.luojiuoscar.isaac_disaster.bullet.tracking.TrackingProfile;
 import net.luojiuoscar.isaac_disaster.event.custom.attack.tear_bullet.BulletStickEndEvent;
 import net.luojiuoscar.isaac_disaster.event.custom.attack.tear_bullet.BulletStickStartEvent;
@@ -44,6 +45,7 @@ public final class BulletState implements IBulletObject {
     public static final double MIN_VALID_SPEED = BulletMotionState.MIN_VALID_SPEED;
 
     private final BulletMotionState motionState;
+    @Nullable private final FetusMomsKnifeState fetusKnife;
     private final BulletStickState stickState;
     private final BulletTrajectoryState trajectoryState;
     private float damage;
@@ -62,6 +64,7 @@ public final class BulletState implements IBulletObject {
     private final CompositeTrigger triggers = new CompositeTrigger();
 
     private BulletState(Builder b) {
+        this.fetusKnife = b.fetusKnife ? new FetusMomsKnifeState(b.velocity) : null;
         this.motionState =
             new BulletMotionState(
                 b.position,
@@ -117,6 +120,7 @@ public final class BulletState implements IBulletObject {
             b.maxSpeedChange,
             b.controlRange,
             b.controlSteer);
+        this.trackingState.setControlTurnMultiplier(b.controlTurnMultiplier);
         ResourceLocation typeId =
             attackContext == null
                 ? b.typeId
@@ -286,6 +290,11 @@ public final class BulletState implements IBulletObject {
     /** Returns the visual scale relative to the registered projectile geometry. */
     public double renderScale() {
         return profile.renderScale();
+    }
+
+    @Nullable
+    public FetusMomsKnifeState fetusKnife() {
+        return fetusKnife;
     }
 
     /** Returns the horizontal collision width. */
@@ -590,6 +599,14 @@ public final class BulletState implements IBulletObject {
         return trackingState.controlSteer();
     }
 
+    public double controlTurnMultiplier() {
+        return trackingState.controlTurnMultiplier();
+    }
+
+    public void setControlTurnMultiplier(double value) {
+        trackingState.setControlTurnMultiplier(value);
+    }
+
     /** Returns whether this bullet applies the normal one-hit-per-target filter. */
     public boolean rememberHitTargets() {
         return trackingState.rememberHitTargets();
@@ -828,6 +845,7 @@ public final class BulletState implements IBulletObject {
         private CompositeTrigger triggers = new CompositeTrigger();
         private Set<BlockPos> hitBlockPositions = Set.of();
         private boolean noGravity;
+        private boolean fetusKnife;
         private boolean spectral, piercing, homing, controllable;
         private boolean rememberHitTargets = true;
         private BulletSteeringMode steeringMode = BulletSteeringMode.LIMITED;
@@ -838,6 +856,7 @@ public final class BulletState implements IBulletObject {
         private ResourceLocation typeId = ModAttackTypes.BULLET.getId();
         private ResourceLocation rootTypeId = ModAttackTypes.BULLET.getId();
         private double controlRange = 64.0D, controlSteer = 0.8D;
+        private double controlTurnMultiplier = 1.0D;
 
         public Builder position(Vec3 v) {
             position = v;
@@ -846,6 +865,11 @@ public final class BulletState implements IBulletObject {
 
         public Builder bulletKnockback(double value) {
             bulletKnockback = value;
+            return this;
+        }
+
+        public Builder fetusKnife(boolean value) {
+            fetusKnife = value;
             return this;
         }
 
@@ -1046,6 +1070,11 @@ public final class BulletState implements IBulletObject {
 
         public Builder controlSteer(double v) {
             controlSteer = Math.max(0.0D, Math.min(1.0D, v));
+            return this;
+        }
+
+        public Builder controlTurnMultiplier(double value) {
+            controlTurnMultiplier = value;
             return this;
         }
 
