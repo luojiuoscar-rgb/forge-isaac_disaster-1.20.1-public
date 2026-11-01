@@ -1218,4 +1218,7 @@ public class ModExecutableEffects {
     public static final RegistryObject<IExecutableEffect> URANUS_FREEZE_ON_KILL =
             EXECUTABLE_EFFECT_REGISTRY.register("uranus_freeze_on_kill", UranusFreezeOnKill::new);
 
+    public static final RegistryObject<IExecutableEffect> HOW_TO_JUMP =
+            EXECUTABLE_EFFECT_REGISTRY.register("how_to_jump", HowToJump::new);
+
 }

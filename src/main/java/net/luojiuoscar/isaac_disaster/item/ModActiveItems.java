@@ -199,4 +199,8 @@ public class ModActiveItems {
             () -> new ActiveItem(new Item.Properties(), 6, 6, ModActiveAbilities.D10));
     static {ItemListManager.ACTIVE_ITEM_LIST.add(D10);}
 
+    public static final RegistryObject<Item> HOW_TO_JUMP = ITEMS.register("how_to_jump",
+            () -> new ActiveItem(new Item.Properties(), 2, 2, ModActiveAbilities.HOW_TO_JUMP));
+    static {ItemListManager.ACTIVE_ITEM_LIST.add(HOW_TO_JUMP);}
+
 }

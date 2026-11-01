@@ -251,7 +251,8 @@ public enum ItemId {
     VIRGO(2),
     AQUARIUS(2),
     D10(1),
-    URANUS(3);
+    URANUS(3),
+    HOW_TO_JUMP(1);
 
 
 

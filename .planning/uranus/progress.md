@@ -20,3 +20,7 @@
 - 来源对齐最终验证通过：12项定向JUnit、16项真实GameTest全通过，build/uranus-source-alignment.log显示BUILD SUCCESSFUL；差异检查通过。新增来源绑定测试确认注册ID覆盖仅作用于本次触发，外层ID保留，实体来源及冻结UUID归属不受影响。再次核对feature-b仍干净，SimpleTrigger与通用批处理测试文件均与B的SHA256一致。未提交、未新增兼容别名、未重复数据生成；未执行客户端验收。
 - 按用户新确认精简：UranusFreezeOnKill直接addEffect(instance, source)，删除额外ContextKey与通用POTIONS的实体来源支持，减速恢复普通POTIONS。替换旧测试为实际致死冰弹测试，验证SOURCE注册ID即使绑定为不同模块也不改变冻结者及首片水迹归属；全src无EFFECT_SOURCE残留，SimpleTrigger仍与feature-b哈希一致。
 - 精简最终验证：15项定向JUnit、16项真实GameTest全部通过，build/uranus-direct-freeze.log显示BUILD SUCCESSFUL，差异检查通过。未重复runData，未运行独立compile/build，未进行客户端/完整存档验收，未提交。
+- 2026-11-01白底回归：用户反馈冰弹仍有白底。核对运行贴图、源码与build/resources副本哈希一致，渲染使用带透明混合的正确资源；前次仅移除64个深灰背景像素，遗漏轮廓外222个不透明白色像素，并将其误计入主体面积。
+- 已精确将这222个外部白色像素的alpha置0，RGB及其余全部像素逐一验证不变，保留103个内部纯白高光。32×32画布、30×32轮廓保持；真实不透明主体738像素（72.07%），仍大于普通tear_bullet的717像素。外部透明像素共286。
+- 原生imagegen尝试未返回可用产物，未采用CLI/API生成；最终为既有PNG的确定性透明通道修正。检查了棋盘格放大预览。
+- 新增UranusIceTearTextureTest两项资源回归，修正前两项均失败（含坐标1,0的外部白底），修正后2/2通过；日志build/uranus-texture-red.log及build/uranus-texture-green.log。未运行GameTest、runData、独立compile/build或客户端验收；仅素材与资源测试改动，保留How to Jump待提交内容。

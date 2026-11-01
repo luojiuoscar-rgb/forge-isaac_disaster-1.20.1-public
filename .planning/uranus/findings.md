@@ -10,3 +10,4 @@
 - 冰弹成品使用用户原图抠去纯灰背景并最近邻缩放为32×32透明PNG；原生imagegen调用未返回可用文件，未使用CLI或代用道具图标。
 - 来源对齐核对：feature-b在e60df89e的工作区干净。实际扩展的是SimpleTrigger，其第四参数为ResourceLocation，绑定ContextKeys.SOURCE；AddFamiliars/SpawnFamiliars等用该ID区分生成道具。EFFECT_SOURCE则是Entity，经POTIONS传给addEffect用于冻结玩家归属。两者语义及类型不同，不能合成一个强类型key。按用户授权对齐B的SOURCE和SimpleTrigger接口，保留独立实体来源。
 - 用户进一步确认冻结可使用专属施加路径：现以mob.addEffect(FROZEN实例, source)直接传冻结者，移除EFFECT_SOURCE及其全部代码/测试引用；普通减速仍走POTIONS且不携带施加者。onFrozenAdded从原版事件取得来源，冻结UUID保存与首片水迹归属保持。此方案取代上一条保留通用实体来源Key的决定。
+- 冰弹白底复查：此前只去除了两侧深灰像素，外部白色区域仍不透明；不是PNG格式不支持透明，也不是旧资源副本。修复按边缘连通的透明/纯白区域定位背景，保留黑边内白色高光；真实主体面积738像素，早先960像素的统计包含白底。

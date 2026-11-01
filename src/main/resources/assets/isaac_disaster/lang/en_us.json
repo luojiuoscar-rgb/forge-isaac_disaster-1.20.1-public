@@ -721,6 +721,8 @@
   "item.isaac_disaster.uranus.lore.2": "冰冻子弹致死时冻结敌人",
   "item.isaac_disaster.uranus.lore.3": "冰雕持续留下水迹",
   "item.isaac_disaster.uranus.lore.4": "冰雕碎裂时发射12发冰弹",
+  "item.isaac_disaster.how_to_jump": "跳跃教程",
+  "item.isaac_disaster.how_to_jump.lore.1": "朝视线方向跳跃",
   "item end": "",
   "trinket": "",
   "item.isaac_disaster.swallowed_penny": "被吞下的硬币",

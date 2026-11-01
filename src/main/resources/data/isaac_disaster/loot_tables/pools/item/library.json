@@ -9,7 +9,8 @@
         {"type": "minecraft:item", "name": "isaac_disaster:the_bible"},
         {"type": "minecraft:item", "name": "isaac_disaster:the_necronmicon"},
         {"type": "minecraft:item", "name": "isaac_disaster:telepathy_for_dummies"},
-        {"type": "minecraft:item", "name": "isaac_disaster:anarchist_cookbook"}
+        {"type": "minecraft:item", "name": "isaac_disaster:anarchist_cookbook"},
+        {"type": "minecraft:item", "name": "isaac_disaster:how_to_jump"}
       ]
     }
   ]

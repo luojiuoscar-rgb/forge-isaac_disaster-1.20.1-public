@@ -194,4 +194,8 @@ public class ModActiveAbilities {
     public static final RegistryObject<ActiveAbility> D10 =
             ACTIVE_ABILITY_REGISTRY.register("d10", () -> new D10(ItemId.D10.getId(), ItemId.D10.getLevel()));
 
+    public static final RegistryObject<ActiveAbility> HOW_TO_JUMP =
+            ACTIVE_ABILITY_REGISTRY.register("how_to_jump",
+                    () -> new HowToJump(ItemId.HOW_TO_JUMP.getId(), ItemId.HOW_TO_JUMP.getLevel()));
+
 }
