@@ -307,7 +307,7 @@ public class ModExecutableEffects {
     public static final RegistryObject<IExecutableEffect> FRIENDS_TILL_THE_END =
             EXECUTABLE_EFFECT_REGISTRY.register("friends_till_the_end", FriendsTillTheEnd::new);
     public static final RegistryObject<IExecutableEffect> FULL_HEALTH_PILL =
-            EXECUTABLE_EFFECT_REGISTRY.register("full_health_pill", FullHealth::new);
+            EXECUTABLE_EFFECT_REGISTRY.register("full_health_pill", FullHealthPill::new);
     public static final RegistryObject<IExecutableEffect> GULP =
             EXECUTABLE_EFFECT_REGISTRY.register("gulp", Gulp::new);
     public static final RegistryObject<IExecutableEffect> HEALTH_DOWN =
