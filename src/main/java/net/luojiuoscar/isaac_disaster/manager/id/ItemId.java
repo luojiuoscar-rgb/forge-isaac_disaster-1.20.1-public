@@ -246,7 +246,16 @@ public enum ItemId {
     INFESTATION_2(3),
     BOX_OF_SPIDERS(1),
     TRACTOR_BEAM(3),
-    MOMS_KNIFE(4);
+    MOMS_KNIFE(4),
+    BROTHER_BOBBY(1),
+    SISTER_MAGGY(1),
+    GHOST_BABY(1),
+    HARLEQUIN_BABY(1),
+    ROTTEN_BABY(3),
+    LOKI_BABY(1),
+    ROBO_BABY(1),
+    ROBO_BABY_2(3),
+    DEMON_BABY(2);
 
 
 

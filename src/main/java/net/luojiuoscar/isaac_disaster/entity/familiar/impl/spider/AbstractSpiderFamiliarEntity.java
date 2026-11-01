@@ -2,7 +2,7 @@ package net.luojiuoscar.isaac_disaster.entity.familiar.impl.spider;
 
 import net.luojiuoscar.isaac_disaster.bullet.collision.SweptCollision;
 import net.luojiuoscar.isaac_disaster.capability.player.PlayerFamiliarDataProvider;
-import net.luojiuoscar.isaac_disaster.entity.familiar.AbstractIsaacFamiliarEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.base.AbstractIsaacFamiliarEntity;
 import net.luojiuoscar.isaac_disaster.system.damage.ModDamageSources;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -123,8 +123,7 @@ public abstract class AbstractSpiderFamiliarEntity extends AbstractIsaacFamiliar
         if (!Float.isFinite(damage) || damage < 0) damage = 0;
         boolean accepted;
         try {
-            data.removeEntity(type, getUUID());
-            data.addCount(type, -1);
+            data.consumeEntity(type, getUUID());
             accepted = first.hurt(ModDamageSources.familiar(level(), this, owner), damage);
         } finally {
             discardSilently();

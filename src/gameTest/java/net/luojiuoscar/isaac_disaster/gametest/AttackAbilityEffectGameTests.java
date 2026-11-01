@@ -31,7 +31,7 @@ public final class AttackAbilityEffectGameTests {
     public static void invalidInputsFailAndOrdinarySkipsSucceed(GameTestHelper helper) {
         ServerPlayer player = player(helper);
         List<IAbilityEffect> eventEffects = List.of(new BrimstonePlusMonstrosLung(),
-                new TheWizAttackPlan(), new LeadPencilShotCounter());
+                new TheWizAttackPlan(), new ConjoinedAttackPlan(), new LeadPencilShotCounter());
         var invalidEntity = new ExecutableEffectContext(new Zombie(helper.getLevel()));
         for (var effect : eventEffects) {
             helper.assertTrue(!effect.applyEffect(invalidEntity), "Wrong entity is an invalid execution input");
@@ -44,6 +44,7 @@ public final class AttackAbilityEffectGameTests {
         context.set(ContextKeys.EVENT, extraPlan);
         helper.assertTrue(new BrimstonePlusMonstrosLung().applyEffect(context), "Ineligible beam plan is safely skipped");
         helper.assertTrue(new TheWizAttackPlan().applyEffect(context), "Missing Wiz status is safely skipped");
+        helper.assertTrue(new ConjoinedAttackPlan().applyEffect(context), "Derived plans do not trigger Conjoined");
         helper.assertTrue(extraPlan.getExtraContexts().isEmpty(), "Skipped beam effect appends nothing");
         context.set(ContextKeys.EVENT, fired(extraPlan));
         helper.assertTrue(new LeadPencilShotCounter().applyEffect(context), "Derived firing is counted");
@@ -51,8 +52,7 @@ public final class AttackAbilityEffectGameTests {
         helper.assertTrue(data.getDouble(LeadPencilShotCounter.DATA_KEY) == 1, "Derived firing advances progress once");
 
         context.set(ContextKeys.EVENT, new Event());
-        for (var effect : List.of(new BrimstonePlusMonstrosLung(),
-                new TheWizAttackPlan(), new LeadPencilShotCounter())) {
+        for (var effect : List.of(new BrimstonePlusMonstrosLung(), new TheWizAttackPlan(), new ConjoinedAttackPlan(), new LeadPencilShotCounter())) {
             helper.assertTrue(!effect.applyEffect(context), "Wrong event type fails");
         }
         helper.succeed();

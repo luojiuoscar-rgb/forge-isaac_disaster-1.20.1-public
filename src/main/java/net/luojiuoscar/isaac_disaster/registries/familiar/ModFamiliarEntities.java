@@ -2,6 +2,18 @@ package net.luojiuoscar.isaac_disaster.registries.familiar;
 
 import net.luojiuoscar.isaac_disaster.IsaacDisaster;
 import net.luojiuoscar.isaac_disaster.entity.ModEntities;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.sack_of_pennies.SackOfPenniesEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.bomb_bag.BombBagEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.the_relic.TheRelicEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.rotten_baby.RottenBabyEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.loki_baby.LokiBabyEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.robo_baby.RoboBabyEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.robo_baby_2.RoboBaby2Entity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.demon_baby.DemonBabyEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.brother_bobby.BrotherBobbyEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.sister_maggy.SisterMaggyEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.ghost_baby.GhostBabyEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.harlequin_baby.HarlequinBabyEntity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.fly.BlueFlyEntity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.fly.LocustOfConquestEntity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.fly.LocustOfDeathEntity;
@@ -30,6 +42,52 @@ public final class ModFamiliarEntities {
     public static final RegistryObject<FamiliarEntityType> MOM_KNIFE =
             FAMILIAR_ENTITY_REGISTRY.register("mom_knife", () ->
                     new FamiliarEntityType(ModEntities.MOM_KNIFE, 27)); // Three formation layers: 5 + 9 + 13.
+
+    public static final RegistryObject<FamiliarEntityType> BROTHER_BOBBY =
+            FAMILIAR_ENTITY_REGISTRY.register("brother_bobby", () ->
+                    new FamiliarEntityType(ModEntities.BROTHER_BOBBY, BrotherBobbyEntity.class, 64, ModFamiliarLimitGroups.BABIES, 0, true));
+
+    public static final RegistryObject<FamiliarEntityType> SISTER_MAGGY =
+            FAMILIAR_ENTITY_REGISTRY.register("sister_maggy", () ->
+                    new FamiliarEntityType(ModEntities.SISTER_MAGGY, SisterMaggyEntity.class, 64, ModFamiliarLimitGroups.BABIES, 0, true));
+
+    public static final RegistryObject<FamiliarEntityType> GHOST_BABY =
+            FAMILIAR_ENTITY_REGISTRY.register("ghost_baby", () ->
+                    new FamiliarEntityType(ModEntities.GHOST_BABY, GhostBabyEntity.class, 64, ModFamiliarLimitGroups.BABIES, 0, true));
+
+    public static final RegistryObject<FamiliarEntityType> HARLEQUIN_BABY =
+            FAMILIAR_ENTITY_REGISTRY.register("harlequin_baby", () ->
+                    new FamiliarEntityType(ModEntities.HARLEQUIN_BABY, HarlequinBabyEntity.class, 64, ModFamiliarLimitGroups.BABIES, 0, true));
+
+    public static final RegistryObject<FamiliarEntityType> ROTTEN_BABY =
+            FAMILIAR_ENTITY_REGISTRY.register("rotten_baby", () ->
+                    new FamiliarEntityType(ModEntities.ROTTEN_BABY, RottenBabyEntity.class, 64, ModFamiliarLimitGroups.BABIES, 0, true));
+
+    public static final RegistryObject<FamiliarEntityType> LOKI_BABY =
+            FAMILIAR_ENTITY_REGISTRY.register("loki_baby", () ->
+                    new FamiliarEntityType(ModEntities.LOKI_BABY, LokiBabyEntity.class, 64, ModFamiliarLimitGroups.BABIES, 0, true));
+
+    public static final RegistryObject<FamiliarEntityType> ROBO_BABY =
+            FAMILIAR_ENTITY_REGISTRY.register("robo_baby", () ->
+                    new FamiliarEntityType(ModEntities.ROBO_BABY, RoboBabyEntity.class, 64, ModFamiliarLimitGroups.BABIES, 0, true));
+
+    public static final RegistryObject<FamiliarEntityType> ROBO_BABY_2 =
+            FAMILIAR_ENTITY_REGISTRY.register("robo_baby_2", () ->
+                    new FamiliarEntityType(ModEntities.ROBO_BABY_2, RoboBaby2Entity.class, 64, ModFamiliarLimitGroups.BABIES, 0, true));
+
+    public static final RegistryObject<FamiliarEntityType> DEMON_BABY =
+            FAMILIAR_ENTITY_REGISTRY.register("demon_baby", () ->
+                    new FamiliarEntityType(ModEntities.DEMON_BABY, DemonBabyEntity.class, 64, ModFamiliarLimitGroups.BABIES, 0, true));
+
+    public static final RegistryObject<FamiliarEntityType> SACK_OF_PENNIES =
+            FAMILIAR_ENTITY_REGISTRY.register("sack_of_pennies", () ->
+                    new FamiliarEntityType(ModEntities.SACK_OF_PENNIES, SackOfPenniesEntity.class, 64, ModFamiliarLimitGroups.ITEM_GIVERS, 0, true));
+    public static final RegistryObject<FamiliarEntityType> BOMB_BAG =
+            FAMILIAR_ENTITY_REGISTRY.register("bomb_bag", () ->
+                    new FamiliarEntityType(ModEntities.BOMB_BAG, BombBagEntity.class, 64, ModFamiliarLimitGroups.ITEM_GIVERS, 0, true));
+    public static final RegistryObject<FamiliarEntityType> THE_RELIC =
+            FAMILIAR_ENTITY_REGISTRY.register("the_relic", () ->
+                    new FamiliarEntityType(ModEntities.THE_RELIC, TheRelicEntity.class, 64, ModFamiliarLimitGroups.ITEM_GIVERS, 0, true));
 
     public static final RegistryObject<FamiliarEntityType> BLUE_FLY =
             FAMILIAR_ENTITY_REGISTRY.register("blue_fly", () ->

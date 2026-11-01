@@ -1,6 +1,6 @@
 package net.luojiuoscar.isaac_disaster.entity.familiar.impl.fly;
 
-import net.luojiuoscar.isaac_disaster.entity.familiar.AbstractIsaacFamiliarEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.base.AbstractIsaacFamiliarEntity;
 import net.luojiuoscar.isaac_disaster.bullet.collision.SweptCollision;
 import net.luojiuoscar.isaac_disaster.capability.player.PlayerFamiliarDataProvider;
 import net.luojiuoscar.isaac_disaster.system.damage.ModDamageSources;
@@ -180,8 +180,7 @@ public abstract class AbstractFlyFamiliarEntity extends AbstractIsaacFamiliarEnt
         try {
             // Consume ownership before hurt callbacks can replace this fly or add new requirements.
             // Keep the entity alive through hurt so direct-source attribution and shields still work.
-            data.removeEntity(type, getUUID());
-            data.addCount(type, -1);
+            data.consumeEntity(type, getUUID());
             accepted = first.hurt(source, damage);
         } finally {
             discardSilently();
