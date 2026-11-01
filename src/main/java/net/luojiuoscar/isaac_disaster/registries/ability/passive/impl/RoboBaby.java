@@ -1,5 +1,8 @@
 package net.luojiuoscar.isaac_disaster.registries.ability.passive.impl;
 
+import net.luojiuoscar.isaac_disaster.client.ClientDataManager;
+import net.luojiuoscar.isaac_disaster.helper.DescriptionHelper;
+import net.luojiuoscar.isaac_disaster.item.ModPassiveItems;
 import net.luojiuoscar.isaac_disaster.manager.StatManager;
 import net.luojiuoscar.isaac_disaster.registries.ability.passive.PassiveAbility;
 import net.luojiuoscar.isaac_disaster.registries.ability.set.ModSetAbilities;
@@ -10,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class RoboBaby extends PassiveAbility {
@@ -40,7 +44,12 @@ public final class RoboBaby extends PassiveAbility {
 
     @Override
     public List<Component> getSynergyDesc(@Nullable ItemStack stack, @Nullable Player player) {
-        return ModSetAbilities.CONJOINED.get().getSynergyDesc();
+        List<Component> description = new ArrayList<>(ModSetAbilities.CONJOINED.get().getSynergyDesc());
+        if (ClientDataManager.getInstance().getItemCount(ModPassiveItems.BFFS.getId()) > 0) {
+            description.add(DescriptionHelper.getSynergyDesc(Component.translatable("item.isaac_disaster.bffs"),
+                    Component.translatable("item.isaac_disaster.familiar.synergy.double_damage")));
+        }
+        return description;
     }
 
     @Override

@@ -27,6 +27,7 @@ import java.util.function.Function;
 @AutoRegisterCapability
 public class PlayerFamiliarData {
     private final Map<ResourceLocation, FamiliarEntry> familiars = new LinkedHashMap<>();
+    private final ItemGivingFamiliarData itemGivingData = new ItemGivingFamiliarData();
     private final Map<FamiliarLimitGroup, FamiliarLimitGroupInstance> groups = new IdentityHashMap<>();
     private final Function<ResourceLocation, FamiliarEntityType> typeResolver;
     private final LinkedHashSet<UUID> pendingRecalls = new LinkedHashSet<>();
@@ -66,6 +67,7 @@ public class PlayerFamiliarData {
             if (descriptor != null && !descriptor.retainOverflow())
                 trimEntry(entry, getEffectiveCount(entry.getType()), changedType, changedSource);
         }
+        itemGivingData.reconcile(familiars);
     }
 
     private static void trimEntry(FamiliarEntry entry, int limit, ResourceLocation changedType, ResourceLocation changedSource) {
@@ -112,8 +114,11 @@ public class PlayerFamiliarData {
     /** Keeps UUIDs until reconciliation can discard the corresponding world entities. */
     public void clearRequirements() {
         pendingSpawn = null;
-        for (FamiliarEntry entry : familiars.values()) entry.requirements().clear();
+        for (FamiliarEntry entry : familiars.values()) {
+            entry.requirements().clear();
+        }
         for (FamiliarLimitGroupInstance group : groups.values()) group.clear();
+        itemGivingData.reconcile(familiars);
     }
 
     public void pruneEmptyEntries() {
@@ -133,6 +138,8 @@ public class PlayerFamiliarData {
         FamiliarLimitGroupInstance group = groups.get(descriptor.getGroup());
         return group == null ? 0 : group.getQuota(type);
     }
+
+    public ItemGivingFamiliarData getItemGivingData() { return itemGivingData; }
 
     public Optional<FamiliarEntry> getEntry(ResourceLocation type) { return Optional.ofNullable(familiars.get(type)); }
 
@@ -235,6 +242,7 @@ public class PlayerFamiliarData {
                 .map(entry -> FamiliarEntry.loadNBT(entry.saveNBT()).orElseThrow()).toList();
         familiars.clear();
         for (FamiliarEntry entry : copied) familiars.put(entry.getType(), entry);
+        itemGivingData.loadNBT(source.itemGivingData.saveNBT());
         rebuildRuntimeState();
     }
 
@@ -242,6 +250,7 @@ public class PlayerFamiliarData {
         ListTag entries = new ListTag();
         for (FamiliarEntry entry : familiars.values()) entries.add(entry.saveNBT());
         nbt.put("Familiars", entries);
+        nbt.put("ItemGiving", itemGivingData.saveNBT());
     }
 
     public void loadNBTData(CompoundTag nbt) {
@@ -252,6 +261,7 @@ public class PlayerFamiliarData {
                     FamiliarEntry.loadNBT(tag).ifPresent(entry -> familiars.put(entry.getType(), entry));
             }
         }
+        itemGivingData.loadNBT(nbt.getList("ItemGiving", Tag.TAG_COMPOUND));
         rebuildRuntimeState();
     }
 
@@ -284,7 +294,8 @@ public class PlayerFamiliarData {
         if (current != null && current.getEntityCount() > getEffectiveCount(type)) return false;
         PlayerFamiliarData preview = new PlayerFamiliarData(typeResolver, List.of());
         for (FamiliarEntry entry : familiars.values()) {
-            FamiliarEntry copy = FamiliarEntry.loadNBT(entry.saveNBT()).orElseThrow();
+            FamiliarEntry copy = new FamiliarEntry(entry.getType());
+            entry.requirements().getSources().forEach(copy.requirements()::setCount);
             for (UUID id : entry.getEntityIds()) copy.addEntity(id, entry.getEntitySource(id));
             preview.familiars.put(entry.getType(), copy);
         }

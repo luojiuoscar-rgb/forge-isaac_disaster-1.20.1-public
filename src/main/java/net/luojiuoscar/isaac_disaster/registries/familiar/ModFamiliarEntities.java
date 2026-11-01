@@ -2,6 +2,9 @@ package net.luojiuoscar.isaac_disaster.registries.familiar;
 
 import net.luojiuoscar.isaac_disaster.IsaacDisaster;
 import net.luojiuoscar.isaac_disaster.entity.ModEntities;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.sack_of_pennies.SackOfPenniesEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.bomb_bag.BombBagEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.the_relic.TheRelicEntity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.rotten_baby.RottenBabyEntity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.loki_baby.LokiBabyEntity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.robo_baby.RoboBabyEntity;
@@ -75,6 +78,16 @@ public final class ModFamiliarEntities {
     public static final RegistryObject<FamiliarEntityType> DEMON_BABY =
             FAMILIAR_ENTITY_REGISTRY.register("demon_baby", () ->
                     new FamiliarEntityType(ModEntities.DEMON_BABY, DemonBabyEntity.class, 64, ModFamiliarLimitGroups.BABIES, 0, true));
+
+    public static final RegistryObject<FamiliarEntityType> SACK_OF_PENNIES =
+            FAMILIAR_ENTITY_REGISTRY.register("sack_of_pennies", () ->
+                    new FamiliarEntityType(ModEntities.SACK_OF_PENNIES, SackOfPenniesEntity.class, 64, ModFamiliarLimitGroups.ITEM_GIVERS, 0, true));
+    public static final RegistryObject<FamiliarEntityType> BOMB_BAG =
+            FAMILIAR_ENTITY_REGISTRY.register("bomb_bag", () ->
+                    new FamiliarEntityType(ModEntities.BOMB_BAG, BombBagEntity.class, 64, ModFamiliarLimitGroups.ITEM_GIVERS, 0, true));
+    public static final RegistryObject<FamiliarEntityType> THE_RELIC =
+            FAMILIAR_ENTITY_REGISTRY.register("the_relic", () ->
+                    new FamiliarEntityType(ModEntities.THE_RELIC, TheRelicEntity.class, 64, ModFamiliarLimitGroups.ITEM_GIVERS, 0, true));
 
     public static final RegistryObject<FamiliarEntityType> BLUE_FLY =
             FAMILIAR_ENTITY_REGISTRY.register("blue_fly", () ->

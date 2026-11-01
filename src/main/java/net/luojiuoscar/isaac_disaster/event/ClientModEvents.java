@@ -1,6 +1,10 @@
 package net.luojiuoscar.isaac_disaster.event;
 
 
+import net.luojiuoscar.isaac_disaster.client.model.familiar.item_giving.CoinBagModel;
+import net.luojiuoscar.isaac_disaster.client.model.familiar.item_giving.BombBagModel;
+import net.luojiuoscar.isaac_disaster.client.model.familiar.item_giving.RelicModel;
+import net.luojiuoscar.isaac_disaster.client.renderer.familiar.item_giving.ItemGivingFamiliarRenderer;
 import net.luojiuoscar.isaac_disaster.IsaacDisaster;
 import net.luojiuoscar.isaac_disaster.block.ModBlockEntities;
 import net.luojiuoscar.isaac_disaster.block.renderer.IdentifierRenderer;
@@ -64,6 +68,9 @@ public class ClientModEvents {
         event.registerLayerDefinition(RoboBabyModel.LAYER_LOCATION, RoboBabyModel::createBodyLayer);
         event.registerLayerDefinition(RoboBaby2Model.LAYER_LOCATION, RoboBaby2Model::createBodyLayer);
         event.registerLayerDefinition(DemonBabyModel.LAYER_LOCATION, DemonBabyModel::createBodyLayer);
+        event.registerLayerDefinition(CoinBagModel.LAYER_LOCATION, CoinBagModel::createBodyLayer);
+        event.registerLayerDefinition(BombBagModel.LAYER_LOCATION, BombBagModel::createBodyLayer);
+        event.registerLayerDefinition(RelicModel.LAYER_LOCATION, RelicModel::createBodyLayer);
     }
 
     // 订阅实体渲染器注册事件
@@ -97,6 +104,15 @@ public class ClientModEvents {
         event.registerEntityRenderer(ModEntities.DEMON_BABY.get(), context -> new BabyFamiliarRenderer<>(context,
                 ResourceLocation.fromNamespaceAndPath(IsaacDisaster.MOD_ID, "textures/entity/familiar/demon_baby.png"),
                 new DemonBabyModel(context.bakeLayer(DemonBabyModel.LAYER_LOCATION))));
+        event.registerEntityRenderer(ModEntities.SACK_OF_PENNIES.get(), context -> new ItemGivingFamiliarRenderer<>(context,
+                ResourceLocation.fromNamespaceAndPath(IsaacDisaster.MOD_ID, "textures/entity/familiar/item_giving/coin_bag.png"),
+                new CoinBagModel<>(context.bakeLayer(CoinBagModel.LAYER_LOCATION))));
+        event.registerEntityRenderer(ModEntities.BOMB_BAG.get(), context -> new ItemGivingFamiliarRenderer<>(context,
+                ResourceLocation.fromNamespaceAndPath(IsaacDisaster.MOD_ID, "textures/entity/familiar/item_giving/bomb_bag.png"),
+                new BombBagModel<>(context.bakeLayer(BombBagModel.LAYER_LOCATION))));
+        event.registerEntityRenderer(ModEntities.THE_RELIC.get(), context -> new ItemGivingFamiliarRenderer<>(context,
+                ResourceLocation.fromNamespaceAndPath(IsaacDisaster.MOD_ID, "textures/entity/familiar/item_giving/relic.png"),
+                new RelicModel<>(context.bakeLayer(RelicModel.LAYER_LOCATION))));
         event.registerEntityRenderer(ModEntities.BLUE_FLY.get(), FlyRenderer::new);
         event.registerEntityRenderer(ModEntities.LOCUST_OF_PESTILENCE.get(), FlyRenderer::new);
         event.registerEntityRenderer(ModEntities.LOCUST_OF_FAMINE.get(), FlyRenderer::new);

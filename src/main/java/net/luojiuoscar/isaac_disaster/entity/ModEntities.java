@@ -20,6 +20,9 @@ import net.luojiuoscar.isaac_disaster.entity.familiar.impl.loki_baby.LokiBabyEnt
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.robo_baby.RoboBabyEntity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.robo_baby_2.RoboBaby2Entity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.demon_baby.DemonBabyEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.sack_of_pennies.SackOfPenniesEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.bomb_bag.BombBagEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.the_relic.TheRelicEntity;
 import net.luojiuoscar.isaac_disaster.entity.tnt.GigaBomb;
 import net.luojiuoscar.isaac_disaster.entity.tnt.IsaacBomb;
 import net.minecraft.world.entity.EntityType;
@@ -124,6 +127,16 @@ public class ModEntities {
                     () -> EntityType.Builder.<DemonBabyEntity>of(DemonBabyEntity::new, MobCategory.MISC)
                             .sized(1.125F * AbstractBabyFamiliarEntity.BASE_SCALE, 1.75F * AbstractBabyFamiliarEntity.BASE_SCALE)
                             .clientTrackingRange(8).updateInterval(1).build("demon_baby"));
+
+    public static final RegistryObject<EntityType<SackOfPenniesEntity>> SACK_OF_PENNIES =
+            MOD_ENTITIES.register("sack_of_pennies", () -> EntityType.Builder.<SackOfPenniesEntity>of(SackOfPenniesEntity::new, MobCategory.MISC)
+                    .sized(0.375F, 0.625F).clientTrackingRange(8).updateInterval(1).build("sack_of_pennies"));
+    public static final RegistryObject<EntityType<BombBagEntity>> BOMB_BAG =
+            MOD_ENTITIES.register("bomb_bag", () -> EntityType.Builder.<BombBagEntity>of(BombBagEntity::new, MobCategory.MISC)
+                    .sized(0.375F, 0.625F).clientTrackingRange(8).updateInterval(1).build("bomb_bag"));
+    public static final RegistryObject<EntityType<TheRelicEntity>> THE_RELIC =
+            MOD_ENTITIES.register("the_relic", () -> EntityType.Builder.<TheRelicEntity>of(TheRelicEntity::new, MobCategory.MISC)
+                    .sized(0.5859375F, 0.703125F).clientTrackingRange(8).updateInterval(1).build("the_relic"));
 
     public static final RegistryObject<EntityType<BlueFlyEntity>> BLUE_FLY =
             MOD_ENTITIES.register("blue_fly",

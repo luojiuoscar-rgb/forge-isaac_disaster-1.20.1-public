@@ -38,12 +38,6 @@ public class ModPeriodicModules {
             PERIODIC_MODULE_REGISTRY.register("the_left_hand", TheLeftHand::new);
     public static final RegistryObject<PeriodicModule> VENUS =
             PERIODIC_MODULE_REGISTRY.register("venus", Venus::new);
-    public static final RegistryObject<PeriodicModule> SACK_OF_PENNIES =
-            PERIODIC_MODULE_REGISTRY.register("sack_of_pennies", SackOfPennies::new);
-    public static final RegistryObject<PeriodicModule> THE_RELIC =
-            PERIODIC_MODULE_REGISTRY.register("the_relic", TheRelic::new);
-    public static final RegistryObject<PeriodicModule> BOMB_BAG =
-            PERIODIC_MODULE_REGISTRY.register("bomb_bag", BombBag::new);
     public static final RegistryObject<PeriodicModule> ATTRACT_ITEM =
             PERIODIC_MODULE_REGISTRY.register("attract_item", AttractItem::new);
     public static final RegistryObject<PeriodicModule> MAGNETO =

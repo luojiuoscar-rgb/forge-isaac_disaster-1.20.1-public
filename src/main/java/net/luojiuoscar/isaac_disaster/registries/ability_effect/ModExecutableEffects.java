@@ -184,8 +184,6 @@ public class ModExecutableEffects {
             EXECUTABLE_EFFECT_REGISTRY.register("magneto", Magneto::new);
     public static final RegistryObject<IExecutableEffect> MONEY_IS_POWER =
             EXECUTABLE_EFFECT_REGISTRY.register("money_is_power", MoneyIsPower::new);
-    public static final RegistryObject<IExecutableEffect> LOOT_MONEY =
-            EXECUTABLE_EFFECT_REGISTRY.register("loot_money", LootMoney::new);
     public static final RegistryObject<IExecutableEffect> THE_LEFT_HAND =
             EXECUTABLE_EFFECT_REGISTRY.register("the_left_hand", TheLeftHand::new);
     public static final RegistryObject<IExecutableEffect> STACK_HOLY_SHIELD =
@@ -556,20 +554,12 @@ public class ModExecutableEffects {
                 ));
                 ctx.set(ContextKeys.EXECUTABLE_EFFECT, POTIONS.get());
             }));
-    public static final RegistryObject<IExecutableEffect> BOMB_BAG =
-            EXECUTABLE_EFFECT_REGISTRY.register("bomb_bag", () -> new AbilityEffectEntry(
-                    GIVE_ITEM, ctx -> ctx.set(ContextKeys.ITEM, ModItems.BOMB.get())
-            ));
     public static final RegistryObject<IExecutableEffect> FIRE_RESISTENCE =
             EXECUTABLE_EFFECT_REGISTRY.register("fire_resistence", () -> new AbilityEffectEntry(
                     POTIONS, ctx -> ctx.set(ContextKeys.POTIONS, List.of(new PotionProfile(
                             MobEffects.FIRE_RESISTANCE,
                             240,
                             0)))
-            ));
-    public static final RegistryObject<IExecutableEffect> THE_RELIC =
-            EXECUTABLE_EFFECT_REGISTRY.register("the_relic", () -> new AbilityEffectEntry(
-                    GIVE_ITEM, ctx -> ctx.set(ContextKeys.ITEM, ModItems.SOUL_HEART.get())
             ));
     public static final RegistryObject<IExecutableEffect> THE_SOUL =
             EXECUTABLE_EFFECT_REGISTRY.register("the_soul", () -> new AbilityEffectEntry(

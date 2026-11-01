@@ -23,7 +23,7 @@ public abstract class AbstractChainFamiliarEntity extends AbstractIsaacFamiliarE
     }
 
     @Override
-    protected final void tickFamiliar() {
+    protected void tickFamiliar() {
         if (level().isClientSide) {
             setPos(motion.tickPosition(position()));
             motion.turnTo(getYRot());
@@ -35,11 +35,19 @@ public abstract class AbstractChainFamiliarEntity extends AbstractIsaacFamiliarE
             return;
         }
         refreshFormationIndex(owner, getFormationIndex());
-        Vec3 next = motion.follow(position(), followLink(owner).target());
+        Vec3 next = motion.follow(position(), followingPosition(owner));
         Vec3 movement = next.subtract(position());
         setDeltaMovement(movement);
         setPos(next);
         tickChainServer(owner, movement);
+    }
+
+    protected Vec3 followingPosition(ServerPlayer owner) {
+        Vec3 target = followLink(owner).target();
+        Vec3 offset = position().subtract(target);
+        double distance = offset.length();
+        return distance <= FamiliarChain.SPACING ? position()
+                : target.add(offset.scale(FamiliarChain.SPACING / distance));
     }
 
     /** Runs after the server commits this tick's movement. Pure followers need no extra behavior. */

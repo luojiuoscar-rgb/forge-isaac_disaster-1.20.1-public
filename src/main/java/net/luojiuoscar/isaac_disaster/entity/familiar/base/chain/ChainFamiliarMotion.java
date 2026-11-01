@@ -17,12 +17,8 @@ final class ChainFamiliarMotion {
     private float yaw;
 
     Vec3 follow(Vec3 current, Vec3 target) {
-        Vec3 offset = current.subtract(target);
-        double distance = offset.length();
-        // Inside the follow area only damp existing momentum; never push away from the leader.
-        Vec3 error = distance > FamiliarChain.SPACING
-                ? offset.scale((distance - FamiliarChain.SPACING) / distance) : Vec3.ZERO;
-        if (distance <= FamiliarChain.SPACING + REST_DISTANCE
+        Vec3 error = current.subtract(target);
+        if (error.lengthSqr() <= REST_DISTANCE * REST_DISTANCE
                 && velocity.lengthSqr() < REST_SPEED * REST_SPEED) {
             velocity = Vec3.ZERO;
             return current;
@@ -38,8 +34,7 @@ final class ChainFamiliarMotion {
                 ? movement.normalize().scale(MAX_SPEED) : movement;
         velocity = velocity.lengthSqr() > MAX_SPEED * MAX_SPEED
                 ? velocity.normalize().scale(MAX_SPEED) : velocity;
-        Vec3 next = current.add(movement);
-        return next;
+        return current.add(movement);
     }
 
     /** Absolute packets include the periodic 400-tick resync, not just actual teleports. */

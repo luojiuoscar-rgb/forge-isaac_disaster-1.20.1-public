@@ -11,6 +11,22 @@ class ChainFamiliarMotionTest {
     private static final double EPSILON = 1.0e-6;
 
     @Test
+    void movingToAPointPreservesMomentumWhenTheTargetChanges() {
+        ChainFamiliarMotion motion = new ChainFamiliarMotion();
+        Vec3 current = new Vec3(0, 6, 0);
+        Vec3 next = motion.follow(current, new Vec3(0, 3, 0));
+        assertTrue(next.y < current.y && next.y > 3);
+        current = next;
+        for (int i = 0; i < 100; i++) {
+            next = motion.follow(current, Vec3.ZERO);
+            assertTrue(next.distanceTo(current) <= 1.5 + EPSILON);
+            current = next;
+        }
+        assertTrue(current.length() < 0.01);
+        assertPosition(current, motion.follow(current, current));
+    }
+
+    @Test
     void smallAbsoluteCorrectionsInterpolateAndOnlyLargeRecallsReset() {
         ChainFamiliarMotion motion = new ChainFamiliarMotion();
         Vec3 target = new Vec3(0.6, 0, 0);
@@ -44,39 +60,35 @@ class ChainFamiliarMotionTest {
     }
 
     @Test
-    void continuouslyFollowsAtShortDistancesWithoutTheOldFourBlockGate() {
-        for (double distance : new double[]{1.1, 1.5, 2, 3, 4}) {
+    void pointPursuitStartsGentlyAtShortDistances() {
+        for (double distance : new double[]{0.1, 0.5, 1, 2, 3, 4}) {
             ChainFamiliarMotion motion = new ChainFamiliarMotion();
             Vec3 next = motion.follow(Vec3.ZERO, new Vec3(distance, 0, 0));
-            assertTrue(next.x > 0 && next.x < 0.3, "Every distance beyond 1 starts gently: " + distance);
+            assertTrue(next.x > 0 && next.x < 0.3, "Every requested displacement starts gently: " + distance);
         }
     }
 
     @Test
-    void remainsAtRestAnywhereInsideOneBlockIncludingOverlap() {
+    void remainsAtRestWhenTheRequestedPositionIsTheCurrentPosition() {
         for (Vec3 start : new Vec3[]{Vec3.ZERO, new Vec3(0.5, 0, 0), new Vec3(0, 0.9, 0), new Vec3(1, 0, 0)}) {
             ChainFamiliarMotion motion = new ChainFamiliarMotion();
-            for (int i = 0; i < 100; i++) {
-                assertSame(start, motion.follow(start, Vec3.ZERO), "An idle follower must not be pushed back to a one-block shell");
-            }
+            for (int i = 0; i < 100; i++) assertSame(start, motion.follow(start, start));
         }
     }
 
     @Test
-    void enteringInnerAreaDampsMomentumWithoutPushingBackOutward() {
+    void requestingTheCurrentPositionDampsExistingMomentum() {
         ChainFamiliarMotion motion = new ChainFamiliarMotion();
         Vec3 current = new Vec3(5, 0, 0);
         for (int i = 0; i < 4; i++) current = motion.follow(current, Vec3.ZERO);
-        Vec3 target = current.add(-0.8, 0, 0);
-        Vec3 next = motion.follow(current, target);
-        assertTrue(next.x < current.x && next.distanceTo(current) < 0.5, "Keep braking instead of hard stopping inside the area");
+        Vec3 next = motion.follow(current, current);
+        assertTrue(next.x < current.x && next.distanceTo(current) < 0.5);
         for (int i = 0; i < 100; i++) {
             current = next;
-            next = motion.follow(current, target);
-            assertTrue(next.x <= current.x, "No outward force should restore the old exact spacing");
+            next = motion.follow(current, current);
+            assertTrue(next.x <= current.x);
         }
-        assertTrue(next.distanceTo(target) < 1, "Braking may finish anywhere inside the follow area");
-        assertSame(next, motion.follow(next, target));
+        assertSame(next, motion.follow(next, next));
     }
 
     @Test
@@ -88,7 +100,7 @@ class ChainFamiliarMotionTest {
         for (int i = 0; i < 100; i++) {
             Vec3 next = motion.follow(current, Vec3.ZERO);
             double speed = next.distanceTo(current);
-            assertTrue(next.x <= current.x && next.x >= 0.99, "Parking must approach monotonically without crossing the comfort area");
+            assertTrue(next.x <= current.x && next.x >= -0.01, "Parking must approach monotonically without crossing the comfort area");
             assertTrue(Math.abs(speed - previousSpeed) < 0.3, "Startup and braking must change speed gradually");
             if (speed == 0 && previousSpeed > 0) assertTrue(previousSpeed < 0.01, "Only negligible drift may be snapped to rest");
             peakSpeed = Math.max(peakSpeed, speed);
@@ -96,7 +108,7 @@ class ChainFamiliarMotionTest {
             current = next;
         }
         assertTrue(peakSpeed > 0.25, "The follower still catches up decisively");
-        assertEquals(1.0, current.x, 0.01);
+        assertEquals(0.0, current.x, 0.01);
         assertEquals(0, previousSpeed, EPSILON, "Parking must finish rather than drift forever");
         assertPosition(current, motion.follow(current, Vec3.ZERO));
         assertTrue(motion.follow(new Vec3(3, 0, 0), Vec3.ZERO).x < 3);
@@ -104,11 +116,11 @@ class ChainFamiliarMotionTest {
     }
 
     @Test
-    void enteringTwoBlocksDoesNotInstantlyEraseVelocity() {
+    void nearbyTargetDoesNotInstantlyEraseVelocity() {
         ChainFamiliarMotion motion = new ChainFamiliarMotion();
         Vec3 current = new Vec3(5, 0, 0);
         for (int i = 0; i < 4; i++) current = motion.follow(current, Vec3.ZERO);
-        Vec3 nearbyOwner = current.add(-1.9, 0, 0);
+        Vec3 nearbyOwner = current.add(-0.9, 0, 0);
         Vec3 next = motion.follow(current, nearbyOwner);
         assertTrue(next.x < current.x, "Keep braking gently after the owner enters the inner radius");
         assertTrue(next.distanceTo(current) < 0.5, "Braking must not launch the familiar through the owner");
@@ -128,7 +140,7 @@ class ChainFamiliarMotionTest {
     @Test
     void continuouslyMovingOwnerDoesNotCauseRepeatedStartsAndStops() {
         ChainFamiliarMotion motion = new ChainFamiliarMotion();
-        Vec3 current = new Vec3(-5, 0, 0);
+        Vec3 current = new Vec3(-4, 0, 0);
         Vec3 previousVelocity = Vec3.ZERO;
         for (int i = 0; i < 240; i++) {
             Vec3 target = new Vec3(i * 0.22, 0, 0);

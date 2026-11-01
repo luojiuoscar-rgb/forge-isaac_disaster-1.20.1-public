@@ -107,11 +107,13 @@ public final class ConjoinedGameTests {
                     helper.assertTrue(!context.getTrajectorySpecs().isEmpty(), "额外攻击也经过轨迹附加流程");
                     near(helper, context.getDamage(), f.owner.getAttributeValue(Attributes.ATTACK_DAMAGE), "伤害包含套装扣减");
                 }
+                if (type == ModAttackTypes.BULLET.get()) {
+                    var bullets = BulletRuntime.INSTANCE.manager(f.owner.serverLevel()).activeStates().stream()
+                            .filter(state -> f.owner.getUUID().equals(state.ownerUuid())).toList();
+                    helper.assertTrue(bullets.size() == 3, "实际生成三颗普通泪弹");
+                    helper.assertTrue(bullets.stream().allMatch(state -> state.isSpectral() && state.isHoming()), "侧弹继承穿墙和追踪");
+                }
             }
-            var bullets = BulletRuntime.INSTANCE.manager(f.owner.serverLevel()).activeStates().stream()
-                    .filter(state -> f.owner.getUUID().equals(state.ownerUuid())).toList();
-            helper.assertTrue(bullets.size() == 3, "实际生成三颗普通泪弹");
-            helper.assertTrue(bullets.stream().allMatch(state -> state.isSpectral() && state.isHoming()), "侧弹继承穿墙和追踪");
         }
         helper.succeed();
     }
