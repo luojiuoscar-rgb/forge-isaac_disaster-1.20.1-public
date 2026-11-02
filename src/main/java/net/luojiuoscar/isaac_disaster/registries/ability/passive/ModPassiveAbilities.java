@@ -875,4 +875,7 @@ public class ModPassiveAbilities {
     public static final RegistryObject<PassiveAbility> URANUS =
             PASSIVE_ABILITY_REGISTRY.register("uranus", () -> new Uranus(ItemId.URANUS.getId(), ItemId.URANUS.getLevel()));
 
+    public static final RegistryObject<PassiveAbility> ANEMIC =
+            PASSIVE_ABILITY_REGISTRY.register("anemic", () -> new Anemic(ItemId.ANEMIC.getId(), ItemId.ANEMIC.getLevel()));
+
 }

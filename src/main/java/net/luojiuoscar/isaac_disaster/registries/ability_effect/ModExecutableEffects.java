@@ -1220,4 +1220,10 @@ public class ModExecutableEffects {
     public static final RegistryObject<IExecutableEffect> HOW_TO_JUMP =
             EXECUTABLE_EFFECT_REGISTRY.register("how_to_jump", HowToJump::new);
 
+    public static final RegistryObject<IExecutableEffect> ANEMIC =
+            EXECUTABLE_EFFECT_REGISTRY.register("anemic", Anemic::new);
+
+    public static final RegistryObject<IExecutableEffect> BLOOD_TRAIL =
+            EXECUTABLE_EFFECT_REGISTRY.register("blood_trail", BloodTrail::new);
+
 }

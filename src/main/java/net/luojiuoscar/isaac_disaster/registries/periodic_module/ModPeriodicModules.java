@@ -81,4 +81,6 @@ public class ModPeriodicModules {
                     new ConquestLocustGeneration(ModFamiliarEntities.LOCUST_OF_CONQUEST.getId(), ModTrinketAbilities.LOCUST_OF_CONQUEST.getId()));
     public static final RegistryObject<PeriodicModule> AQUARIUS =
             PERIODIC_MODULE_REGISTRY.register("aquarius", Aquarius::new);
+    public static final RegistryObject<Anemic> ANEMIC =
+            PERIODIC_MODULE_REGISTRY.register("anemic", Anemic::new);
 }

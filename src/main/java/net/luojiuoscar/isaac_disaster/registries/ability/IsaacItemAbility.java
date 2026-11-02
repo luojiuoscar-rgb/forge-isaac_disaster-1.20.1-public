@@ -26,6 +26,7 @@ public abstract class IsaacItemAbility {
 
     abstract public List<Component> getDesc(@Nullable ItemStack stack, @Nullable Player player);
 
+    /** 仅用于解释套装效果、药水效果等专有名词，不用于长篇说明道具自身的具体效果。 */
     public List<Component> getExtraDesc(@Nullable ItemStack stack, @Nullable Player player){
         return List.of();
     }

@@ -238,4 +238,7 @@ public class ModTriggerModules {
     public static final RegistryObject<TriggerModule> URANUS =
             TRIGGER_MODULE_REGISTRY.register("uranus", Uranus::new);
 
+    public static final RegistryObject<TriggerModule> ANEMIC =
+            TRIGGER_MODULE_REGISTRY.register("anemic", Anemic::new);
+
 }

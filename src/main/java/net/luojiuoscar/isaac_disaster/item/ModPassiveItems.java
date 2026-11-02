@@ -883,4 +883,8 @@ public class ModPassiveItems {
             () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.URANUS));
     static {ItemListManager.PASSIVE_ITEM_LIST.add(URANUS);}
 
+    public static final RegistryObject<Item> ANEMIC = ITEMS.register("anemic",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.ANEMIC));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(ANEMIC);}
+
 }

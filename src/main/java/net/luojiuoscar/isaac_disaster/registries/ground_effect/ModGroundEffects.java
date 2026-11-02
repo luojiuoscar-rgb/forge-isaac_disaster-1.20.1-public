@@ -2,6 +2,7 @@ package net.luojiuoscar.isaac_disaster.registries.ground_effect;
 
 import net.luojiuoscar.isaac_disaster.IsaacDisaster;
 import net.luojiuoscar.isaac_disaster.system.combat_effect.groundeffect.impl.AquariusPuddleEffect;
+import net.luojiuoscar.isaac_disaster.system.combat_effect.groundeffect.impl.BloodPuddleEffect;
 import net.luojiuoscar.isaac_disaster.system.combat_effect.groundeffect.impl.WaterPuddleEffect;
 import net.luojiuoscar.isaac_disaster.system.combat_effect.groundeffect.impl.LemonPuddleEffect;
 import net.luojiuoscar.isaac_disaster.system.combat_effect.groundeffect.impl.PotionPuddleEffect;
@@ -29,6 +30,9 @@ public final class ModGroundEffects {
 
     public static final RegistryObject<GroundEffectType<AquariusPuddleEffect>> AQUARIUS =
             GROUND_EFFECT_REGISTRY.register("aquarius", () -> new GroundEffectType<>(AquariusPuddleEffect::new));
+
+    public static final RegistryObject<GroundEffectType<BloodPuddleEffect>> BLOOD =
+            GROUND_EFFECT_REGISTRY.register("blood", () -> new GroundEffectType<>(BloodPuddleEffect::new));
 
     private ModGroundEffects() { }
 }

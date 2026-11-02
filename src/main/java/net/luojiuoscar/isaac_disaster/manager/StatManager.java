@@ -248,7 +248,7 @@ public enum StatManager {
                 .append(formatted).withStyle(style);
     }
 
-    /** Uses the stat's configured formatting and highlights only the changing value. */
+    /** 仅高亮局内会变化的属性值；固定加成即使随配置变化，也应使用description。 */
     public Component dynamicDescription(double ratio) {
         var result = description(ratio).copy();
         var values = result.getSiblings();
