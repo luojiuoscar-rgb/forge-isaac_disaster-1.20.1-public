@@ -241,4 +241,7 @@ public class ModTriggerModules {
     public static final RegistryObject<TriggerModule> ANEMIC =
             TRIGGER_MODULE_REGISTRY.register("anemic", Anemic::new);
 
+    public static final RegistryObject<TriggerModule> SHARD_OF_GLASS =
+            TRIGGER_MODULE_REGISTRY.register("shard_of_glass", ShardOfGlass::new);
+
 }

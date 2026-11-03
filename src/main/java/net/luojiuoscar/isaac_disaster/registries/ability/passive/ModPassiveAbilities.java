@@ -878,4 +878,7 @@ public class ModPassiveAbilities {
     public static final RegistryObject<PassiveAbility> ANEMIC =
             PASSIVE_ABILITY_REGISTRY.register("anemic", () -> new Anemic(ItemId.ANEMIC.getId(), ItemId.ANEMIC.getLevel()));
 
+    public static final RegistryObject<PassiveAbility> SHARD_OF_GLASS =
+            PASSIVE_ABILITY_REGISTRY.register("shard_of_glass", () -> new ShardOfGlass(ItemId.SHARD_OF_GLASS.getId(), ItemId.SHARD_OF_GLASS.getLevel()));
+
 }

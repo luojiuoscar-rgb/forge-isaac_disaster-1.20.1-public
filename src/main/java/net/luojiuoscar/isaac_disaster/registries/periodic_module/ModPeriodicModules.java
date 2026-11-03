@@ -83,4 +83,7 @@ public class ModPeriodicModules {
             PERIODIC_MODULE_REGISTRY.register("aquarius", Aquarius::new);
     public static final RegistryObject<Anemic> ANEMIC =
             PERIODIC_MODULE_REGISTRY.register("anemic", Anemic::new);
+    public static final RegistryObject<ShardOfGlass> SHARD_OF_GLASS =
+            PERIODIC_MODULE_REGISTRY.register("shard_of_glass", ShardOfGlass::new);
+
 }

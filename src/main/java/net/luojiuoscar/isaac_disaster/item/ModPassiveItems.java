@@ -887,4 +887,8 @@ public class ModPassiveItems {
             () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.ANEMIC));
     static {ItemListManager.PASSIVE_ITEM_LIST.add(ANEMIC);}
 
+    public static final RegistryObject<Item> SHARD_OF_GLASS = ITEMS.register("shard_of_glass",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.SHARD_OF_GLASS));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(SHARD_OF_GLASS);}
+
 }

@@ -10,11 +10,10 @@ import net.luojiuoscar.isaac_disaster.registries.periodic_module.ModPeriodicModu
 import net.luojiuoscar.isaac_disaster.registries.periodic_module.PeriodicModule;
 import net.luojiuoscar.isaac_disaster.registries.periodic_module.PeriodicModuleQueue;
 import net.luojiuoscar.isaac_disaster.registries.trigger_module.ModTriggerTypes;
-import net.minecraft.core.particles.DustParticleOptions;
+import net.luojiuoscar.isaac_disaster.registries.ability_effect.impl.normal.BloodTrail;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 
 import java.util.List;
 import java.util.Map;
@@ -22,8 +21,6 @@ import java.util.WeakHashMap;
 
 public final class Anemic extends PeriodicModule {
     public static final int DURATION = 200;
-    private static final DustParticleOptions BLOOD_PARTICLE =
-            new DustParticleOptions(new Vector3f(0.72F, 0.04F, 0.06F), 0.7F);
     private static final CompositeTrigger TRIGGER = new CompositeTrigger(List.of(
             new SimpleTrigger(ModTriggerTypes.EMTPY, ModExecutableEffects.BLOOD_TRAIL)
     ));
@@ -61,9 +58,7 @@ public final class Anemic extends PeriodicModule {
             }
             if (remaining <= 2) data.removeDouble(key);
             else data.setDouble(key, remaining - 2);
-            player.serverLevel().sendParticles(BLOOD_PARTICLE,
-                    player.getX(), player.getY() + player.getBbHeight() * 0.4, player.getZ(),
-                    1, player.getBbWidth() * 0.3, player.getBbHeight() * 0.2, player.getBbWidth() * 0.3, 0.01);
+            BloodTrail.sendParticles(player);
             Vec3 previous = lastPositions.put(player, player.position());
             if (previous != null && previous.subtract(player.position()).horizontalDistanceSqr() > 1.0E-8D) {
                 super.fire(context);
