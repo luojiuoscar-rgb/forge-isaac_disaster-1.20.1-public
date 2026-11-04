@@ -6,6 +6,7 @@ import net.luojiuoscar.isaac_disaster.capability.entity.ExtraDataProvider;
 import net.luojiuoscar.isaac_disaster.helper.PlayerHelper;
 import net.luojiuoscar.isaac_disaster.manager.StatManager;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.CompositeTrigger;
+import net.luojiuoscar.isaac_disaster.registries.ability_effect.ContextKeys;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ExecutableEffectContext;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ModExecutableEffects;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.SimpleTrigger;
@@ -105,7 +106,9 @@ public final class ShardOfGlass extends PeriodicModule {
             BloodTrail.sendParticles(player);
             Vec3 previous = lastPositions.put(player, player.position());
             if (previous != null && previous.subtract(player.position()).horizontalDistanceSqr() > 1.0E-8) {
-                ModExecutableEffects.BLOOD_TRAIL.get().apply(context);
+                var blood = context.copy(player);
+                blood.set(ContextKeys.AMPLIFIER, 1.0);
+                ModExecutableEffects.BLOOD_TRAIL.get().apply(blood);
             }
         });
     }

@@ -891,4 +891,8 @@ public class ModPassiveItems {
             () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.SHARD_OF_GLASS));
     static {ItemListManager.PASSIVE_ITEM_LIST.add(SHARD_OF_GLASS);}
 
+    public static final RegistryObject<Item> HEADLESS_BABY = ITEMS.register("headless_baby",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.HEADLESS_BABY));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(HEADLESS_BABY);}
+
 }

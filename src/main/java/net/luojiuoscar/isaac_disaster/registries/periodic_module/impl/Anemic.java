@@ -3,6 +3,7 @@ package net.luojiuoscar.isaac_disaster.registries.periodic_module.impl;
 import net.luojiuoscar.isaac_disaster.capability.entity.EffectModulesProvider;
 import net.luojiuoscar.isaac_disaster.capability.entity.ExtraDataProvider;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.CompositeTrigger;
+import net.luojiuoscar.isaac_disaster.registries.ability_effect.ContextKeys;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ExecutableEffectContext;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ModExecutableEffects;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.SimpleTrigger;
@@ -61,7 +62,9 @@ public final class Anemic extends PeriodicModule {
             BloodTrail.sendParticles(player);
             Vec3 previous = lastPositions.put(player, player.position());
             if (previous != null && previous.subtract(player.position()).horizontalDistanceSqr() > 1.0E-8D) {
-                super.fire(context);
+                var blood = context.copy(player);
+                blood.set(ContextKeys.AMPLIFIER, 1.0);
+                super.fire(blood);
             }
         });
     }

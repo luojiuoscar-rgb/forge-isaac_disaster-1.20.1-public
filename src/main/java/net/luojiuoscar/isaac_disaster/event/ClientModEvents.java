@@ -14,6 +14,8 @@ import net.luojiuoscar.isaac_disaster.client.ModKeyMappings;
 import net.luojiuoscar.isaac_disaster.client.model.creature.FlyModel;
 import net.luojiuoscar.isaac_disaster.client.model.creature.SpiderModel;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.tear_baby.TearBabyModel;
+import net.luojiuoscar.isaac_disaster.client.model.familiar.headless_baby.HeadlessBabyModel;
+import net.luojiuoscar.isaac_disaster.client.renderer.familiar.headless_baby.HeadlessBabyRenderer;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.harlequin_baby.HarlequinBabyModel;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.rotten_baby.RottenBabyModel;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.loki_baby.LokiBabyModel;
@@ -62,6 +64,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);
         event.registerLayerDefinition(SpiderModel.LAYER_LOCATION, SpiderModel::createBodyLayer);
         event.registerLayerDefinition(TearBabyModel.LAYER_LOCATION, TearBabyModel::createBodyLayer);
+        event.registerLayerDefinition(HeadlessBabyModel.LAYER_LOCATION, HeadlessBabyModel::createBodyLayer);
         event.registerLayerDefinition(HarlequinBabyModel.LAYER_LOCATION, HarlequinBabyModel::createBodyLayer);
         event.registerLayerDefinition(RottenBabyModel.LAYER_LOCATION, RottenBabyModel::createBodyLayer);
         event.registerLayerDefinition(LokiBabyModel.LAYER_LOCATION, LokiBabyModel::createBodyLayer);
@@ -79,6 +82,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(ModEntities.ISAAC_BOMB.get(), CustomTntRenderer::new);
         event.registerEntityRenderer(ModEntities.GIGA_BOMB.get(), CustomTntRenderer::new);
         event.registerEntityRenderer(ModEntities.MOM_KNIFE.get(), MomKnifeRenderer::new);
+        event.registerEntityRenderer(ModEntities.HEADLESS_BABY.get(), HeadlessBabyRenderer::new);
         event.registerEntityRenderer(ModEntities.PLAYER_MOMS_KNIFE.get(), PlayerMomsKnifeRenderer::new);
         event.registerEntityRenderer(ModEntities.BROTHER_BOBBY.get(), context -> new BabyFamiliarRenderer<>(context,
                 ResourceLocation.fromNamespaceAndPath(IsaacDisaster.MOD_ID, "textures/entity/familiar/brother_bobby.png")));
