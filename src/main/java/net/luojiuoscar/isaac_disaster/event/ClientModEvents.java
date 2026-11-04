@@ -16,6 +16,7 @@ import net.luojiuoscar.isaac_disaster.client.model.creature.SpiderModel;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.tear_baby.TearBabyModel;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.headless_baby.HeadlessBabyModel;
 import net.luojiuoscar.isaac_disaster.client.renderer.familiar.headless_baby.HeadlessBabyRenderer;
+import net.luojiuoscar.isaac_disaster.client.renderer.familiar.depression.DepressionRenderer;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.harlequin_baby.HarlequinBabyModel;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.rotten_baby.RottenBabyModel;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.loki_baby.LokiBabyModel;
@@ -83,6 +84,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(ModEntities.GIGA_BOMB.get(), CustomTntRenderer::new);
         event.registerEntityRenderer(ModEntities.MOM_KNIFE.get(), MomKnifeRenderer::new);
         event.registerEntityRenderer(ModEntities.HEADLESS_BABY.get(), HeadlessBabyRenderer::new);
+        event.registerEntityRenderer(ModEntities.DEPRESSION.get(), DepressionRenderer::new);
         event.registerEntityRenderer(ModEntities.PLAYER_MOMS_KNIFE.get(), PlayerMomsKnifeRenderer::new);
         event.registerEntityRenderer(ModEntities.BROTHER_BOBBY.get(), context -> new BabyFamiliarRenderer<>(context,
                 ResourceLocation.fromNamespaceAndPath(IsaacDisaster.MOD_ID, "textures/entity/familiar/brother_bobby.png")));

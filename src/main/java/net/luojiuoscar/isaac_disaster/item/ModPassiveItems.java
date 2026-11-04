@@ -895,4 +895,8 @@ public class ModPassiveItems {
             () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.HEADLESS_BABY));
     static {ItemListManager.PASSIVE_ITEM_LIST.add(HEADLESS_BABY);}
 
+    public static final RegistryObject<Item> DEPRESSION = ITEMS.register("depression",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.DEPRESSION));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(DEPRESSION);}
+
 }

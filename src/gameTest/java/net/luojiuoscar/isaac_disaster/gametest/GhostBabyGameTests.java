@@ -68,7 +68,7 @@ public final class GhostBabyGameTests {
         helper.assertTrue(FamiliarHelper.isRegisteredFamiliarType(GHOST), "Ghost Baby has an entity and familiar descriptor");
         var descriptor = FamiliarHelper.getFamiliarType(GHOST);
         helper.assertTrue(descriptor.getLimit() == 64 && descriptor.hasEntityTag(AbstractBabyFamiliarEntity.class)
-                && descriptor.getGroup() == ModFamiliarLimitGroups.BABIES.get(), "Ghost Baby belongs to the shared baby category");
+                && descriptor.getGroup() == ModFamiliarLimitGroups.CHAIN_FAMILIARS.get(), "Ghost Baby belongs to the shared baby category");
         try (Fixture f = new Fixture(helper)) {
             f.data.setCount(GHOST, FAMILIAR_SOURCE, 100);
             helper.assertTrue(f.data.getEffectiveCount(GHOST) == 64, "Ghost Baby alone has a sixty-four cap");

@@ -414,6 +414,38 @@ public final class ItemGivingFamiliarGameTests {
     }
 
     @GameTest(template = "trajectory_empty")
+    public static void mixedChainQuotaPreservesItemGivingInventoryAndProductionClock(GameTestHelper helper) {
+        try (Fixture f = new Fixture(helper)) {
+            var bobby = id("brother_bobby");
+            var cloud = id("depression");
+            f.data.addCount(bobby, SOURCE, 64);
+            f.data.addCount(COINS, SOURCE, 1);
+            f.data.addCount(cloud, SOURCE, 1);
+            for (int i = 0; i < 64; i++) helper.assertTrue(FamiliarHelper.spawnNextMissingFamiliar(f.owner), "先填满混合链式共享上限");
+            helper.assertTrue(f.data.getEffectiveCount(COINS) == 0 && f.data.getEffectiveCount(cloud) == 0,
+                    "掉落跟班和云朵都等待宝宝释放容量");
+            f.data.addCount(bobby, SOURCE, -1);
+            FamiliarHelper.maintainExistingFamiliars(f.owner);
+            helper.assertTrue(FamiliarHelper.spawnNextMissingFamiliar(f.owner), "释放的一个位置补出掉落跟班");
+            var giver = f.entity(COINS);
+            giver.setPos(f.hover().add(6, 0, 0));
+            f.tick(giver);
+            var slot = f.slot(COINS, 0);
+            slot.produce(List.of(new ItemStack(Items.DIAMOND, 3)), 99);
+            f.data.addCount(bobby, SOURCE, 1);
+            FamiliarHelper.maintainExistingFamiliars(f.owner);
+            helper.assertTrue(f.data.getEffectiveCount(bobby) == 63 && f.data.getEffectiveCount(COINS) == 1
+                    && f.data.getEffectiveCount(cloud) == 0 && f.slot(COINS, 0) == slot
+                    && count(slot) == 3 && slot.cooldown() == 99,
+                    "等优先级的新需求不抢占已分配位置，也不重建库存或重置计时");
+            f.tick(giver);
+            helper.assertTrue(f.slot(COINS, 0) == slot && slot.cooldown() == 98 && count(slot) == 3,
+                    "共享配额变化后掉落跟班继续原生产进度");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "trajectory_empty")
     public static void physicalCuriosAbsorptionSaveReloadAndDeathCopyPreserveStableState(GameTestHelper helper) {
         for (var type : TYPES) try (Fixture original = new Fixture(helper); Fixture restored = new Fixture(helper); Fixture clone = new Fixture(helper)) {
             original.owner.getAttribute(ModAttributes.PASSIVE_ITEM_SLOTS.get()).setBaseValue(4); tickCurios(original.owner);

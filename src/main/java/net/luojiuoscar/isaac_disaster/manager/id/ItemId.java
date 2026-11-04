@@ -266,7 +266,8 @@ public enum ItemId {
     HOW_TO_JUMP(1),
     ANEMIC(1),
     SHARD_OF_GLASS(1),
-    HEADLESS_BABY(1);
+    HEADLESS_BABY(1),
+    DEPRESSION(1);
 
 
 

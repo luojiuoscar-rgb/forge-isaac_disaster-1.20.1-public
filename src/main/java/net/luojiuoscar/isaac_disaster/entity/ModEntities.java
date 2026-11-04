@@ -12,6 +12,7 @@ import net.luojiuoscar.isaac_disaster.entity.familiar.impl.mom_knife.MomKnifeEnt
 import net.luojiuoscar.isaac_disaster.entity.projectile.moms_knife.PlayerMomsKnifeEntity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.brother_bobby.BrotherBobbyEntity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.headless_baby.HeadlessBabyEntity;
+import net.luojiuoscar.isaac_disaster.entity.familiar.impl.depression.DepressionEntity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.base.baby.AbstractBabyFamiliarEntity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.sister_maggy.SisterMaggyEntity;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.ghost_baby.GhostBabyEntity;
@@ -134,6 +135,11 @@ public class ModEntities {
             MOD_ENTITIES.register("headless_baby", () -> EntityType.Builder.of(HeadlessBabyEntity::new, MobCategory.MISC)
                     .sized(0.75F * HeadlessBabyEntity.BASE_SCALE, 0.6875F * HeadlessBabyEntity.BASE_SCALE)
                     .clientTrackingRange(8).updateInterval(1).build("headless_baby"));
+
+    public static final RegistryObject<EntityType<DepressionEntity>> DEPRESSION =
+            MOD_ENTITIES.register("depression", () -> EntityType.Builder.of(DepressionEntity::new, MobCategory.MISC)
+                    .sized(0.708668125F * DepressionEntity.BASE_SCALE, 0.5125F * DepressionEntity.BASE_SCALE)
+                    .clientTrackingRange(8).updateInterval(1).build("depression"));
 
     public static final RegistryObject<EntityType<SackOfPenniesEntity>> SACK_OF_PENNIES =
             MOD_ENTITIES.register("sack_of_pennies", () -> EntityType.Builder.<SackOfPenniesEntity>of(SackOfPenniesEntity::new, MobCategory.MISC)

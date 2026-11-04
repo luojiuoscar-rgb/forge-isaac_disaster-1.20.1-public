@@ -1226,6 +1226,9 @@ public class ModExecutableEffects {
     public static final RegistryObject<IExecutableEffect> BLOOD_TRAIL =
             EXECUTABLE_EFFECT_REGISTRY.register("blood_trail", BloodTrail::new);
 
+    public static final RegistryObject<IExecutableEffect> DEPRESSION_TRAIL =
+            EXECUTABLE_EFFECT_REGISTRY.register("depression_trail", DepressionTrail::new);
+
     public static final RegistryObject<IExecutableEffect> SHARD_OF_GLASS =
             EXECUTABLE_EFFECT_REGISTRY.register("shard_of_glass", ShardOfGlass::new);
     public static final RegistryObject<IExecutableEffect> SHARD_OF_GLASS_BLOOD_TEAR =

@@ -134,7 +134,8 @@
         {"type": "minecraft:item", "name": "isaac_disaster:tractor_beam"},
         {"type": "minecraft:item", "name": "isaac_disaster:anemic"},
         {"type": "minecraft:item", "name": "isaac_disaster:shard_of_glass"},
-        {"type": "minecraft:item", "name": "isaac_disaster:headless_baby"}
+        {"type": "minecraft:item", "name": "isaac_disaster:headless_baby"},
+        {"type": "minecraft:item", "name": "isaac_disaster:depression"}
       ]
     }
   ]

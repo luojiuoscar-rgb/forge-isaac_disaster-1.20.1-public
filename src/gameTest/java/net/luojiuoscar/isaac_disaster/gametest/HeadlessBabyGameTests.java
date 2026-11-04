@@ -78,7 +78,7 @@ public final class HeadlessBabyGameTests {
             f.data.setCount(bobby, bobby, 64);
             f.data.setCount(TYPE, TYPE, 2);
             helper.assertTrue(f.data.getCount(TYPE) == 2 && f.data.getEffectiveCount(TYPE) == 0,
-                    "Headless Baby shares the full BABIES quota while retaining excess demand");
+                    "Headless Baby shares the full chain familiar quota while retaining excess demand");
             var tag = new CompoundTag();
             f.data.saveNBTData(tag);
             f.data.clearRequirements();

@@ -82,7 +82,7 @@ public final class BabyFamiliarGameTests {
             });
             event.register(ModFamiliarEntities.FAMILIAR_ENTITY_KEY, helper -> {
                     helper.register(OTHER, new FamiliarEntityType(() -> other, TestBaby.class, 64,
-                            ModFamiliarLimitGroups.BABIES, 0, false));
+                            ModFamiliarLimitGroups.CHAIN_FAMILIARS, 0, false));
                     helper.register(CHAIN_ONLY, new FamiliarEntityType(() -> chainOnly, TestChain.class, 1,
                             null, 0, false));
             });
@@ -211,7 +211,7 @@ public final class BabyFamiliarGameTests {
             var descriptor = ModFamiliarEntities.BROTHER_BOBBY.get();
             helper.assertTrue(descriptor.hasEntityTag(AbstractBabyFamiliarEntity.class) && descriptor.getLimit() == 64,
                     "Bobby is a baby familiar with an own limit of 64");
-            helper.assertTrue(descriptor.getGroup() == ModFamiliarLimitGroups.BABIES.get()
+            helper.assertTrue(descriptor.getGroup() == ModFamiliarLimitGroups.CHAIN_FAMILIARS.get()
                     && descriptor.getGroup().getLimit() == 64, "Babies share 64 slots");
             f.data.setCount(BOBBY, FAMILIAR_SOURCE, 40);
             f.data.setCount(OTHER, FAMILIAR_SOURCE, 40);

@@ -66,7 +66,7 @@ public final class SisterMaggyGameTests {
         helper.assertTrue(FamiliarHelper.isRegisteredFamiliarType(MAGGY), "Sister Maggy has an entity and familiar descriptor");
         var descriptor = FamiliarHelper.getFamiliarType(MAGGY);
         helper.assertTrue(descriptor.getLimit() == 64 && descriptor.hasEntityTag(AbstractBabyFamiliarEntity.class)
-                        && descriptor.getGroup() == ModFamiliarLimitGroups.BABIES.get(),
+                        && descriptor.getGroup() == ModFamiliarLimitGroups.CHAIN_FAMILIARS.get(),
                 "Maggy is a baby with its own and shared cap of sixty-four");
         try (Fixture f = new Fixture(helper)) {
             f.data.setCount(MAGGY, FAMILIAR_SOURCE, 100);

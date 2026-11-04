@@ -884,4 +884,7 @@ public class ModPassiveAbilities {
     public static final RegistryObject<PassiveAbility> HEADLESS_BABY =
             PASSIVE_ABILITY_REGISTRY.register("headless_baby", () -> new HeadlessBaby(ItemId.HEADLESS_BABY.getId(), ItemId.HEADLESS_BABY.getLevel()));
 
+    public static final RegistryObject<PassiveAbility> DEPRESSION =
+            PASSIVE_ABILITY_REGISTRY.register("depression", () -> new Depression(ItemId.DEPRESSION.getId(), ItemId.DEPRESSION.getLevel()));
+
 }
