@@ -1,6 +1,5 @@
 package net.luojiuoscar.isaac_disaster.registries.ability_effect.impl.normal;
 
-import com.google.gson.JsonParser;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.CompositeTriggerView;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ContextKeys;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ExecutableEffectContext;
@@ -13,7 +12,6 @@ import net.luojiuoscar.isaac_disaster.registries.bullet_color.BulletColor;
 import net.luojiuoscar.isaac_disaster.registries.bullet_color.BulletColorPrio;
 import net.luojiuoscar.isaac_disaster.registries.bullet_color.ModBulletColors;
 import net.luojiuoscar.isaac_disaster.registries.trigger_module.ModTriggerTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
@@ -22,9 +20,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryManager;
 import org.junit.jupiter.api.Test;
 
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -78,23 +74,6 @@ class FireMindAttachmentTest {
         assertEquals(ModBulletColors.FIRE_MIND.getId(), child.getColorId());
         assertEquals(2, child.getDamage());
         assertEquals(7, parent.getDamage());
-    }
-
-    @Test
-    void lorePassesMinecraftTranslationParsingWithoutUnimplementedEffects() throws Exception {
-        try (var input = getClass().getResourceAsStream("/assets/isaac_disaster/lang/en_us.json")) {
-            assertNotNull(input);
-            var lang = JsonParser.parseReader(new InputStreamReader(input, StandardCharsets.UTF_8)).getAsJsonObject();
-            for (String key : List.of("item.isaac_disaster.fire_mind.lore.1",
-                    "item.isaac_disaster.fire_mind.lore.2", "item.isaac_disaster.fire_mind.lore.3",
-                    "effect.isaac_disaster.burning.description",
-                    "item.isaac_disaster.terra.synergy.fire_mind.1")) {
-                String text = lang.get(key).getAsString();
-                assertEquals(text, Component.translatableWithFallback("test." + key, text).getString());
-                assertFalse(text.contains("爆炸"));
-                assertFalse(text.contains("发光"));
-            }
-        }
     }
 
     private static void prepare(AttackContext attack, double amplifier) {

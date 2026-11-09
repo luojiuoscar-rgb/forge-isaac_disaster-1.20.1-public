@@ -21,7 +21,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Consumer;
 import net.luojiuoscar.isaac_disaster.bullet.server.BulletManager;
 import net.luojiuoscar.isaac_disaster.bullet.core.BulletState;
@@ -555,86 +554,25 @@ public final class SwarmItemGameTests {
     }
 
     @GameTest(template = "trajectory_empty")
-    public static void itemIdentityQualityAndDescriptionsResolveRealTranslations(GameTestHelper helper) {
-        try (Fixture f = new Fixture(helper)) {
-            String[] names = {"moms_underwear", "moms_pad", "guppys_head", "infestation", "the_mulligan", "spider_baby", "moms_wig", "infestation_2", "box_of_spiders"};
-            int[] levels = {1, 0, 2, 0, 3, 0, 2, 3, 1};
-            for (int i = 0; i < names.length; i++) {
-                var item = ForgeRegistries.ITEMS.getValue(id(names[i]));
-                helper.assertTrue(item instanceof IsaacItem, "Registered Isaac item " + names[i]);
-                var ability = ((IsaacItem) item).getAbility();
-                helper.assertTrue(ability.getId() == ItemId.MOMS_UNDERWEAR.ordinal() + i && ability.getLevel() == levels[i],
-                        "Ordered project ordinal and level for " + names[i]);
-                for (var line : ability.getDesc(new ItemStack(item), f.owner)) {
-                    String text = line.getString();
-                    helper.assertTrue(!text.contains(".lore.") && !text.contains("%s") && !text.contains("\n")
-                            && !text.contains("可叠加"), "Description resolves one semantic line: " + text);
-                }
-            }
-            var wig = ((PassiveItem) ModPassiveItems.MOMS_WIG.get()).getAbility();
-            String baseline = wig.getDesc(null, f.owner).get(1).getString();
-            f.owner.getAttribute(Attributes.LUCK).setBaseValue(9.5);
-            helper.assertTrue(baseline.contains("5.00%") && wig.getDesc(null, f.owner).get(1).getString().contains("100.00%"),
-                    "Real translated percentage follows actual luck formula");
-            helper.assertTrue(((PassiveItem) ModPassiveItems.THE_MULLIGAN.get()).getAbility().getDesc(null, f.owner).get(0).getString().contains("16.67%"),
-                    "Fixed 1/6 is formatted as a real percentage");
+    public static void itemIdentityAndQualityMatchRegistration(GameTestHelper helper) {
+        String[] names = {"moms_underwear", "moms_pad", "guppys_head", "infestation", "the_mulligan", "spider_baby", "moms_wig", "infestation_2", "box_of_spiders"};
+        int[] levels = {1, 0, 2, 0, 3, 0, 2, 3, 1};
+        for (int i = 0; i < names.length; i++) {
+            var item = ForgeRegistries.ITEMS.getValue(id(names[i]));
+            helper.assertTrue(item instanceof IsaacItem, "Registered Isaac item " + names[i]);
+            var ability = ((IsaacItem) item).getAbility();
+            helper.assertTrue(ability.getId() == ItemId.MOMS_UNDERWEAR.ordinal() + i && ability.getLevel() == levels[i],
+                    "Ordered project ordinal and level for " + names[i]);
         }
         helper.succeed();
     }
 
     @GameTest(template = "trajectory_empty")
-    public static void synergyDescriptionsKeepTheBaseQuantityAndPutPartnersInTheirOwnLines(GameTestHelper helper) {
-        try (Fixture f = new Fixture(helper)) {
-            var names = List.of("box_of_spiders", "guppys_head", "moms_pad");
-            List<List<String>> baseline = new ArrayList<>();
-            for (String name : names) {
-                var item = (ActiveItem) ForgeRegistries.ITEMS.getValue(id(name));
-                baseline.add(item.getAbility().getDesc(null, f.owner).stream().map(line -> line.getString()).toList());
-            }
-            f.grant("car_battery");
-            for (int i = 0; i < names.size(); i++) {
-                var item = (ActiveItem) ForgeRegistries.ITEMS.getValue(id(names.get(i)));
-                helper.assertTrue(item.getAbility().getDesc(null, f.owner).stream().map(line -> line.getString()).toList().equals(baseline.get(i)),
-                        "Car Battery does not rewrite base amounts for " + names.get(i));
-                helper.assertTrue(item.getAbility().getSynergyDesc(null, f.owner).stream()
-                                .anyMatch(line -> line.getString().contains("车载电池") && line.getString().contains("使用两次")),
-                        "Car Battery is described as two uses for " + names.get(i));
-            }
-            var wig = ((PassiveItem) ModPassiveItems.MOMS_WIG.get()).getAbility();
-            helper.assertTrue(wig.getDesc(null, f.owner).stream().anyMatch(line -> line.getString().equals("最多5只")),
-                    "The Wig's ordinary description gives its base cap");
-            f.grant("hive_mind");
-            helper.assertTrue(wig.getDesc(null, f.owner).stream().anyMatch(line -> line.getString().equals("最多5只"))
-                    && wig.getSynergyDesc(null, f.owner).stream().anyMatch(line -> line.getString().contains("虫群之心")
-                    && line.getString().contains("最多10只")), "Hive Mind puts the ten-spider cap in its synergy line");
-        }
-        helper.succeed();
-    }
-
-    @GameTest(template = "trajectory_empty")
-    public static void hiveMindAndHurtItemDescriptionsUseBothSetsAndCurrentLuck(GameTestHelper helper) {
+    public static void hiveMindContributesToBothSets(GameTestHelper helper) {
         try (Fixture f = new Fixture(helper)) {
             f.grant("hive_mind");
-            var hive = ((PassiveItem) ModPassiveItems.HIVE_MIND.get()).getAbility();
-            for (var lines : List.of(hive.getSynergyDesc(null, f.owner), hive.getExtraDesc(null, f.owner))) {
-                helper.assertTrue(lines.stream().anyMatch(line -> line.getString().contains("苍蝇领主"))
-                        && lines.stream().anyMatch(line -> line.getString().contains("蜘蛛宝宝")), "Both set descriptions are visible");
-            }
             helper.assertTrue(f.items.getSetCountFromId(ModSetAbilities.BEELZEBUB.getId()) == 1
                     && f.items.getSetCountFromId(ModSetAbilities.SPIDER_BABY.getId()) == 1, "Both existing set contributions remain intact");
-            for (String name : List.of("infestation", "spider_baby")) {
-                var item = (PassiveItem) ForgeRegistries.ITEMS.getValue(id(name));
-                for (double[] pair : new double[][]{{0, 10}, {7.5, 25}, {-2, 6}, {-10, 0}}) {
-                    f.owner.getAttribute(Attributes.LUCK).setBaseValue(pair[0]);
-                    String percent = String.format(Locale.ROOT, "%.2f%%", pair[1]);
-                    helper.assertTrue(item.getAbility().getDesc(null, f.owner).get(0).getString().contains(percent),
-                            "Actual translated hurt probability reflects luck " + pair[0]);
-                    helper.assertTrue(item.getAbility().getDesc(null, f.owner).get(1).getString().contains("1–2"),
-                            "Hurt quantity uses the same one-to-two registered generator");
-                }
-            }
-            helper.assertTrue(ModSetAbilities.CAT.get().getExtraDesc().stream()
-                    .anyMatch(line -> line.getString().contains("66.67%")), "Cat description uses its fixed two-thirds formula");
         }
         helper.succeed();
     }

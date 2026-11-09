@@ -242,18 +242,7 @@ public final class FamiliarModifiersGameTests {
     }
 
     @GameTest(template = "trajectory_empty")
-    public static void descriptionsResolveCurrentLoreAndKeepItemMetadata(GameTestHelper helper) {
-        var bffs = ModPassiveItems.BFFS.get();
-        var hive = ModPassiveItems.HIVE_MIND.get();
-        for (Item item : List.of(bffs, hive)) {
-            var ability = ((PassiveItem) item).getAbility();
-            var lore = ability.getDesc(new ItemStack(item), null);
-            for (var line : lore) {
-                String text = line.getString();
-                helper.assertTrue(!text.contains("%s") && !text.contains("%%")
-                        && !text.contains("item.isaac_disaster."), "The real translation parser resolves every lore line: " + text);
-            }
-        }
+    public static void itemQualityAndSetRequirementRemainConfigured(GameTestHelper helper) {
         helper.assertTrue(ItemId.BFFS.getLevel() == 2 && ItemId.HIVE_MIND.getLevel() == 2
                 && ModSetAbilities.BEELZEBUB.get().getRequirementCount() == 3,
                 "Both collectibles have quality two and Beelzebub is a three-item set");

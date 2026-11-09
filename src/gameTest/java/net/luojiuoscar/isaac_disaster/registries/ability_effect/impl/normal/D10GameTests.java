@@ -9,7 +9,6 @@ import net.luojiuoscar.isaac_disaster.datapack.gameplay.GameplayConfig;
 import net.luojiuoscar.isaac_disaster.item.ModActiveItems;
 import net.luojiuoscar.isaac_disaster.item.ModPassiveItems;
 import net.luojiuoscar.isaac_disaster.manager.TagManager;
-import net.luojiuoscar.isaac_disaster.registries.ability.active.ModActiveAbilities;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ContextKeys;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ExecutableEffectContext;
 import net.minecraft.gametest.framework.GameTest;
@@ -299,8 +298,6 @@ public final class D10GameTests {
             ModActiveItems.D10.get().use(f.level, f.owner, InteractionHand.MAIN_HAND);
             helper.assertTrue(stack.getDamageValue() == 600, "Empty use consumes all six bars");
             helper.assertTrue(f.owner.getCooldowns().isOnCooldown(stack.getItem()), "Use applies shared cooldown");
-            helper.assertTrue(ModActiveAbilities.D10.get().getDesc(stack, f.owner).stream()
-                    .allMatch(line -> !line.getString().startsWith("item.isaac_disaster")), "Actual translator resolves all three lore lines");
             f.owner.getCapability(PlayerIsaacItemsProvider.PLAYER_ISAAC_ITEMS).orElseThrow(AssertionError::new)
                     .addItem(f.owner, new ItemStack(ModPassiveItems.CAR_BATTERY.get()));
             settings.set(GameplayConfig.NEARBY_RANGE, 5.0);

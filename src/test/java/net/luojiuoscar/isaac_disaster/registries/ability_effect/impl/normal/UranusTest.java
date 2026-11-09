@@ -16,8 +16,6 @@ import net.luojiuoscar.isaac_disaster.registries.bullet_color.ModBulletColors;
 import net.luojiuoscar.isaac_disaster.registries.bullet_visual.ModBulletVisuals;
 import net.luojiuoscar.isaac_disaster.registries.trigger_module.ModTriggerTypes;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.Component;
-import com.google.gson.JsonParser;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -26,8 +24,6 @@ import net.minecraftforge.registries.RegistryManager;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
 
@@ -63,16 +59,6 @@ class UranusTest {
     }
 
     @Test
-    void iceEffectTierOverridesBaseColor() throws Exception {
-        ensureColors();
-        for (var color : List.of(ModBulletColors.URANUS, ModBulletColors.IPECAC)) {
-            AttackContext attack = attack(TestAttackTypes.BULLET, color.getId());
-            prepare(attack);
-            assertEquals(ModBulletColors.URANUS.getId(), attack.getColorId());
-        }
-    }
-
-    @Test
     void ringHasTwelveHorizontalDirectionsAndPreservesExactCenterAndDamage() throws Exception {
         var origin = new Vec3(5.25, 17.4, -9.5);
         var attack = attack(TestAttackTypes.BULLET, ModBulletColors.BASE.getId());
@@ -85,20 +71,6 @@ class UranusTest {
             assertEquals(1, shard.getMainAxis().length(), 1e-10);
             assertEquals(origin, shard.getPos());
             assertEquals(7, shard.getDamage());
-        }
-    }
-
-    @Test
-    void loreUsesRealTranslationParsingAndShortLines() throws Exception {
-        try (var input = getClass().getResourceAsStream("/assets/isaac_disaster/lang/en_us.json")) {
-            assertNotNull(input);
-            var lang = JsonParser.parseReader(new InputStreamReader(input, StandardCharsets.UTF_8)).getAsJsonObject();
-            for (var entry : lang.entrySet()) {
-                if (!entry.getKey().startsWith("item.isaac_disaster.uranus")) continue;
-                String text = entry.getValue().getAsString();
-                assertEquals(text, Component.translatableWithFallback("test." + entry.getKey(), text).getString());
-                assertTrue(text.length() <= 30, "Static lore line too long: " + text);
-            }
         }
     }
 

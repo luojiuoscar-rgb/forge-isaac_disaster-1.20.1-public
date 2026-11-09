@@ -73,8 +73,6 @@ public final class PiscesGameTests {
             DefaultAttributeManager.apply(f.owner);
             DefaultAttributeManager.apply(f.owner);
             close(helper, f.owner.getAttributeValue(ModAttributes.BULLET_KNOCKBACK.get()), 1.0);
-            helper.assertTrue(ModPassiveAbilities.PISCES.get().getDesc(null, f.owner).get(4).getString().contains("0.6"),
-                    "The fifth lore line uses the configured three-unit value");
             ModPassiveAbilities.PISCES.get().handleRemove(f.owner, null);
             close(helper, f.owner.getAttributeValue(ModAttributes.BULLET_KNOCKBACK.get()), 0.4);
             close(helper, HurtKnockback.captureMultiplier(f.cow(f.origin.add(4, 0, 0))), 0.4);

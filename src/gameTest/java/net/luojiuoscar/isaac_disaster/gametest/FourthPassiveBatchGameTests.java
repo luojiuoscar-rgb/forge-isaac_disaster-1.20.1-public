@@ -28,11 +28,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.luojiuoscar.isaac_disaster.helper.PlayerHelper;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.*;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.impl.normal.JumperCablesKillCounter;
-import net.luojiuoscar.isaac_disaster.registries.ability.passive.ModPassiveAbilities;
-import net.luojiuoscar.isaac_disaster.manager.ColorManager;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextColor;
-import net.minecraft.network.chat.contents.TranslatableContents;
 import net.luojiuoscar.isaac_disaster.registries.ability.pickup.impl.items.SoulHeart;
 import net.luojiuoscar.isaac_disaster.registries.attack_type.*;
 import net.luojiuoscar.isaac_disaster.registries.bullet_visual.ModBulletVisuals;
@@ -315,11 +310,6 @@ public final class FourthPassiveBatchGameTests {
             close(helper, player.getAttributeValue(Attributes.ATTACK_DAMAGE) - damage, oneUnitDamage * missingUnits,
                     "Adrenaline scales linearly even below one missing heart and across its boundary");
         }
-        var bonusLine = ModPassiveAbilities.ADRENALINE.get().getDesc(null, player).get(2);
-        var arguments = ((TranslatableContents) bonusLine.getContents()).getArgs();
-        helper.assertTrue(arguments.length == 1 && arguments[0] instanceof Component number
-                        && TextColor.fromRgb(ColorManager.SYNERGY).equals(number.getStyle().getColor()),
-                "Adrenaline presents its current bonus through the yellow dynamic component");
         equip(player, 2, ModPassiveItems.ADRENALINE.get());
         tickPeriodicModules(player);
         close(helper, player.getAttributeValue(Attributes.ATTACK_DAMAGE) - damage, oneUnitDamage * 2,

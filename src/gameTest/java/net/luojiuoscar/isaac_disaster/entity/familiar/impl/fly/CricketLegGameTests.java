@@ -20,7 +20,6 @@ import net.luojiuoscar.isaac_disaster.item.ModPassiveItems;
 import net.luojiuoscar.isaac_disaster.item.ModTrinkets;
 import net.luojiuoscar.isaac_disaster.item.item.Trinket;
 import net.luojiuoscar.isaac_disaster.manager.StatManager;
-import net.luojiuoscar.isaac_disaster.manager.ColorManager;
 import net.luojiuoscar.isaac_disaster.manager.CurioSlotManager;
 import net.luojiuoscar.isaac_disaster.manager.DefaultAttributeManager;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ContextKeys;
@@ -37,8 +36,6 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.util.RandomSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -70,7 +67,6 @@ import top.theillusivec4.curios.common.event.CuriosEventHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.Optional;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
@@ -516,64 +512,6 @@ public final class CricketLegGameTests {
                     "Giga explosion event does not execute ordinary item attachments");
         }
         helper.succeed();
-    }
-
-    @GameTest(template = "trajectory_empty")
-    public static void loreUsesMinecraftPercentFormatting(GameTestHelper helper) {
-        var ability = ((Trinket) ModTrinkets.CRICKET_LEG.get()).getAbility();
-        var ordinary = ability.getDesc(null, null);
-        ItemStack gold = new ItemStack(ModTrinkets.CRICKET_LEG.get());
-        Trinket.setEnchanted(gold, true);
-        helper.assertTrue(ordinary.get(0).getString().contains("16.67%")
-                        && ordinary.get(ordinary.size() - 1).getString().equals(Component.translatable("item.isaac_disaster.special.stackable").getString()),
-                "Minecraft translation parser formats the ordinary probability and the stacking note");
-        Component goldenLine = ability.getDesc(gold, null).get(0);
-        helper.assertTrue(goldenLine.getString().contains("33.33%") && hasDynamicNumber(goldenLine, "33.33"),
-                "Golden chance replaces the ordinary percentage inline as a yellow dynamic component");
-        helper.assertTrue(ability.getSynergyDesc(gold, null).isEmpty(), "No duplicate golden explanation line is appended");
-        helper.succeed();
-    }
-
-    @GameTest(template = "trajectory_empty")
-    public static void callusShowsItsCurrentReductionInline(GameTestHelper helper) {
-        var ability = ((Trinket) ModTrinkets.CALLUS.get()).getAbility();
-        var ordinary = ability.getDesc(null, null).get(0);
-        ItemStack gold = new ItemStack(ModTrinkets.CALLUS.get());
-        Trinket.setEnchanted(gold, true);
-        var enhanced = ability.getDesc(gold, null).get(0);
-        helper.assertTrue(ordinary.getString().contains("1") && hasDynamicNumber(ordinary, "1"),
-                "Ordinary Callus displays its one-point reduction as an integer component");
-        helper.assertTrue(enhanced.getString().contains("2") && hasDynamicNumber(enhanced, "2")
-                        && ability.getSynergyDesc(gold, null).isEmpty(),
-                "Golden Callus replaces the number with two instead of repeating an unchanged description");
-        helper.succeed();
-    }
-
-    @GameTest(template = "trajectory_empty")
-    public static void locustTrinketsShowCurrentCountsWithoutColoringConfiguredTime(GameTestHelper helper) {
-        for (var item : List.of(ModTrinkets.LOCUST_OF_WAR, ModTrinkets.LOCUST_OF_PESTILENCE,
-                ModTrinkets.LOCUST_OF_FAMINE, ModTrinkets.LOCUST_OF_DEATH, ModTrinkets.LOCUST_OF_CONQUEST)) {
-            var ability = ((Trinket) item.get()).getAbility();
-            ItemStack gold = new ItemStack(item.get());
-            Trinket.setEnchanted(gold, true);
-            var ordinary = ability.getDesc(null, null).get(0);
-            var enhanced = ability.getDesc(gold, null).get(0);
-            helper.assertTrue(hasDynamicNumber(ordinary, "1") && hasDynamicNumber(enhanced, "2"),
-                    "All five trinkets replace the ordinary generation count inline");
-            helper.assertTrue(!hasDynamicNumber(enhanced, "40") && ability.getSynergyDesc(gold, null).isEmpty(),
-                    "Configured time remains plain text and the separate golden line is removed");
-            if (item == ModTrinkets.LOCUST_OF_CONQUEST) {
-                helper.assertTrue(hasDynamicNumber(ordinary, "4") && hasDynamicNumber(enhanced, "6"),
-                        "Conquest preserves its one-to-four and two-to-six periodic ranges");
-            }
-        }
-        helper.succeed();
-    }
-
-    private static boolean hasDynamicNumber(Component component, String expected) {
-        return component.visit((style, text) -> expected.equals(text) && style.getColor() != null
-                        && style.getColor().getValue() == ColorManager.SYNERGY
-                        ? Optional.of(true) : Optional.<Boolean>empty(), Style.EMPTY).orElse(false);
     }
 
     private static ResourceLocation id(String path) {

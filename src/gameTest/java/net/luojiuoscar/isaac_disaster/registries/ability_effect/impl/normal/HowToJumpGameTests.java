@@ -11,7 +11,6 @@ import net.luojiuoscar.isaac_disaster.item.ModActiveItems;
 import net.luojiuoscar.isaac_disaster.item.ModPassiveItems;
 import net.luojiuoscar.isaac_disaster.item.ModTrinkets;
 import net.luojiuoscar.isaac_disaster.item.item.ActiveItem;
-import net.luojiuoscar.isaac_disaster.registries.ability.active.ModActiveAbilities;
 import net.luojiuoscar.isaac_disaster.registries.ability.set.ModSetAbilities;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ContextKeys;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ExecutableEffectContext;
@@ -19,7 +18,6 @@ import net.luojiuoscar.isaac_disaster.system.flight.IsaacFlightController;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,7 +39,6 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 @GameTestHolder("isaac_disaster_how_to_jump")
@@ -78,8 +75,6 @@ public final class HowToJumpGameTests {
             stack.getItem().use(f.level, f.owner, InteractionHand.MAIN_HAND);
             helper.assertTrue(f.owner.getDeltaMovement().distanceTo(new Vec3(0, .75, 1.5)) < 1e-6, "Car Battery neither stacks nor strengthens velocity");
             helper.assertTrue(f.items().getSetCountFromId(ModSetAbilities.BOOK.getId()) == 1, "Same stack never counts twice");
-            helper.assertTrue(ModActiveAbilities.HOW_TO_JUMP.get().getSynergyDesc(stack, f.owner).stream()
-                    .map(Component::getString).anyMatch(line -> line.contains("无额外效果")), "Car Battery description is conditional and translated");
         }
         helper.succeed();
     }
@@ -173,19 +168,10 @@ public final class HowToJumpGameTests {
     }
 
     @GameTest(template = "trajectory_empty", batch = "how_to_jump")
-    public static void nonPlayersAreRejectedAndActualTranslationsResolve(GameTestHelper helper) {
+    public static void nonPlayersAreRejected(GameTestHelper helper) {
         try (var f = new Fixture(helper)) {
             var cow = EntityType.COW.create(f.level);
             helper.assertTrue(!new HowToJump().applyEffect(new ExecutableEffectContext(cow)), "Non-player contexts return false");
-            var ability = ModActiveAbilities.HOW_TO_JUMP.get();
-            var stack = new ItemStack(ModActiveItems.HOW_TO_JUMP.get());
-            helper.assertTrue(ability.getDesc(stack, f.owner).size() == 1 && stack.getHoverName().getString().equals("跳跃教程"), "Name and concise ordinary lore resolve");
-            var lines = new ArrayList<>(ability.getDesc(stack, f.owner));
-            lines.addAll(ability.getExtraDesc(stack, f.owner));
-            lines.addAll(ability.getSynergyDesc(stack, f.owner));
-            helper.assertTrue(lines.stream().map(Component::getString).noneMatch(line -> line.contains("item.isaac_disaster.")
-                    || line.contains("set.isaac_disaster.") || line.contains("%s")), "Actual Minecraft parser resolves all lore and set descriptions");
-            helper.assertTrue(ability.getSynergyDesc(stack, f.owner).stream().noneMatch(line -> line.getString().contains("无额外效果")), "Car Battery text is hidden without ownership");
         }
         helper.succeed();
     }

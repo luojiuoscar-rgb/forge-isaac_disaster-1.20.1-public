@@ -1,0 +1,66 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+> Configure project :
+Java: 17.0.11, JVM: 17.0.11+9-LTS (Microsoft), Arch: amd64
+
+> Task :downloadMcpConfig
+> Task :extractSrg
+> Task :createMcpToSrg
+
+> Task :compileJava
+ע: SpongePowered MIXIN Annotation Processor Version=0.8.5
+ע: Supported obfuscation types: ObfuscationServiceMCP supports [notch] ObfuscationServiceFG3 supports [searge]
+ע: Loading searge mappings from D:\Oscar\MC\mods\isaac disaster\master\build\createMcpToSrg\output.tsrg
+ע: Writing refmap to D:\Oscar\MC\mods\isaac disaster\master\build\resources\main\isaac_disaster.refmap.json
+ע: Writing refmap to D:\Oscar\MC\mods\isaac disaster\master\build\resources\main\isaac_disaster.refmap.json
+ע: Writing refmap to D:\Oscar\MC\mods\isaac disaster\master\build\resources\main\isaac_disaster.refmap.json
+ע: Writing refmap to D:\Oscar\MC\mods\isaac disaster\master\build\resources\main\isaac_disaster.refmap.json
+D:\Oscar\MC\mods\isaac disaster\master\src\main\java\net\luojiuoscar\isaac_disaster\effect\custom\SoulStateEffect.java:29: ����: [removal] ProjectileImpactEvent �е� setCanceled(boolean) �ѹ�ʱ, �ұ��Ϊ��ɾ��
+            event.setCanceled(true);
+                 ^
+ע: ĳЩ�����ļ�ʹ�û򸲸����ѹ�ʱ�� API��
+ע: �й���ϸ��Ϣ, ��ʹ�� -Xlint:deprecation ���±��롣
+1 ������
+
+> Task :processResources
+> Task :classes
+> Task :compileTestJava
+> Task :processTestResources
+> Task :testClasses
+
+> Task :test
+
+DepressionLoreTest > realTranslationParserKeepsSixNaturalLinesAndLiteralPercent() FAILED
+    java.lang.NullPointerException at DepressionLoreTest.java:33
+
+HeadlessBabyLoreTest > configuredDamageUsesRealTranslationParserAndIndependentLines() FAILED
+    org.opentest4j.AssertionFailedError at HeadlessBabyLoreTest.java:24
+
+UranusTest > iceEffectTierOverridesBaseColor() FAILED
+    org.opentest4j.AssertionFailedError at UranusTest.java:71
+
+BulletColorSelectionTest > alphaNormalizationAndOptionalRgbAreExplicit() FAILED
+    org.opentest4j.AssertionFailedError at BulletColorSelectionTest.java:115
+
+987 tests completed, 4 failed
+
+> Task :test FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':test'.
+> There were failing tests. See the report at: file:///D:/Oscar/MC/mods/isaac%20disaster/master/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+8 actionable tasks: 8 executed
+
+BUILD FAILED in 1m 25s

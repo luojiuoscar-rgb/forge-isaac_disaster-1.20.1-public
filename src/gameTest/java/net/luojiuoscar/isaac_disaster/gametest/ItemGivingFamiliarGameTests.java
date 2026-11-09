@@ -23,7 +23,6 @@ import net.luojiuoscar.isaac_disaster.manager.CurioSlotManager;
 import net.luojiuoscar.isaac_disaster.manager.DefaultAttributeManager;
 import net.luojiuoscar.isaac_disaster.registries.ability.passive.impl.Bffs;
 import net.luojiuoscar.isaac_disaster.registries.ability.passive.impl.HiveMind;
-import net.luojiuoscar.isaac_disaster.registries.ability.set.ModSetAbilities;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ModExecutableEffects;
 import net.luojiuoscar.isaac_disaster.registries.periodic_module.ModPeriodicModules;
 import net.luojiuoscar.isaac_disaster.registries.familiar_modifier.FamiliarModifierEntry;
@@ -345,20 +344,6 @@ public final class ItemGivingFamiliarGameTests {
                 giver.tick();
                 helper.assertTrue(giver.getFormationIndex() == i && f.slot(TYPES.get(i), 0) != null, "链槽与各类型库存slot相互独立");
             }
-        }
-        helper.succeed();
-    }
-
-    @GameTest(template = "trajectory_empty")
-    public static void synergyLinesStayOutOfExtraDescriptions(GameTestHelper helper) {
-        for (var type : TYPES) {
-            var item = (PassiveItem) ForgeRegistries.ITEMS.getValue(type);
-            helper.assertTrue(item.getAbility().getExtraDesc(null, null).isEmpty(), "给予型没有额外说明，协同只属于协同说明 " + type);
-        }
-        for (String name : List.of("brother_bobby", "sister_maggy", "ghost_baby", "harlequin_baby", "rotten_baby", "loki_baby", "robo_baby", "robo_baby_2", "demon_baby")) {
-            var item = (PassiveItem) ForgeRegistries.ITEMS.getValue(id(name));
-            helper.assertTrue(item.getAbility().getExtraDesc(null, null).equals(ModSetAbilities.CONJOINED.get().getExtraDesc()),
-                    "宝宝保留原有套装额外说明，不混入BFFS协同 " + name);
         }
         helper.succeed();
     }

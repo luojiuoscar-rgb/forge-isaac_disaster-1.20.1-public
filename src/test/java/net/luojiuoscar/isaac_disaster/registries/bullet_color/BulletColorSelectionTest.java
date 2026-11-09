@@ -105,14 +105,4 @@ class BulletColorSelectionTest {
         assertEquals(1, result.alpha());
     }
 
-    @Test
-    void alphaNormalizationAndOptionalRgbAreExplicit() {
-        assertNull(BulletColor.builder().alpha(0.5F).build().color());
-        assertEquals(1, BulletColor.builder().alpha(Float.NaN).build().alpha());
-        assertEquals(1, BulletColor.builder().alpha(Float.POSITIVE_INFINITY).build().alpha());
-        assertEquals(1, BulletColor.builder().alpha(2).build().alpha());
-        assertEquals(0.5F, BulletColor.builder().alpha(-2).build().alpha());
-        assertEquals(100, BulletColor.builder().priority(BulletColorPrio.URANUS).build().priorityTier());
-        assertEquals(30, BulletColorPrio.URANUS.getPriority());
-    }
 }

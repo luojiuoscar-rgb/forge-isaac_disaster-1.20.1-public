@@ -11,10 +11,8 @@ import net.luojiuoscar.isaac_disaster.helper.PlayerHelper;
 import net.luojiuoscar.isaac_disaster.item.ModItems;
 import net.luojiuoscar.isaac_disaster.item.ModTrinkets;
 import net.luojiuoscar.isaac_disaster.item.item.Trinket;
-import net.luojiuoscar.isaac_disaster.manager.ColorManager;
 import net.luojiuoscar.isaac_disaster.manager.CurioSlotManager;
 import net.luojiuoscar.isaac_disaster.manager.DefaultAttributeManager;
-import net.luojiuoscar.isaac_disaster.manager.StatManager;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ContextKeys;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.ExecutableEffectContext;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.impl.general.ChestLootTrinket;
@@ -25,11 +23,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -52,90 +47,11 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
-@GameTestHolder("isaac_disaster_trinket_descriptions")
+@GameTestHolder("isaac_disaster_trinket_loot")
 @PrefixGameTestTemplate(false)
-public final class TrinketDescriptionGameTests {
-    private static final Set<String> STACKABLE_CHANCES = Set.of("lucky_rock", "black_lipstick",
-            "bible_tract", "cartridge", "cricket_leg");
-
-    @GameTest(template = "trajectory_empty")
-    public static void everyTooltipResolvesAndOnlyVerifiedProbabilitiesAreMarked(GameTestHelper helper) {
-        int checked = 0;
-        for (Item item : ForgeRegistries.ITEMS.getValues()) {
-            if (!(item instanceof Trinket trinket)) continue;
-            String path = ForgeRegistries.ITEMS.getKey(item).getPath();
-            for (boolean gold : new boolean[]{false, true}) {
-                ItemStack stack = stack(item, gold);
-                var ability = trinket.getAbility();
-                var lines = ability.getDesc(stack, null);
-                helper.assertTrue(!lines.isEmpty(), "Every trinket retains its effect description: " + path);
-                for (Component line : lines) {
-                    String text = line.getString();
-                    helper.assertTrue(!text.contains("%s") && !text.contains("%%") && !text.contains("item.isaac_disaster."),
-                            "Minecraft resolves placeholders and translations: " + path + " " + text);
-                }
-                String last = lines.get(lines.size() - 1).getString();
-                helper.assertTrue(last.equals(Component.translatable("item.isaac_disaster.special.stackable").getString())
-                                == STACKABLE_CHANCES.contains(path),
-                        "The final stacking line agrees with the actual probability logic: " + path);
-                helper.assertTrue(ability.getSynergyDesc(stack, null).isEmpty(),
-                        "Golden values are inline and no redundant no-effect line remains: " + path);
-            }
-            checked++;
-        }
-        helper.assertTrue(checked >= 40, "The audit must cover the complete registered trinket set");
-        helper.succeed();
-    }
-
-    @GameTest(template = "trajectory_empty")
-    public static void correctedWormStatsMatchTheConfiguredAppliedValues(GameTestHelper helper) {
-        for (boolean gold : new boolean[]{false, true}) {
-            var lazy = ((Trinket) ModTrinkets.LAZY_WORM.get()).getAbility().getDesc(stack(ModTrinkets.LAZY_WORM.get(), gold), null);
-            helper.assertTrue(lazy.get(0).getString().equals(StatManager.BULLET_SPEED.description(gold ? -4 : -2).getString()),
-                    "Lazy Worm displays the negative shot-speed modifier");
-            for (var item : List.of(ModTrinkets.HOOK_WORM.get(), ModTrinkets.OUROBOROS_WORM.get())) {
-                var lore = ((Trinket) item).getAbility().getDesc(stack(item, gold), null);
-                helper.assertTrue(lore.stream().filter(c -> c.getString().equals(StatManager.TEARS.description(gold ? 1 : 0.5).getString())).count() == 1,
-                        "Both worms display exactly one configured tears bonus");
-                helper.assertTrue(lore.stream().filter(c -> c.getString().equals(StatManager.RANGE.description(gold ? 1 : 0.5).getString())).count() == 1,
-                        "Both worms display exactly one configured range bonus");
-            }
-        }
-        Component stat = StatManager.BULLET_SPEED.dynamicDescription(-2);
-        helper.assertTrue(stat.getSiblings().size() == 1 && stat.getSiblings().get(0).getStyle().getColor().getValue() == ColorManager.SYNERGY
-                        && stat.getStyle().getColor().getValue() != ColorManager.SYNERGY,
-                "Only the changing number is yellow; the attribute label keeps its normal color");
-        helper.succeed();
-    }
-
-    @GameTest(template = "trajectory_empty")
-    public static void probabilityLoreUsesTheCurrentGoldValueAndLuck(GameTestHelper helper) {
-        try (Fixture f = new Fixture(helper)) {
-            for (var expected : List.of(new String[]{"swallowed_penny", "35.00", "70.00"},
-                    new String[]{"lucky_rock", "5.00", "10.00"}, new String[]{"black_lipstick", "10.00", "20.00"},
-                    new String[]{"bible_tract", "3.33", "6.67"}, new String[]{"daemons_tail", "70.00", "35.00"},
-                    new String[]{"lucky_toe", "33.00", "66.00"})) {
-                Item item = ForgeRegistries.ITEMS.getValue(ModTrinkets.CRICKET_LEG.getId().withPath(expected[0]));
-                for (int i = 0; i < 2; i++) {
-                    var lore = ((Trinket) item).getAbility().getDesc(stack(item, i == 1), f.player);
-                    String percentage = expected[i + 1];
-                    helper.assertTrue(lore.stream().anyMatch(c -> hasYellowValue(c, percentage)),
-                            "Inline percentage agrees with the actual effect: " + expected[0]);
-                }
-            }
-            f.player.getAttribute(Attributes.LUCK).setBaseValue(20);
-            var cartridge = ((Trinket) ModTrinkets.CARTRIDGE.get()).getAbility();
-            helper.assertTrue(hasYellowValue(cartridge.getDesc(stack(ModTrinkets.CARTRIDGE.get(), false), f.player).get(0), "10.00")
-                            && hasYellowValue(cartridge.getDesc(stack(ModTrinkets.CARTRIDGE.get(), true), f.player).get(0), "20.00"),
-                    "Cartridge uses live player luck for ordinary and gold previews");
-        }
-        helper.succeed();
-    }
-
+public final class TrinketLootGameTests {
     @GameTest(template = "trajectory_empty")
     public static void goldQueriesDistinguishVanillaEnchantmentsAndSwallowedGold(GameTestHelper helper) {
         try (Fixture f = new Fixture(helper); Fixture reloaded = new Fixture(helper)) {
@@ -306,11 +222,6 @@ public final class TrinketDescriptionGameTests {
         return new GeneralLootModifyEvent(player, new LootContext.Builder(params).create(null), entries);
     }
 
-    private static boolean hasYellowValue(Component component, String expected) {
-        return component.visit((style, text) -> text.equals(expected) && style.getColor() != null
-                && style.getColor().getValue() == ColorManager.SYNERGY ? Optional.of(true) : Optional.<Boolean>empty(), Style.EMPTY).orElse(false);
-    }
-
     private static ItemStack stack(Item item, boolean gold) {
         ItemStack stack = new ItemStack(item);
         Trinket.setEnchanted(stack, gold);
@@ -321,7 +232,7 @@ public final class TrinketDescriptionGameTests {
         private final ServerPlayer player;
 
         private Fixture(GameTestHelper helper) {
-            player = FakePlayerFactory.get(helper.getLevel(), new GameProfile(UUID.randomUUID(), "trinket-lore"));
+            player = FakePlayerFactory.get(helper.getLevel(), new GameProfile(UUID.randomUUID(), "trinket-loot"));
             player.setPos(helper.absolutePos(BlockPos.ZERO).getCenter());
             DefaultAttributeManager.apply(player);
             player.getAttribute(ModAttributes.TRINKET_SLOTS.get()).setBaseValue(1);

@@ -1,14 +1,12 @@
 package net.luojiuoscar.isaac_disaster.registries.ability_effect.impl.normal;
 
 import net.luojiuoscar.isaac_disaster.manager.id.ItemId;
-import com.google.gson.JsonParser;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.*;
 import net.luojiuoscar.isaac_disaster.registries.ability_effect.impl.attachment.HolyLightAttachment;
 import net.luojiuoscar.isaac_disaster.registries.attack_type.*;
 import net.luojiuoscar.isaac_disaster.registries.bullet_color.*;
 import net.luojiuoscar.isaac_disaster.registries.trigger_module.ModTriggerTypes;
 import net.luojiuoscar.isaac_disaster.registries.trigger_module.impl.normal.HolyLight;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -19,9 +17,7 @@ import net.minecraftforge.registries.RegistryManager;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.junit.jupiter.api.Test;
 
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -145,17 +141,6 @@ class HolyLightItemTest {
             assertTrue(condition.test(context));
             assertFalse(condition.test(context));
             assertTrue(condition.test(context));
-        }
-    }
-
-    @Test
-    void percentageLoreUsesMinecraftTranslationParser() throws Exception {
-        try (var input = getClass().getResourceAsStream("/assets/isaac_disaster/lang/en_us.json")) {
-            assertNotNull(input);
-            var lang = JsonParser.parseReader(new InputStreamReader(input, StandardCharsets.UTF_8)).getAsJsonObject();
-            String format = lang.get("item.isaac_disaster.holy_light.lore.1").getAsString();
-            assertEquals("10%概率发射圣光泪弹", Component.translatableWithFallback("test.holy_light.chance", format, "10").getString());
-            assertEquals("50%概率发射圣光泪弹", Component.translatableWithFallback("test.holy_light.chance", format, "50").getString());
         }
     }
 

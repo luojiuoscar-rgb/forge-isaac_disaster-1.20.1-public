@@ -1,0 +1,33 @@
+{
+  "removed_junit_methods": 12,
+  "removed_gametest_methods": 8,
+  "deleted_files": [
+    "src/test/java/net/luojiuoscar/isaac_disaster/helper/DescriptionHelperTest.java",
+    "src/test/java/net/luojiuoscar/isaac_disaster/registries/ability/passive/AnemicLoreTest.java",
+    "src/test/java/net/luojiuoscar/isaac_disaster/registries/ability/passive/HeadlessBabyLoreTest.java",
+    "src/test/java/net/luojiuoscar/isaac_disaster/registries/ability/passive/ZodiacLoreTest.java"
+  ],
+  "renamed_files": {
+    "src/test/java/net/luojiuoscar/isaac_disaster/registries/ability/passive/DepressionLoreTest.java": "src/test/java/net/luojiuoscar/isaac_disaster/registries/ability/passive/DepressionItemIdTest.java",
+    "src/test/java/net/luojiuoscar/isaac_disaster/registries/ability/passive/ShardOfGlassLoreTest.java": "src/test/java/net/luojiuoscar/isaac_disaster/registries/ability/passive/ShardOfGlassItemIdTest.java",
+    "src/gameTest/java/net/luojiuoscar/isaac_disaster/gametest/TrinketDescriptionGameTests.java": "src/gameTest/java/net/luojiuoscar/isaac_disaster/gametest/TrinketLootGameTests.java"
+  },
+  "modified_files": [
+    "src/gameTest/java/net/luojiuoscar/isaac_disaster/entity/familiar/impl/fly/CricketLegGameTests.java",
+    "src/gameTest/java/net/luojiuoscar/isaac_disaster/gametest/FamiliarModifiersGameTests.java",
+    "src/gameTest/java/net/luojiuoscar/isaac_disaster/gametest/FourthPassiveBatchGameTests.java",
+    "src/gameTest/java/net/luojiuoscar/isaac_disaster/gametest/ItemGivingFamiliarGameTests.java",
+    "src/gameTest/java/net/luojiuoscar/isaac_disaster/gametest/PiscesGameTests.java",
+    "src/gameTest/java/net/luojiuoscar/isaac_disaster/gametest/SwarmItemGameTests.java",
+    "src/gameTest/java/net/luojiuoscar/isaac_disaster/gametest/TrinketDescriptionGameTests.java",
+    "src/gameTest/java/net/luojiuoscar/isaac_disaster/gametest/WorldDatapackGameTests.java",
+    "src/gameTest/java/net/luojiuoscar/isaac_disaster/registries/ability_effect/impl/normal/D10GameTests.java",
+    "src/gameTest/java/net/luojiuoscar/isaac_disaster/registries/ability_effect/impl/normal/HowToJumpGameTests.java",
+    "src/test/java/net/luojiuoscar/isaac_disaster/registries/ability/passive/DepressionLoreTest.java",
+    "src/test/java/net/luojiuoscar/isaac_disaster/registries/ability/passive/ShardOfGlassLoreTest.java",
+    "src/test/java/net/luojiuoscar/isaac_disaster/registries/ability_effect/impl/normal/FireMindAttachmentTest.java",
+    "src/test/java/net/luojiuoscar/isaac_disaster/registries/ability_effect/impl/normal/HolyLightItemTest.java",
+    "src/test/java/net/luojiuoscar/isaac_disaster/registries/ability_effect/impl/normal/UranusTest.java",
+    "src/test/java/net/luojiuoscar/isaac_disaster/registries/bullet_color/BulletColorSelectionTest.java"
+  ]
+}
