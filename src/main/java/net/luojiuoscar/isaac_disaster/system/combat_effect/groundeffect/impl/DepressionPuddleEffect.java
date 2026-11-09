@@ -33,8 +33,7 @@ public final class DepressionPuddleEffect extends AbstractGroundEffect {
         Vec3 position = target.position();
         if (!target.hurt(ModDamageSources.water(contact.level(), owner), damage())) return;
         if (owner.isAlive() && owner.level() == contact.level()
-                //&& procs(owner.getRandom().nextDouble())
-        ) {
+                && procs(owner.getRandom().nextDouble())) {
             HolyLight.strike(contact.level(), owner, position,
                     holyDamage(owner.getAttributeValue(Attributes.ATTACK_DAMAGE)), true);
         }

@@ -15,7 +15,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public final class DepressionEntity extends AbstractChainFamiliarEntity {
-    public static final float BASE_SCALE = 0.6F;
+    public static final float BASE_SCALE = 1.2F;
     private static final CompositeTrigger TRIGGER = new CompositeTrigger(List.of(
             new SimpleTrigger(ModTriggerTypes.EMTPY, ModExecutableEffects.DEPRESSION_TRAIL)
     ));
@@ -30,7 +30,7 @@ public final class DepressionEntity extends AbstractChainFamiliarEntity {
         if (tick < nextTrailTick || isRecallPending() || !isValidFamiliar()) return;
         nextTrailTick = tick + 2;
         var context = new ExecutableEffectContext(owner);
-        context.set(ContextKeys.TARGET_POSITION, position());
+        context.set(ContextKeys.TARGET_POSITION, position().subtract(movement));
         context.set(ContextKeys.AMPLIFIER, 1 + getEnhancement());
         TRIGGER.fire(context, ModTriggerTypes.EMTPY);
     }

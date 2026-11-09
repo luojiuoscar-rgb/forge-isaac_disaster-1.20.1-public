@@ -30,7 +30,8 @@ public final class HeadlessBabyEntity extends AbstractChainFamiliarEntity {
         if (tick < nextBloodTick || isRecallPending() || owner.isRemoved() || !isValidFamiliar()) return;
         nextBloodTick = tick + 2;
         var context = new ExecutableEffectContext(owner);
-        context.set(ContextKeys.TARGET_POSITION, position());
+        // used position - movement to ensure the correctness of client visual
+        context.set(ContextKeys.TARGET_POSITION, position().subtract(movement));
         context.set(ContextKeys.AMPLIFIER, 1 + getEnhancement());
         TRIGGER.fire(context, ModTriggerTypes.EMTPY);
     }
