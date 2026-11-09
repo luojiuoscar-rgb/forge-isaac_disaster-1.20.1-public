@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.luojiuoscar.isaac_disaster.IsaacDisaster;
 import net.luojiuoscar.isaac_disaster.client.model.creature.FlyModel;
+import net.luojiuoscar.isaac_disaster.client.render.OwnerHostility;
 import net.luojiuoscar.isaac_disaster.entity.familiar.impl.fly.AbstractFlyFamiliarEntity;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -53,10 +54,16 @@ public final class FlyRenderer<T extends AbstractFlyFamiliarEntity> extends Enti
 
     static int renderColor(int bodyColor, UUID viewer, Team viewerTeam,
                            UUID owner, Team ownerTeam, double seconds) {
-        boolean hostile = viewer != null && owner != null && !viewer.equals(owner)
-                && (viewerTeam == null || !viewerTeam.isAlliedTo(ownerTeam));
-        // Every variant alternates its own body color and gray sixteen times per second.
-        return hostile && (((int) Math.floor(seconds * 16)) & 1) != 0 ? 0xD8D8D8 : bodyColor;
+        return color(bodyColor, shouldFlash(viewer, viewerTeam, owner, ownerTeam), seconds);
+    }
+
+    static boolean shouldFlash(UUID viewer, Team viewerTeam, UUID owner, Team ownerTeam) {
+        return OwnerHostility.isHostile(viewer, viewerTeam, owner, ownerTeam);
+    }
+
+    static int color(int original, boolean flashing, double seconds) {
+        // Sixteen half-cycles per second: 62.5 ms in each color, eight complete cycles.
+        return flashing && (((int) Math.floor(seconds * 16)) & 1) != 0 ? 0xD8D8D8 : original;
     }
 
     @Override

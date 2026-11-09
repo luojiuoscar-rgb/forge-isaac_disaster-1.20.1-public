@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import net.luojiuoscar.isaac_disaster.IsaacDisaster;
+import net.luojiuoscar.isaac_disaster.system.damage.HurtKnockback;
 import net.luojiuoscar.isaac_disaster.entity.projectile.moms_knife.FetusMomsKnifeState;
 import net.luojiuoscar.isaac_disaster.bullet.tracking.TrackingProfile;
 import net.luojiuoscar.isaac_disaster.event.custom.attack.tear_bullet.BulletStickEndEvent;
@@ -16,8 +17,6 @@ import net.luojiuoscar.isaac_disaster.registries.attack_type.AttackType;
 import net.luojiuoscar.isaac_disaster.registries.attack_type.IBulletObject;
 import net.luojiuoscar.isaac_disaster.registries.attack_type.ModAttackTypes;
 import net.luojiuoscar.isaac_disaster.registries.attack_type.util.DamagedEntities;
-import net.luojiuoscar.isaac_disaster.registries.bullet_color.BulletColor;
-import net.luojiuoscar.isaac_disaster.registries.bullet_color.ModBulletColors;
 import net.luojiuoscar.isaac_disaster.registries.split_module.SplitSequence;
 import net.luojiuoscar.isaac_disaster.registries.split_module.SplitTriggerCounts;
 import net.luojiuoscar.isaac_disaster.registries.split_module.SplitTriggerType;
@@ -33,8 +32,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryManager;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -52,6 +49,7 @@ public final class BulletState implements IBulletObject {
     private final BulletStickState stickState;
     private final BulletTrajectoryState trajectoryState;
     private float damage;
+    private final double bulletKnockback;
     private final BulletProfile profile;
     private final boolean noGravity;
     private boolean spectral;
@@ -90,6 +88,9 @@ public final class BulletState implements IBulletObject {
         this.noGravity = b.noGravity;
         AttackContext attackContext =
             b.attackContext == null ? null : b.attackContext.copyConfiguration();
+        this.bulletKnockback = attackContext != null ? attackContext.getBulletKnockback()
+                : b.bulletKnockback == null ? HurtKnockback.captureMultiplier(b.owner)
+                : HurtKnockback.normalizeMultiplier(b.bulletKnockback);
         List<TrajectorySpec> specs =
             b.trajectorySpecs.isEmpty()
                 ? attackContext == null ? List.of() : attackContext.getTrajectorySpecs()
@@ -144,9 +145,11 @@ public final class BulletState implements IBulletObject {
         return new Builder();
     }
 
+    public double getBulletKnockback() { return bulletKnockback; }
+
     /** Defers trajectory initialization until the final position and velocity are known. */
     public static Builder from(AttackContext context) {
-        BulletColor color = resolveColor(context.getColorRl());
+        var color = context.resolveColor();
         return builder()
             .position(context.getPos())
             .velocity(context.getMainAxis().scale(context.getBulletSpeed()))
@@ -158,21 +161,10 @@ public final class BulletState implements IBulletObject {
             .attackContext(context)
             .splitSequence(context.copySplitSequence())
             .triggers(context.copyTrigger())
-            .colorId(context.getColorRl())
+            .colorId(color.colorId())
             .color(color.color())
             .alpha(color.alpha())
             .visualIds(context.getVisualIds());
-    }
-
-    /**
-     * Resolves the one-time RGB/alpha snapshot so the client never needs the color registry per
-     * bullet.
-     */
-    private static BulletColor resolveColor(ResourceLocation colorId) {
-        IForgeRegistry<BulletColor> registry =
-            RegistryManager.ACTIVE.getRegistry(ModBulletColors.BULLET_COLOR_KEY);
-        BulletColor color = registry == null || colorId == null ? null : registry.getValue(colorId);
-        return color == null ? ModBulletColors.BASE.get() : color;
     }
 
     /** Advances one authoritative tick using only base kinematics. Returns whether still alive. */
@@ -838,6 +830,7 @@ public final class BulletState implements IBulletObject {
         private Integer stickDurationTicks;
         private double range;
         private float damage = 1.0f;
+        private Double bulletKnockback;
         private double renderScale = 1.0D, collisionWidth = 0.125D, collisionHeight = 0.125D;
         private int color = 0xFFFFFF;
         private float alpha = 1.0F;
@@ -867,6 +860,11 @@ public final class BulletState implements IBulletObject {
 
         public Builder position(Vec3 v) {
             position = v;
+            return this;
+        }
+
+        public Builder bulletKnockback(double value) {
+            bulletKnockback = value;
             return this;
         }
 

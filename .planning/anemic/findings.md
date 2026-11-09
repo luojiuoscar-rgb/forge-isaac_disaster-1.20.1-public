@@ -1,0 +1,23 @@
+# 发现与决策
+
+- 基线工作区干净；当前分支feature/feature-c，协议21。
+- 普通水迹的地面投影、伤害、来源判定、覆盖、空间索引和网络流程可直接复用。
+- 宝瓶座用真实服务器位置比较判断移动，避免远程玩家水平速度为0。
+- 周期模块仅最后一份移除时调用handleRemove；模块数量可以与道具份数对称增减。
+- 用户最新要求：生效剩余时间直接放在玩家ExtraData的普通doubleValues，每次受伤重设200、每2 tick扣2；允许沿用既有保存与复制，不增加临时Double映射。
+- 模块移除四个专属事件监听和Trail状态类，只保留实际位置采样用于移动判定；已有血迹继续自然到期，不新增清理行为。
+- getExtraDesc的公共入口注释限定为解释套装、药水等专有名词，不承载道具的长篇机制说明。
+- 动态文本只高亮局内会变化的数值；血迹伤害只依赖配置，改为普通格式化文本，继续读取配置值但不使用dynamicNumber。
+- 流血粒子直接复用贫血周期模块的倒计时，沿用项目DeadTooth中的DustParticleOptions与原版粒子发送方式；每2 tick一个小型暗红dust，位于身体中下部。移动判定之前发送，站立不影响显示。
+- 本轮改用普通Double后，定向JUnit13项、实际GameTest8项及一次runData均通过；GameTest覆盖普通Double保存/复制后继续倒计时。FakePlayer的周期倒计时需由测试显式推进；真实玩家仍使用已有PlayerTick循环入口。
+- 原版ID214、品质1、忏悔射程+1.5；项目确认每份+1单位，默认+3格。
+- 英文Wiki：普通宝箱、贪婪宝箱、究极隐藏池；图标Collectible_Anemic_icon.png。
+- 原版伤害频率资料不一致（Wiki每秒6，IsaacGuru每秒20），本项目已明确独立数值。
+- 中文Wiki403、旧Fandom超时；不声称双站正文核验完成。
+- 普通说明4行；射程使用StatManager描述，血迹伤害动态读取配置。Shift说明自然拆行；真实翻译解析测试已通过，未进行客户端字体测量或截图验收。
+- 图标来源：https://bindingofisaacrebirth.wiki.gg/images/Collectible_Anemic_icon.png；已下载并确认PNG/32×32，未重绘或替代。
+- 普通液体支撑采用现有每10 tick错峰检查；贫血不改变该优化。
+- 最新定向JUnit17项通过，包含10项新增测试及7项既有液体伤害/覆盖回归；MC真实翻译解析测试通过。
+- 最新Forge GameTest8项通过；使用独立namespace isaac_disaster_anemic及build/gametest世界。
+- runData已执行且仅执行一次，退出0；生成anemic模型与passive_items标签。三个道具池均包含唯一无权重条目。
+- 最终git diff HEAD --check通过。27个相关文件，不含临时调研素材、参考源码或音频；生成资源沿用项目原有忽略规则。

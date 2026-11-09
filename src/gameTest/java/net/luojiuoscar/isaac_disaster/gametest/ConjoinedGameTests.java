@@ -102,7 +102,7 @@ public final class ConjoinedGameTests {
                 helper.assertTrue(contexts.size() == 3, "普通泪弹、激光和蓄力硫磺火各增加两发");
                 for (var context : contexts) {
                     helper.assertTrue(type.getId().equals(context.getTypeId()), "额外攻击保留当前攻击类型");
-                    helper.assertTrue(ModBulletColors.BLOOD_TEAR.getId().equals(context.getColorRl()), "额外攻击继承弹色");
+                    helper.assertTrue(ModBulletColors.BLOOD_TEAR.getId().equals(context.getColorId()), "额外攻击继承弹色");
                     helper.assertTrue(!context.getSplitSequence().isEmpty(), "额外攻击也经过分裂模块附加流程");
                     helper.assertTrue(!context.getTrajectorySpecs().isEmpty(), "额外攻击也经过轨迹附加流程");
                     near(helper, context.getDamage(), f.owner.getAttributeValue(Attributes.ATTACK_DAMAGE), "伤害包含套装扣减");

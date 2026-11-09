@@ -783,6 +783,13 @@ public class ModPassiveAbilities {
             PASSIVE_ABILITY_REGISTRY.register("sinus_infection",
                     () -> new SinusInfection(ItemId.SINUS_INFECTION.getId(), ItemId.SINUS_INFECTION.getLevel()));
 
+    public static final RegistryObject<PassiveAbility> FIRE_MIND =
+            PASSIVE_ABILITY_REGISTRY.register("fire_mind",
+                    () -> new FireMind(ItemId.FIRE_MIND.getId(), ItemId.FIRE_MIND.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> HOLY_LIGHT =
+            PASSIVE_ABILITY_REGISTRY.register("holy_light",
+                    () -> new HolyLight(ItemId.HOLY_LIGHT.getId(), ItemId.HOLY_LIGHT.getLevel()));
     public static final RegistryObject<PassiveAbility> BFFS =
             PASSIVE_ABILITY_REGISTRY.register("bffs",
                     () -> new Bffs(ItemId.BFFS.getId(), ItemId.BFFS.getLevel()));
@@ -858,5 +865,26 @@ public class ModPassiveAbilities {
             PASSIVE_ABILITY_REGISTRY.register("demon_baby",
                     () -> new DemonBaby(ItemId.DEMON_BABY.getId(), ItemId.DEMON_BABY.getLevel()));
 
+
+    public static final RegistryObject<PassiveAbility> VIRGO =
+            PASSIVE_ABILITY_REGISTRY.register("virgo", () -> new Virgo(ItemId.VIRGO.getId(), ItemId.VIRGO.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> AQUARIUS =
+            PASSIVE_ABILITY_REGISTRY.register("aquarius", () -> new Aquarius(ItemId.AQUARIUS.getId(), ItemId.AQUARIUS.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> URANUS =
+            PASSIVE_ABILITY_REGISTRY.register("uranus", () -> new Uranus(ItemId.URANUS.getId(), ItemId.URANUS.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> ANEMIC =
+            PASSIVE_ABILITY_REGISTRY.register("anemic", () -> new Anemic(ItemId.ANEMIC.getId(), ItemId.ANEMIC.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> SHARD_OF_GLASS =
+            PASSIVE_ABILITY_REGISTRY.register("shard_of_glass", () -> new ShardOfGlass(ItemId.SHARD_OF_GLASS.getId(), ItemId.SHARD_OF_GLASS.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> HEADLESS_BABY =
+            PASSIVE_ABILITY_REGISTRY.register("headless_baby", () -> new HeadlessBaby(ItemId.HEADLESS_BABY.getId(), ItemId.HEADLESS_BABY.getLevel()));
+
+    public static final RegistryObject<PassiveAbility> DEPRESSION =
+            PASSIVE_ABILITY_REGISTRY.register("depression", () -> new Depression(ItemId.DEPRESSION.getId(), ItemId.DEPRESSION.getLevel()));
 
 }

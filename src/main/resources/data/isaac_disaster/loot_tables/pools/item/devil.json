@@ -33,7 +33,8 @@
         {"type": "minecraft:item", "name": "isaac_disaster:blood_rights"},
         {"type": "minecraft:item", "name": "isaac_disaster:contract_from_below"},
         {"type": "minecraft:item", "name": "isaac_disaster:dead_cat"},
-        {"type": "minecraft:item", "name": "isaac_disaster:guppys_collar"}
+        {"type": "minecraft:item", "name": "isaac_disaster:guppys_collar"},
+        {"type": "minecraft:item", "name": "isaac_disaster:headless_baby"}
       ]
     }
   ]

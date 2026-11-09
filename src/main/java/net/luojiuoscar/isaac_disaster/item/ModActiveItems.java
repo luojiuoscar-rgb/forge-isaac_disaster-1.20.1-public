@@ -19,10 +19,6 @@ public class ModActiveItems {
         ITEMS.register(eventBus);
     }
 
-    public static final RegistryObject<Item> ANARCHIST_COOKBOOK = ITEMS.register("anarchist_cookbook",
-            () -> new ActiveItem(new Item.Properties(), 6, 6, ModActiveAbilities.ANARCHIST_COOKBOOK));
-    static {ItemListManager.ACTIVE_ITEM_LIST.add(ANARCHIST_COOKBOOK);}
-
     public static final RegistryObject<Item> YUM_HEART = ITEMS.register("yum_heart",
             () -> new ActiveItem(new Item.Properties(), 8, 8, ModActiveAbilities.YUM_HEART));
     static {ItemListManager.ACTIVE_ITEM_LIST.add(YUM_HEART);}
@@ -90,6 +86,10 @@ public class ModActiveItems {
     public static final RegistryObject<Item> TELEPATHY_FOR_DUMMIES = ITEMS.register("telepathy_for_dummies",
             () -> new ActiveItem(new Item.Properties(), 8, 8, ModActiveAbilities.TELEPATHY_FOR_DUMMIES));
     static {ItemListManager.ACTIVE_ITEM_LIST.add(TELEPATHY_FOR_DUMMIES);}
+
+    public static final RegistryObject<Item> ANARCHIST_COOKBOOK = ITEMS.register("anarchist_cookbook",
+            () -> new ActiveItem(new Item.Properties(), 6, 6, ModActiveAbilities.ANARCHIST_COOKBOOK));
+    static {ItemListManager.ACTIVE_ITEM_LIST.add(ANARCHIST_COOKBOOK);}
 
     public static final RegistryObject<Item> SMELTER = ITEMS.register("smelter",
             () -> new ActiveItem(new Item.Properties(), 12, 12, ModActiveAbilities.SMELTER));
@@ -190,5 +190,17 @@ public class ModActiveItems {
     public static final RegistryObject<Item> BOX_OF_SPIDERS = ITEMS.register("box_of_spiders",
             () -> new ActiveItem(new Item.Properties(), 4, 4, ModActiveAbilities.BOX_OF_SPIDERS));
     static {ItemListManager.ACTIVE_ITEM_LIST.add(BOX_OF_SPIDERS);}
+
+    public static final RegistryObject<Item> CRACK_THE_SKY = ITEMS.register("crack_the_sky",
+            () -> new ActiveItem(new Item.Properties(), 4, 4, ModActiveAbilities.CRACK_THE_SKY));
+    static {ItemListManager.ACTIVE_ITEM_LIST.add(CRACK_THE_SKY);}
+
+    public static final RegistryObject<Item> D10 = ITEMS.register("d10",
+            () -> new ActiveItem(new Item.Properties(), 6, 6, ModActiveAbilities.D10));
+    static {ItemListManager.ACTIVE_ITEM_LIST.add(D10);}
+
+    public static final RegistryObject<Item> HOW_TO_JUMP = ITEMS.register("how_to_jump",
+            () -> new ActiveItem(new Item.Properties(), 2, 2, ModActiveAbilities.HOW_TO_JUMP));
+    static {ItemListManager.ACTIVE_ITEM_LIST.add(HOW_TO_JUMP);}
 
 }

@@ -79,4 +79,11 @@ public class ModPeriodicModules {
     public static final RegistryObject<PeriodicModule> LOCUST_OF_CONQUEST =
             PERIODIC_MODULE_REGISTRY.register("locust_of_conquest", () ->
                     new ConquestLocustGeneration(ModFamiliarEntities.LOCUST_OF_CONQUEST.getId(), ModTrinketAbilities.LOCUST_OF_CONQUEST.getId()));
+    public static final RegistryObject<PeriodicModule> AQUARIUS =
+            PERIODIC_MODULE_REGISTRY.register("aquarius", Aquarius::new);
+    public static final RegistryObject<Anemic> ANEMIC =
+            PERIODIC_MODULE_REGISTRY.register("anemic", Anemic::new);
+    public static final RegistryObject<ShardOfGlass> SHARD_OF_GLASS =
+            PERIODIC_MODULE_REGISTRY.register("shard_of_glass", ShardOfGlass::new);
+
 }

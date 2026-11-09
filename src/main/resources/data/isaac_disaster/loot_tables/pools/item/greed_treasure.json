@@ -3,6 +3,9 @@
     {
       "rolls": 1,
       "entries": [
+        {"type": "minecraft:item", "name": "isaac_disaster:aquarius"},
+        {"type": "minecraft:item", "name": "isaac_disaster:virgo"},
+        {"type": "minecraft:item", "name": "isaac_disaster:holy_light"},
         {"type": "minecraft:item", "name": "isaac_disaster:robo_baby_2"},
         {"type": "minecraft:item", "name": "isaac_disaster:robo_baby"},
         {"type": "minecraft:item", "name": "isaac_disaster:loki_baby"},
@@ -124,7 +127,15 @@
         {"type": "minecraft:item", "name": "isaac_disaster:compound_fracture"},
         {"type": "minecraft:item", "name": "isaac_disaster:haemolacria"},
         {"type": "minecraft:item", "name": "isaac_disaster:monstros_lung"},
-        {"type": "minecraft:item", "name": "isaac_disaster:tractor_beam"}
+        {"type": "minecraft:item", "name": "isaac_disaster:crack_the_sky"},
+        {"type": "minecraft:item", "name": "isaac_disaster:fire_mind"},
+        {"type": "minecraft:item", "name": "isaac_disaster:d10"},
+        {"type": "minecraft:item", "name": "isaac_disaster:how_to_jump"},
+        {"type": "minecraft:item", "name": "isaac_disaster:tractor_beam"},
+        {"type": "minecraft:item", "name": "isaac_disaster:anemic"},
+        {"type": "minecraft:item", "name": "isaac_disaster:shard_of_glass"},
+        {"type": "minecraft:item", "name": "isaac_disaster:headless_baby"},
+        {"type": "minecraft:item", "name": "isaac_disaster:depression"}
       ]
     }
   ]

@@ -19,10 +19,8 @@ public final class ModFamiliarLimitGroups {
     public static final RegistryObject<FamiliarLimitGroup> SPIDERS =
             FAMILIAR_LIMIT_GROUP_REGISTRY.register("spiders", () -> new FamiliarLimitGroup(64));
 
-    public static final RegistryObject<FamiliarLimitGroup> BABIES =
-            FAMILIAR_LIMIT_GROUP_REGISTRY.register("babies", () -> new FamiliarLimitGroup(64));
-    public static final RegistryObject<FamiliarLimitGroup> ITEM_GIVERS =
-            FAMILIAR_LIMIT_GROUP_REGISTRY.register("item_givers", () -> new FamiliarLimitGroup(64));
+    public static final RegistryObject<FamiliarLimitGroup> CHAIN_FAMILIARS =
+            FAMILIAR_LIMIT_GROUP_REGISTRY.register("chain_familiars", () -> new FamiliarLimitGroup(64));
 
     private ModFamiliarLimitGroups() { }
 }

@@ -206,6 +206,11 @@ public class ModTriggerModules {
     public static final RegistryObject<TriggerModule> SINUS_INFECTION =
             TRIGGER_MODULE_REGISTRY.register("sinus_infection", SinusInfection::new);
 
+    public static final RegistryObject<TriggerModule> FIRE_MIND =
+            TRIGGER_MODULE_REGISTRY.register("fire_mind", FireMind::new);
+
+    public static final RegistryObject<TriggerModule> HOLY_LIGHT =
+            TRIGGER_MODULE_REGISTRY.register("holy_light", HolyLight::new);
     public static final RegistryObject<TriggerModule> CRICKET_LEG =
             TRIGGER_MODULE_REGISTRY.register("cricket_leg", CricketLeg::new);
 
@@ -226,5 +231,17 @@ public class ModTriggerModules {
 
     public static final RegistryObject<TriggerModule> CAT =
             TRIGGER_MODULE_REGISTRY.register("cat", Cat::new);
+
+    public static final RegistryObject<TriggerModule> VIRGO =
+            TRIGGER_MODULE_REGISTRY.register("virgo", Virgo::new);
+
+    public static final RegistryObject<TriggerModule> URANUS =
+            TRIGGER_MODULE_REGISTRY.register("uranus", Uranus::new);
+
+    public static final RegistryObject<TriggerModule> ANEMIC =
+            TRIGGER_MODULE_REGISTRY.register("anemic", Anemic::new);
+
+    public static final RegistryObject<TriggerModule> SHARD_OF_GLASS =
+            TRIGGER_MODULE_REGISTRY.register("shard_of_glass", ShardOfGlass::new);
 
 }

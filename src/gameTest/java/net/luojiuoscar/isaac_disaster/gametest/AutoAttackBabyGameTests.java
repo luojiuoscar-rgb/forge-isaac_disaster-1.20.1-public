@@ -302,7 +302,7 @@ public final class AutoAttackBabyGameTests {
                         && laser.getOwner() == f.owner && laser.getShooter() == baby, "激光配置范围24到64，伤害独立且归属正确");
                 helper.assertTrue(laser.isSpectral() && laser.isPiercing() && !laser.isHoming() && !laser.isControllable()
                         && context.usesFixedLaunchTransform() && context.getPos().distanceTo(f.head(baby)) < 1e-7
-                        && context.getColorRl().equals(ModBulletColors.BASE.getId()) && context.getSplitSequence().isEmpty()
+                        && context.getColorId().equals(ModBulletColors.BASE.getId()) && context.getSplitSequence().isEmpty()
                         && context.getVisualIds().isEmpty() && context.getTrajectorySpecs().isEmpty()
                         && ((AbstractLaserAttack.LaserProjectile) laser).width == 0.25, "固定中立发射点、普通红色和独立尺寸，不继承玩家模块");
             }

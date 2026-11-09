@@ -292,7 +292,7 @@ public final class SwarmItemGameTests {
             long next = reference.nextLong();
             f.owner.getRandom().setSeed(successSeed());
             MinecraftForge.EVENT_BUS.post(new LivingAttackEvent(target,
-                    ModDamageSources.tear(helper.getLevel(), f.owner, new Vec3(1, 0, 0)), 2));
+                    ModDamageSources.tear(helper.getLevel(), f.owner, new Vec3(1, 0, 0), 0.2D), 2));
             f.hit(prepared(f, ModAttackTypes.BULLET.get()), 2, false);
             helper.assertTrue(f.count("blue_fly") == 1 && f.owner.getRandom().nextLong() == next,
                     "The tear damage source does not add an extra restricted probability roll");
@@ -732,7 +732,7 @@ public final class SwarmItemGameTests {
                 MinecraftForge.EVENT_BUS.post(new LivingDamageEvent(target, ModDamageSources.familiar(helper.getLevel(), familiar, f.owner), 2));
                 helper.assertTrue(f.count("blue_fly") == before, "All familiar direct sources are excluded: " + type);
             }
-            for (DamageSource source : List.of(ModDamageSources.tear(helper.getLevel(), f.owner, new Vec3(1, 0, 0)),
+            for (DamageSource source : List.of(ModDamageSources.tear(helper.getLevel(), f.owner, new Vec3(1, 0, 0), 0.2D),
                     ModDamageSources.laser(helper.getLevel(), f.owner), f.owner.damageSources().explosion(f.owner, f.owner))) {
                 f.reset();
                 target.invulnerableTime = 0;
@@ -829,7 +829,7 @@ public final class SwarmItemGameTests {
             var source = id("random_module");
             TriggerModule module = new TriggerModule(new CompositeTrigger(List.of(
                     new SimpleTrigger(ModTriggerTypes.ATTACK_PLAN, ModExecutableEffects.MOMS_WIG, null, source),
-                    new SimpleTrigger(ModTriggerTypes.ATTACK_CONTEXT_PREPARE,
+                    new SimpleTrigger(ModTriggerTypes.EFFECT_ATTACHMENT_PREPARE,
                             ModExecutableEffects.THE_MULLIGAN_ATTACHMENT, null, source)))) {};
             f.owner.getAttribute(Attributes.LUCK).setBaseValue(100);
             var context = new ExecutableEffectContext(f.owner);
@@ -842,7 +842,7 @@ public final class SwarmItemGameTests {
                     && f.data.getCount(id("blue_spider"), id("moms_wig")) == 0,
                     "复用假发效果时，嵌套生成沿用模块来源");
             context.set(ContextKeys.ATTACK_CONTEXT, attack);
-            module.fire(context, ModTriggerTypes.ATTACK_CONTEXT_PREPARE);
+            module.fire(context, ModTriggerTypes.EFFECT_ATTACHMENT_PREPARE);
             f.owner.getRandom().setSeed(successSeed());
             f.hit(attack, 1, false);
             helper.assertTrue(f.data.getCount(id("blue_fly"), source) == 1

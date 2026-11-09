@@ -1,7 +1,13 @@
 package net.luojiuoscar.isaac_disaster.registries.attack_type;
 
 import java.util.*;
-import java.util.HashSet;
+import java.util.function.Supplier;
+import net.luojiuoscar.isaac_disaster.system.combat_effect.attachment.EffectAttachmentNode;
+import net.luojiuoscar.isaac_disaster.system.damage.HurtKnockback;
+import net.luojiuoscar.isaac_disaster.registries.ability_effect.IExecutableEffect;
+import net.luojiuoscar.isaac_disaster.registries.trigger_module.ModTriggerTypes;
+import net.luojiuoscar.isaac_disaster.registries.bullet_color.BulletColorSelection;
+import net.luojiuoscar.isaac_disaster.registries.bullet_color.ModBulletColors;
 import net.luojiuoscar.isaac_disaster.IsaacDisaster;
 import net.luojiuoscar.isaac_disaster.attribute.ModAttributes;
 import net.luojiuoscar.isaac_disaster.helper.GeometryHelper;
@@ -22,14 +28,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /** Creation-time data used to construct one attack object. */
-public class AttackContext {
+public class AttackContext implements EffectAttachmentNode {
     public static final double DEFAULT_RANGE = 18.0;
     public static final double DEFAULT_SPEED = 1.0;
     public static final double MAX_RANGE = 64.0;
     private static final double MIN_BULLET_SCALE = 0.25D;
     private static final double BULLET_SCALE_BASE_DAMAGE = 2.0D;
 
-    private ResourceLocation colorRl;
+    private final BulletColorSelection colors;
+    private BulletColorSelection.Result resolvedColor;
     private Set<ResourceLocation> visualIds;
     private final CompositeTrigger trigger;
     private final TrajectorySequence trajectorySequence;
@@ -40,6 +47,7 @@ public class AttackContext {
     private double bulletScale;
     private final double bulletRange;
     private final double bulletSpeed;
+    private final double bulletKnockback;
     private SplitSequence splitSequence;
     private boolean useFixedLaunchTransform;
     private int stickDurationTicks;
@@ -56,7 +64,7 @@ public class AttackContext {
     private AttackContext(Builder builder) {
         this.owner = Objects.requireNonNull(builder.owner, "owner");
         this.shooter = builder.shooter == null ? owner : builder.shooter;
-        this.colorRl = builder.colorRl;
+        this.colors = builder.colors.copy();
         this.visualIds = Set.copyOf(builder.visualIds);
         this.trigger = builder.trigger == null ? new CompositeTrigger() : builder.trigger.copy();
         this.trajectorySequence = builder.trajectorySequence.copy();
@@ -74,6 +82,8 @@ public class AttackContext {
         this.bulletScale = resolveBulletScale(damage, bulletScaleModifier);
         this.bulletRange = sanitizeRange(builder.range);
         this.bulletSpeed = sanitizeSpeed(builder.speed);
+        this.bulletKnockback = builder.bulletKnockback == null ? HurtKnockback.captureMultiplier(owner)
+                : HurtKnockback.normalizeMultiplier(builder.bulletKnockback);
         this.splitSequence = builder.splitSequence == null ? new SplitSequence() : builder.splitSequence.copy();
         this.useFixedLaunchTransform = builder.useFixedLaunchTransform;
         this.stickDurationTicks = builder.stickDurationTicks;
@@ -87,9 +97,9 @@ public class AttackContext {
 
     /** Derives a new attack: size is recalculated from its damage and inherited modifier. */
     public Builder toBuilder() {
-        return Builder.from(this).color(colorRl).visuals(visualIds).trigger(trigger).trajectorySequence(trajectorySequence)
+        return Builder.from(this).colors(colors.ids()).visuals(visualIds).trigger(trigger).trajectorySequence(trajectorySequence)
                 .position(pos).attackType(attackType).mainAxis(mainAxis).damage((double) damage).range(bulletRange)
-                .speed(bulletSpeed).bulletScaleModifier(bulletScaleModifier).splitSequence(splitSequence)
+                .speed(bulletSpeed).bulletKnockback(bulletKnockback).bulletScaleModifier(bulletScaleModifier).splitSequence(splitSequence)
                 .useFixedLaunchTransform(useFixedLaunchTransform).stickDurationTicks(stickDurationTicks).hitBlockPositions(hitBlockPositions)
                 .inheritTrajectorySnapshot(inheritedTrajectorySnapshot);
     }
@@ -107,6 +117,12 @@ public class AttackContext {
     public void addSimpleTrigger(SimpleTrigger trigger) { if (ensureMutable("addSimpleTrigger")) this.trigger.add(Objects.requireNonNull(trigger, "trigger")); }
     public void addSimpleTriggers(List<SimpleTrigger> triggers) { if (ensureMutable("addSimpleTriggers")) this.trigger.addAll(Objects.requireNonNull(triggers, "triggers")); }
 
+    @Override
+    public void addStatusEffect(HitPhase phase, Supplier<? extends IExecutableEffect> effect) {
+        addSimpleTrigger(new SimpleTrigger(phase == HitPhase.BEFORE_DAMAGE
+                ? ModTriggerTypes.BULLET_HIT_ENTITY_BEFORE : ModTriggerTypes.BULLET_HIT_ENTITY_AFTER, effect));
+    }
+
     public Vec3 getPos() { return pos; }
     public void setPos(Vec3 pos) { if (ensureMutable("setPos")) this.pos = Objects.requireNonNull(pos, "pos"); }
     public Vec3 getMainAxis() { return mainAxis; }
@@ -114,8 +130,19 @@ public class AttackContext {
 
     @NotNull public Entity getShooter() { return shooter; }
     @NotNull public LivingEntity getOwner() { return owner; }
-    public ResourceLocation getColorRl() { return colorRl; }
-    public void setColorRl(ResourceLocation colorRl) { if (ensureMutable("setColorRl")) this.colorRl = colorRl; }
+    public Set<ResourceLocation> getColorIds() { return colors.ids(); }
+    public ResourceLocation getColorId() { return resolveColor().colorId(); }
+    public BulletColorSelection.Result resolveColor() {
+        if (resolvedColor == null) {
+            int fallback = attackType == null ? ModBulletColors.DEFAULT_TEAR_COLOR : attackType.getDefaultColor();
+            resolvedColor = colors.resolveForAttack(attackType, fallback, !isLaserAttack());
+        }
+        return resolvedColor;
+    }
+    @Override
+    public void offerColor(ResourceLocation id) {
+        if (ensureMutable("offerColor") && colors.offer(id)) resolvedColor = null;
+    }
     public Set<ResourceLocation> getVisualIds() { return visualIds; }
     public void setVisualIds(Set<ResourceLocation> visualIds) { if (ensureMutable("setVisualIds")) this.visualIds = visualIds == null ? Set.of() : Set.copyOf(visualIds); }
     public TrajectorySequence copyTrajectorySequence() { return trajectorySequence.copy(); }
@@ -132,6 +159,7 @@ public class AttackContext {
     public float getDamage() { return damage; }
     public double getBulletRange() { return bulletRange; }
     public double getBulletSpeed() { return bulletSpeed; }
+    public double getBulletKnockback() { return bulletKnockback; }
     public int getStickDurationTicks() { return stickDurationTicks; }
     /**
      * Requests a shared attachment lifetime during preparation. Repeated requests retain the
@@ -150,7 +178,10 @@ public class AttackContext {
     @Nullable public ResourceLocation getRootTypeId() { return attackType == null ? null : attackType.getRootId(); }
     public boolean isLaserAttack() { return ModAttackTypes.LASER.getId().equals(getRootTypeId()); }
     public void setAttackType(AttackType type) {
-        if (ensureMutable("setAttackType")) attackType = Objects.requireNonNull(type, "attackType");
+        if (ensureMutable("setAttackType")) {
+            attackType = Objects.requireNonNull(type, "attackType");
+            resolvedColor = null;
+        }
     }
     /**
      * Binds the attack definition before preparation or direct execution, preserving finalized size.
@@ -163,6 +194,7 @@ public class AttackContext {
         if (attackType == type) return this;
         AttackContext boundContext = frozen ? copy() : this;
         boundContext.attackType = type;
+        boundContext.resolvedColor = null;
         boundContext.frozen = false;
         return boundContext;
     }
@@ -192,6 +224,7 @@ public class AttackContext {
     /** Resolves trajectories and locks controlled setters; mutable trigger/split access remains explicit. */
     public void freeze() {
         if (frozen) return;
+        resolveColor();
         trajectorySequence.resolve(getRootTypeId());
         frozen = true;
     }
@@ -257,7 +290,8 @@ public class AttackContext {
     private AttackContext(AttackContext source, boolean includeInheritance) {
         this.owner = source.owner;
         this.shooter = source.shooter;
-        this.colorRl = source.colorRl;
+        this.colors = source.colors.copy();
+        this.resolvedColor = source.resolvedColor;
         this.visualIds = Set.copyOf(source.visualIds);
         this.trigger = source.trigger.copy();
         this.trajectorySequence = source.trajectorySequence.copy();
@@ -268,6 +302,7 @@ public class AttackContext {
         this.bulletScale = source.bulletScale;
         this.bulletRange = source.bulletRange;
         this.bulletSpeed = source.bulletSpeed;
+        this.bulletKnockback = source.bulletKnockback;
         this.splitSequence = source.splitSequence.copy();
         this.useFixedLaunchTransform = source.useFixedLaunchTransform;
         this.stickDurationTicks = source.stickDurationTicks;
@@ -280,7 +315,7 @@ public class AttackContext {
     private AttackContext(AttackContext source, Builder builder) {
         this.owner = source.owner;
         this.shooter = source.shooter;
-        this.colorRl = builder.colorRl;
+        this.colors = builder.colors.copy();
         this.visualIds = Set.copyOf(builder.visualIds);
         this.trigger = builder.trigger == null ? new CompositeTrigger() : builder.trigger.copy();
         this.trajectorySequence = builder.trajectorySequence.copy();
@@ -293,6 +328,8 @@ public class AttackContext {
         this.bulletScale = resolveBulletScale(damage, bulletScaleModifier);
         this.bulletRange = sanitizeRange(builder.range);
         this.bulletSpeed = sanitizeSpeed(builder.speed);
+        this.bulletKnockback = builder.bulletKnockback == null ? source.bulletKnockback
+                : HurtKnockback.normalizeMultiplier(builder.bulletKnockback);
         this.splitSequence = builder.splitSequence == null ? new SplitSequence() : builder.splitSequence.copy();
         this.useFixedLaunchTransform = builder.useFixedLaunchTransform;
         this.stickDurationTicks = builder.stickDurationTicks;
@@ -306,7 +343,7 @@ public class AttackContext {
         private final LivingEntity owner;
         private final Entity shooter;
         private AttackContext source;
-        private ResourceLocation colorRl;
+        private BulletColorSelection colors = new BulletColorSelection();
         private Set<ResourceLocation> visualIds = Set.of();
         private CompositeTrigger trigger;
         private TrajectorySequence trajectorySequence = new TrajectorySequence();
@@ -315,6 +352,7 @@ public class AttackContext {
         private Vec3 direction;
         private Double damage;
         private Double bulletScaleModifier;
+        private Double bulletKnockback;
         private double range = DEFAULT_RANGE;
         private double speed = DEFAULT_SPEED;
         private SplitSequence splitSequence;
@@ -332,7 +370,8 @@ public class AttackContext {
         private Builder(AttackContext source) { this.owner = null; this.shooter = null; this.source = source; }
         private static Builder from(AttackContext source) { return new Builder(source); }
 
-        public Builder color(ResourceLocation colorRl) { this.colorRl = colorRl; return this; }
+        public Builder color(ResourceLocation id) { colors = new BulletColorSelection(List.of(id)); return this; }
+        public Builder colors(Collection<ResourceLocation> ids) { colors = new BulletColorSelection(ids); return this; }
         public Builder visuals(Set<ResourceLocation> visualIds) { this.visualIds = visualIds == null ? Set.of() : Set.copyOf(visualIds); return this; }
         public Builder trigger(CompositeTrigger trigger) { this.trigger = trigger; return this; }
         public Builder trajectorySequence(TrajectorySequence sequence) {
@@ -367,6 +406,7 @@ public class AttackContext {
         public Builder bulletScaleModifier(@Nullable Double modifier) { this.bulletScaleModifier = modifier; return this; }
         public Builder range(double range) { this.range = range; return this; }
         public Builder speed(double speed) { this.speed = speed; return this; }
+        public Builder bulletKnockback(double value) { this.bulletKnockback = value; return this; }
         public Builder stickDurationTicks(int ticks) {
             if (ticks < 0) ticks = 0;
             this.stickDurationTicks = Math.max(this.stickDurationTicks, ticks);

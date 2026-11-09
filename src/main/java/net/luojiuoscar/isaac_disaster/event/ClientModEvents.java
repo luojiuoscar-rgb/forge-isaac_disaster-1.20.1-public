@@ -14,6 +14,9 @@ import net.luojiuoscar.isaac_disaster.client.ModKeyMappings;
 import net.luojiuoscar.isaac_disaster.client.model.creature.FlyModel;
 import net.luojiuoscar.isaac_disaster.client.model.creature.SpiderModel;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.tear_baby.TearBabyModel;
+import net.luojiuoscar.isaac_disaster.client.model.familiar.headless_baby.HeadlessBabyModel;
+import net.luojiuoscar.isaac_disaster.client.renderer.familiar.headless_baby.HeadlessBabyRenderer;
+import net.luojiuoscar.isaac_disaster.client.renderer.familiar.depression.DepressionRenderer;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.harlequin_baby.HarlequinBabyModel;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.rotten_baby.RottenBabyModel;
 import net.luojiuoscar.isaac_disaster.client.model.familiar.loki_baby.LokiBabyModel;
@@ -37,7 +40,6 @@ import net.luojiuoscar.isaac_disaster.renderer.layer.golden.GoldenLayer;
 import net.luojiuoscar.isaac_disaster.renderer.layer.golden.SlimeGoldenLayer;
 import net.luojiuoscar.isaac_disaster.renderer.layer.petrified.PetrifiedLayer;
 import net.luojiuoscar.isaac_disaster.renderer.layer.petrified.SlimePetrifiedLayer;
-import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.SlimeRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -63,6 +65,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(FlyModel.LAYER_LOCATION, FlyModel::createBodyLayer);
         event.registerLayerDefinition(SpiderModel.LAYER_LOCATION, SpiderModel::createBodyLayer);
         event.registerLayerDefinition(TearBabyModel.LAYER_LOCATION, TearBabyModel::createBodyLayer);
+        event.registerLayerDefinition(HeadlessBabyModel.LAYER_LOCATION, HeadlessBabyModel::createBodyLayer);
         event.registerLayerDefinition(HarlequinBabyModel.LAYER_LOCATION, HarlequinBabyModel::createBodyLayer);
         event.registerLayerDefinition(RottenBabyModel.LAYER_LOCATION, RottenBabyModel::createBodyLayer);
         event.registerLayerDefinition(LokiBabyModel.LAYER_LOCATION, LokiBabyModel::createBodyLayer);
@@ -79,8 +82,9 @@ public class ClientModEvents {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.ISAAC_BOMB.get(), CustomTntRenderer::new);
         event.registerEntityRenderer(ModEntities.GIGA_BOMB.get(), CustomTntRenderer::new);
-        event.registerEntityRenderer(ModEntities.SELECTIVE_EFFECT_CLOUD.get(), NoopRenderer::new);
         event.registerEntityRenderer(ModEntities.MOM_KNIFE.get(), MomKnifeRenderer::new);
+        event.registerEntityRenderer(ModEntities.HEADLESS_BABY.get(), HeadlessBabyRenderer::new);
+        event.registerEntityRenderer(ModEntities.DEPRESSION.get(), DepressionRenderer::new);
         event.registerEntityRenderer(ModEntities.PLAYER_MOMS_KNIFE.get(), PlayerMomsKnifeRenderer::new);
         event.registerEntityRenderer(ModEntities.BROTHER_BOBBY.get(), context -> new BabyFamiliarRenderer<>(context,
                 ResourceLocation.fromNamespaceAndPath(IsaacDisaster.MOD_ID, "textures/entity/familiar/brother_bobby.png")));

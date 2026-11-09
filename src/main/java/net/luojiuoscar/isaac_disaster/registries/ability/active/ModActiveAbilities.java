@@ -176,6 +176,9 @@ public class ModActiveAbilities {
             ACTIVE_ABILITY_REGISTRY.register("d12",
                     () -> new D12(ItemId.D12.getId(), ItemId.D12.getLevel()));
 
+    public static final RegistryObject<ActiveAbility> CRACK_THE_SKY =
+            ACTIVE_ABILITY_REGISTRY.register("crack_the_sky",
+                    () -> new CrackTheSky(ItemId.CRACK_THE_SKY.getId(), ItemId.CRACK_THE_SKY.getLevel()));
     public static final RegistryObject<ActiveAbility> MOMS_PAD =
             ACTIVE_ABILITY_REGISTRY.register("moms_pad",
                     () -> new MomsPad(ItemId.MOMS_PAD.getId(), ItemId.MOMS_PAD.getLevel()));
@@ -187,5 +190,12 @@ public class ModActiveAbilities {
     public static final RegistryObject<ActiveAbility> BOX_OF_SPIDERS =
             ACTIVE_ABILITY_REGISTRY.register("box_of_spiders",
                     () -> new BoxOfSpiders(ItemId.BOX_OF_SPIDERS.getId(), ItemId.BOX_OF_SPIDERS.getLevel()));
+
+    public static final RegistryObject<ActiveAbility> D10 =
+            ACTIVE_ABILITY_REGISTRY.register("d10", () -> new D10(ItemId.D10.getId(), ItemId.D10.getLevel()));
+
+    public static final RegistryObject<ActiveAbility> HOW_TO_JUMP =
+            ACTIVE_ABILITY_REGISTRY.register("how_to_jump",
+                    () -> new HowToJump(ItemId.HOW_TO_JUMP.getId(), ItemId.HOW_TO_JUMP.getLevel()));
 
 }

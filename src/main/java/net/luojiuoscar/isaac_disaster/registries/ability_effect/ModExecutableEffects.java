@@ -444,11 +444,11 @@ public class ModExecutableEffects {
 
     public static final RegistryObject<IExecutableEffect> FREE_LEMONADE =
             EXECUTABLE_EFFECT_REGISTRY.register("free_lemonade", () -> new AbilityEffectEntry(
-                    LEMON, ctx -> ctx.set(ContextKeys.DOUBLE, List.of(0.8, 100., 0., 10., 4.))
+                    LEMON, ctx -> ctx.set(ContextKeys.DOUBLE, List.of(0.8, 360., 5.))
             ));
     public static final RegistryObject<IExecutableEffect> LEMON_MISHAP =
             EXECUTABLE_EFFECT_REGISTRY.register("lemon_mishap", () -> new AbilityEffectEntry(
-                    LEMON, ctx -> ctx.set(ContextKeys.DOUBLE, List.of(0.4, 100., 0., 10., 2.5))
+                    LEMON, ctx -> ctx.set(ContextKeys.DOUBLE, List.of(0.4, 200., 4.))
             ));
     public static final RegistryObject<IExecutableEffect> MR_BOOM =
             EXECUTABLE_EFFECT_REGISTRY.register("mr_boom", () -> new AbilityEffectEntry(
@@ -569,7 +569,7 @@ public class ModExecutableEffects {
                     POTIONS, ctx -> ctx.set(ContextKeys.POTIONS, List.of(new PotionProfile(
                             MobEffects.FIRE_RESISTANCE,
                             240,
-                            0)))
+                            0, 0, 0, false)))
             ));
     public static final RegistryObject<IExecutableEffect> THE_SOUL =
             EXECUTABLE_EFFECT_REGISTRY.register("the_soul", () -> new AbilityEffectEntry(
@@ -1125,13 +1125,33 @@ public class ModExecutableEffects {
 
     public static final RegistryObject<IExecutableEffect> SOUL_LOCKET =
             EXECUTABLE_EFFECT_REGISTRY.register("soul_locket", SoulLocket::new);
+
     public static final RegistryObject<IExecutableEffect> SINUS_INFECTION_ATTACHMENT =
             EXECUTABLE_EFFECT_REGISTRY.register("sinus_infection_attachment", SinusInfectionAttachment::new);
+
     public static final RegistryObject<IExecutableEffect> SINUS_INFECTION_POISON =
             EXECUTABLE_EFFECT_REGISTRY.register("sinus_infection_poison", SinusInfectionPoison::new);
+
     public static final RegistryObject<IExecutableEffect> SINUS_INFECTION_DAMAGE =
             EXECUTABLE_EFFECT_REGISTRY.register("sinus_infection_damage", SinusInfectionDamage::new);
 
+    public static final RegistryObject<IExecutableEffect> CRACK_THE_SKY =
+            EXECUTABLE_EFFECT_REGISTRY.register("crack_the_sky", CrackTheSky::new);
+
+    public static final RegistryObject<IExecutableEffect> FIRE_MIND_ATTACHMENT =
+            EXECUTABLE_EFFECT_REGISTRY.register("fire_mind_attachment", FireMindAttachment::new);
+
+    public static final RegistryObject<IExecutableEffect> FIRE_MIND_BURN =
+            EXECUTABLE_EFFECT_REGISTRY.register("fire_mind_burn", FireMindBurn::new);
+
+    public static final RegistryObject<IExecutableEffect> FIRE_MIND_IMPACT =
+            EXECUTABLE_EFFECT_REGISTRY.register("fire_mind_impact", FireMindImpact::new);
+
+    public static final RegistryObject<IExecutableEffect> HOLY_LIGHT_ATTACHMENT =
+            EXECUTABLE_EFFECT_REGISTRY.register("holy_light_attachment", HolyLightAttachment::new);
+
+    public static final RegistryObject<IExecutableEffect> HOLY_LIGHT_IMPACT =
+            EXECUTABLE_EFFECT_REGISTRY.register("holy_light_impact", HolyLightImpact::new);
     public static final RegistryObject<IExecutableEffect> CRICKET_LEG =
             EXECUTABLE_EFFECT_REGISTRY.register("cricket_leg", CricketLeg::new);
 
@@ -1180,5 +1200,38 @@ public class ModExecutableEffects {
             EXECUTABLE_EFFECT_REGISTRY.register("spawn_blue_fly", () ->
                     new SpawnFamiliars(ModFamiliarEntities.BLUE_FLY::getId, 1, 1, false));
 
+
+    public static final RegistryObject<IExecutableEffect> VIRGO =
+            EXECUTABLE_EFFECT_REGISTRY.register("virgo", VirgoShield::new);
+
+    public static final RegistryObject<IExecutableEffect> AQUARIUS =
+            EXECUTABLE_EFFECT_REGISTRY.register("aquarius", Aquarius::new);
+
+    public static final RegistryObject<IExecutableEffect> D10 =
+            EXECUTABLE_EFFECT_REGISTRY.register("d10", D10::new);
+
+    public static final RegistryObject<IExecutableEffect> URANUS_ATTACHMENT =
+            EXECUTABLE_EFFECT_REGISTRY.register("uranus_attachment", UranusAttachment::new);
+    public static final RegistryObject<IExecutableEffect> URANUS_SLOW =
+            EXECUTABLE_EFFECT_REGISTRY.register("uranus_slow", UranusSlow::new);
+    public static final RegistryObject<IExecutableEffect> URANUS_FREEZE_ON_KILL =
+            EXECUTABLE_EFFECT_REGISTRY.register("uranus_freeze_on_kill", UranusFreezeOnKill::new);
+
+    public static final RegistryObject<IExecutableEffect> HOW_TO_JUMP =
+            EXECUTABLE_EFFECT_REGISTRY.register("how_to_jump", HowToJump::new);
+
+    public static final RegistryObject<IExecutableEffect> ANEMIC =
+            EXECUTABLE_EFFECT_REGISTRY.register("anemic", Anemic::new);
+
+    public static final RegistryObject<IExecutableEffect> BLOOD_TRAIL =
+            EXECUTABLE_EFFECT_REGISTRY.register("blood_trail", BloodTrail::new);
+
+    public static final RegistryObject<IExecutableEffect> DEPRESSION_TRAIL =
+            EXECUTABLE_EFFECT_REGISTRY.register("depression_trail", DepressionTrail::new);
+
+    public static final RegistryObject<IExecutableEffect> SHARD_OF_GLASS =
+            EXECUTABLE_EFFECT_REGISTRY.register("shard_of_glass", ShardOfGlass::new);
+    public static final RegistryObject<IExecutableEffect> SHARD_OF_GLASS_BLOOD_TEAR =
+            EXECUTABLE_EFFECT_REGISTRY.register("shard_of_glass_blood_tear", ShardOfGlassBloodTear::new);
 
 }

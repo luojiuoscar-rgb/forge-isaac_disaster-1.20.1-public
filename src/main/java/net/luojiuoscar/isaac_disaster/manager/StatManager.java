@@ -105,6 +105,8 @@ public enum StatManager {
             () -> GameplayConfig.BLOCK_BREAKING_SPEED_BONUS.get(), 0.0, null),
     ATTACK_KNOCKBACK("attack_knockback", Attributes.ATTACK_KNOCKBACK, 0, false,
             () -> GameplayConfig.ATTACK_KNOCKBACK_BONUS.get(), null, null),
+    BULLET_KNOCKBACK("bullet_knockback", ModAttributes.BULLET_KNOCKBACK.get(), 0, false,
+            () -> GameplayConfig.BULLET_KNOCKBACK_BONUS.get(), null, null),
     BULLET_SCALE("bullet_scale", ModAttributes.BULLET_SCALE.get(), 0, false,
             () -> GameplayConfig.BULLET_SCALE_BONUS.get(), null, null),
     BULLET_COUNT("bullet_count", ModAttributes.BULLET_COUNT.get(), 0, false,
@@ -246,7 +248,7 @@ public enum StatManager {
                 .append(formatted).withStyle(style);
     }
 
-    /** Uses the stat's configured formatting and highlights only the changing value. */
+    /** 仅高亮局内会变化的属性值；固定加成即使随配置变化，也应使用description。 */
     public Component dynamicDescription(double ratio) {
         var result = description(ratio).copy();
         var values = result.getSiblings();

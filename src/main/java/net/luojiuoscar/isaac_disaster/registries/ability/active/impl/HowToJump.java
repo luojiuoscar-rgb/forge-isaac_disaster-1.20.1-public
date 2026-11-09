@@ -1,0 +1,61 @@
+package net.luojiuoscar.isaac_disaster.registries.ability.active.impl;
+
+import net.luojiuoscar.isaac_disaster.helper.DescriptionHelper;
+import net.luojiuoscar.isaac_disaster.manager.StatManager;
+import net.luojiuoscar.isaac_disaster.registries.ability.active.ActiveAbility;
+import net.luojiuoscar.isaac_disaster.registries.ability.set.ModSetAbilities;
+import net.luojiuoscar.isaac_disaster.registries.ability_effect.CompositeTrigger;
+import net.luojiuoscar.isaac_disaster.registries.ability_effect.ModExecutableEffects;
+import net.luojiuoscar.isaac_disaster.registries.ability_effect.SimpleTrigger;
+import net.luojiuoscar.isaac_disaster.registries.trigger_module.ModTriggerTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public final class HowToJump extends ActiveAbility {
+    private static final CompositeTrigger TRIGGER = new CompositeTrigger(List.of(
+            new SimpleTrigger(ModTriggerTypes.EMTPY, ModExecutableEffects.HOW_TO_JUMP)
+    ));
+
+    public HowToJump(int id, int level) {
+        super(TRIGGER, id, level);
+    }
+
+    @Override
+    public double getStrongerAmplifier() {
+        return 1;
+    }
+
+    @Override
+    public void onFirstUse(ServerPlayer player, @Nullable ItemStack stack, @Nullable InteractionHand hand) {
+        StatManager.modifySetWithId(player, ModSetAbilities.BOOK.getId(), 1);
+    }
+
+    @Override
+    public void triggerSFX(ServerPlayer player) {
+        player.level().playSound(null, player.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS);
+    }
+
+    @Override
+    public List<Component> getDesc(@Nullable ItemStack stack, Player player) {
+        return List.of(Component.translatable("item.isaac_disaster.how_to_jump.lore.1"));
+    }
+
+    @Override
+    public List<Component> getSynergyDesc(@Nullable ItemStack stack, Player player) {
+        List<Component> description = new ArrayList<>(ModSetAbilities.BOOK.get().getSynergyDesc());
+        if (hasCarBattery(player)) {
+            description.add(DescriptionHelper.getSynergyDesc(Component.translatable("item.isaac_disaster.car_battery"),
+                    Component.translatable("item.isaac_disaster.synergy.description.no_effect")));
+        }
+        return description;
+    }
+}

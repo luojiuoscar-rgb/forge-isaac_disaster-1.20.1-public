@@ -11,7 +11,7 @@ public class DescriptionHelper {
     private DescriptionHelper() {
     }
 
-    /** Creates a yellow dynamic integer without decimal places. */
+    /** 仅为局内会变化的整数提供动态高亮；仅随配置变化的值使用普通文本。 */
     public static Component dynamicNumber(int currentValue) {
         return Component.literal(Integer.toString(currentValue))
                 .withStyle(style -> style.withColor(ColorManager.SYNERGY));

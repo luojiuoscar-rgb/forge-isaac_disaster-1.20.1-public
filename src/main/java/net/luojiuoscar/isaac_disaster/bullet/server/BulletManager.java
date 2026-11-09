@@ -634,7 +634,7 @@ public final class BulletManager {
      * entity.
      */
     private static DamageSource tearDamageSource(ServerLevel level, BulletState bullet) {
-        return ModDamageSources.tear(level, bullet.getOwner(), bullet.velocity());
+        return ModDamageSources.tear(level, bullet.getOwner(), bullet.velocity(), bullet.getBulletKnockback(), bullet);
     }
 
     /** Coalesces same-tick redirects so each slot/generation receives at most one correction. */

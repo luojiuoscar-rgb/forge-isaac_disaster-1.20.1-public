@@ -255,7 +255,19 @@ public enum ItemId {
     LOKI_BABY(1),
     ROBO_BABY(1),
     ROBO_BABY_2(3),
-    DEMON_BABY(2);
+    DEMON_BABY(2),
+    CRACK_THE_SKY(1),
+    HOLY_LIGHT(3),
+    FIRE_MIND(2),
+    VIRGO(2),
+    AQUARIUS(2),
+    D10(1),
+    URANUS(3),
+    HOW_TO_JUMP(1),
+    ANEMIC(1),
+    SHARD_OF_GLASS(1),
+    HEADLESS_BABY(1),
+    DEPRESSION(1);
 
 
 

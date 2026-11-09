@@ -5,6 +5,8 @@
     "isaac_disaster:tear",
     "isaac_disaster:laser",
     "isaac_disaster:familiar",
+    "isaac_disaster:water",
+    "isaac_disaster:holy_light",
     "isaac_disaster:self_damage",
     "isaac_disaster:moms_knife"
   ]

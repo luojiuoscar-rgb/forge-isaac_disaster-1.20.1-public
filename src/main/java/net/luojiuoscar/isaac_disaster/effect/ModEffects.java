@@ -7,6 +7,7 @@ import net.luojiuoscar.isaac_disaster.effect.custom.*;
 import net.luojiuoscar.isaac_disaster.manager.EffectManager;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -29,6 +30,9 @@ public class ModEffects {
             () -> new CurseOfTheMaze(MobEffectCategory.HARMFUL, 0x512799));
 
     // normal effects
+    public static final RegistryObject<MobEffect> BURNING = MOB_EFFECTS.register(EffectManager.BURNING.getName(),
+            BurningEffect::new);
+
     public static final RegistryObject<MobEffect> DEADLY_POISON = MOB_EFFECTS.register(EffectManager.DEADLY_POISON.getName(),
             () -> new DeadlyPoisonEffect(MobEffectCategory.HARMFUL, 8889187));
 
@@ -45,7 +49,7 @@ public class ModEffects {
             () -> new InvincibleEffect(MobEffectCategory.BENEFICIAL, 0xFFD700));
 
     public static final RegistryObject<MobEffect> FRAILTY = MOB_EFFECTS.register(EffectManager.FRAILTY.getName(),
-            () -> new FrailtyEffect(MobEffectCategory.HARMFUL, 0xFFD700));
+            () -> new FrailtyEffect(MobEffectCategory.HARMFUL, MobEffects.WEAKNESS.getColor()));
 
     public static final RegistryObject<MobEffect> NECRONMICON_SHIELD = MOB_EFFECTS.register(EffectManager.NECRONMICON_SHIELD.getName(),
             () -> new NecronmiconShieldEffect(MobEffectCategory.BENEFICIAL, 0x000000));

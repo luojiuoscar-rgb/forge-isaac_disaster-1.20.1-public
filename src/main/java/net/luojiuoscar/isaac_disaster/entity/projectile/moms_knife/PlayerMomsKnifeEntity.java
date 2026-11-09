@@ -925,7 +925,7 @@ public final class PlayerMomsKnifeEntity extends Entity implements IBulletObject
     public boolean isPiercing() { return true; }
 
     @Override
-    public ResourceLocation getColorId() { return attack.context == null ? null : attack.context.getColorRl(); }
+    public ResourceLocation getColorId() { return attack.context == null ? null : attack.context.getColorId(); }
 
     @Override
     public TrajectoryRuntime getTrajectoryRuntime() { return attack.trajectory; }

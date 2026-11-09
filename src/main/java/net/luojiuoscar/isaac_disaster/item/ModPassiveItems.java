@@ -863,4 +863,40 @@ public class ModPassiveItems {
     static {ItemListManager.PASSIVE_ITEM_LIST.add(DEMON_BABY);}
 
 
+    public static final RegistryObject<Item> HOLY_LIGHT = ITEMS.register("holy_light",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.HOLY_LIGHT));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(HOLY_LIGHT);}
+
+    public static final RegistryObject<Item> FIRE_MIND = ITEMS.register("fire_mind",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.FIRE_MIND));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(FIRE_MIND);}
+
+    public static final RegistryObject<Item> VIRGO = ITEMS.register("virgo",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.VIRGO));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(VIRGO);}
+
+    public static final RegistryObject<Item> AQUARIUS = ITEMS.register("aquarius",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.AQUARIUS));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(AQUARIUS);}
+
+    public static final RegistryObject<Item> URANUS = ITEMS.register("uranus",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.URANUS));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(URANUS);}
+
+    public static final RegistryObject<Item> ANEMIC = ITEMS.register("anemic",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.ANEMIC));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(ANEMIC);}
+
+    public static final RegistryObject<Item> SHARD_OF_GLASS = ITEMS.register("shard_of_glass",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.SHARD_OF_GLASS));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(SHARD_OF_GLASS);}
+
+    public static final RegistryObject<Item> HEADLESS_BABY = ITEMS.register("headless_baby",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.HEADLESS_BABY));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(HEADLESS_BABY);}
+
+    public static final RegistryObject<Item> DEPRESSION = ITEMS.register("depression",
+            () -> new PassiveItem(new Item.Properties(), ModPassiveAbilities.DEPRESSION));
+    static {ItemListManager.PASSIVE_ITEM_LIST.add(DEPRESSION);}
+
 }
